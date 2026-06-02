@@ -1,0 +1,30 @@
+# Todo
+
+## Objectif
+Centraliser les tâches en attente, idées de contenu, idées sur la méthode, et outils à développer.
+Sert aussi à noter les suggestions de l'assistant pour les prochaines sessions.
+
+## Contenu
+
+- Décider si les tokens sont développés dans le chapitre 5 ou dans un encadré dédié ailleurs
+- Trouver une mise en valeur adaptée pour le concept déclaratif/impératif (chapitre 6) : encadré, analogie, ou autre forme éditoriale
+- Développer l'encadré technique : tokens spéciaux et génération token par token (mentionné dans le chapitre 6)
+- Vérifier sur les différents assistants IA (Claude, ChatGPT, Gemini...) comment consulter et contrôler sa mémoire
+- Développer l'encadré technique : la polysémie — pourquoi le langage est intrinsèquement ambigu (mentionné dans le chapitre 7)
+
+## Méthode
+
+- Explorer la possibilité de produire des présentations (slides avec images et animations) à partir du guide — format et outillage à définir
+- Définir la convention "encadré technique" dans Methode.md : usage, format, place dans le guide
+
+## Outillage
+
+- Générateur de TOC du guide (à faire une fois la rédaction du guide commencée)
+- Générateur d'index à partir des balises `{{mot-clé}}` (à faire une fois la rédaction du guide commencée)
+- Générateur du sommaire des sessions dans `Journal.md`
+- Export du guide vers PDF, HTML, etc.
+
+## Suggestions pour la prochaine session
+
+- Finaliser le plan du chapitre 7 (exemples, articulation avec ch. 5 et 6, lien "lost in the middle")
+- Travailler le plan du chapitre 8 (Conclusion)
