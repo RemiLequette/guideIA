@@ -7,6 +7,7 @@
 - [Session 2026-06-02d — Plan chapitre 6](#session-2026-06-02d--plan-chapitre-6)
 - [Session 2026-06-02e — Plan chapitre 7 (en cours)](#session-2026-06-02e--plan-chapitre-7-en-cours)
 - [Session 2026-06-02f — Balises : mots-clés, figures, encadrés](#session-2026-06-02f--balises--mots-clés-figures-encadrés)
+- [Session 2026-06-02g — Outillage : script de rendu HTML](#session-2026-06-02g--outillage--script-de-rendu-html)
 
 ---
 
@@ -188,3 +189,59 @@ La session a démarré sur un malentendu productif : "illustration" a d'abord é
 **Moment clé — La logique check/rendu émerge de la logique mots-clés**
 
 Le parallèle avec les mots-clés (déjà présents dans le plan) a naturellement amené la syntaxe `{{def:...}}` / `{{ref:...}}`. Et c'est en poussant cette logique jusqu'au bout — "un outil peut vérifier que chaque balise est définie une fois et dans le bon chapitre" — que le concept d'outils de check a pris forme, avec ses 5 règles explicites.
+
+- [Session 2026-06-02h — Figures SVG](#session-2026-06-02h--figures-svg)
+
+---
+
+## Session 2026-06-02h — Figures SVG
+
+### Décisions
+- Guide de style figures rédigé dans `Plan.md` : palette commune, règles des groupes `prompt` et `immo`
+- 10 figures SVG créées et écrites dans `figures/html/` — toutes les figures déclarées dans le plan sont désormais réelles
+- `output/GuideIA.html` régénéré avec les figures
+
+### Collaboration
+
+**Moment clé — Le calcul simulé**
+
+La figure `immo-regression` a demandé 5 itérations. La cause profonde n'était pas le style mais les données : l'assistant avait placé les points à la main "pour coller à peu près à la tendance", puis annoncé avoir calculé la droite par régression. Le calcul était formellement correct — appliqué à des coordonnées SVG soigneusement choisies pour qu'il donne un résultat plausible.
+
+> U : *« ca va pas du tout ! plus de bruit. et calculer simplement un prix moyen au m2 somme(prix) / somme(surface) qui donne la pente de la droite »*
+
+Puis, une fois la formule correcte appliquée :
+
+> U : *« oui, surtout que le resultat est loin d'etre satisfaisant ;-) »*
+
+Diagnostic exact : la droite était "calculée", les données étaient fausses. Les points avaient été placés pour que ça *ressemble* à une régression, pas pour que ce soit une vraie distribution avec une vraie droite qui passe au milieu. L'assistant avait produit une illustration plausible d'un calcul sans faire le calcul.
+
+C'est une variante de l'hallucination : pas une information inventée, mais un processus simulé — l'apparence du raisonnement sans le raisonnement. Et particulièrement difficile à détecter, car le résultat *semble* correct à première vue.
+
+---
+
+## Session 2026-06-02g — Outillage : script de rendu HTML
+
+### Décisions
+- Création de `figures/html/` — répertoire des figures pour la cible de rendu HTML
+- Génération des 10 figures SVG placeholder (une par figure déclarée dans le plan)
+- Création de `tools/render_html.js` — script Node.js produisant `output/GuideIA.html`
+- Création de `package.json` avec dépendance `marked`
+- Mise à jour de `Methode.md` : répertoires `figures/html/` et `tools/`, Node.js comme runtime des scripts, rendu mk documenté (`{{def:mk}}` → italique gras avec ancre, `{{ref:mk}}` → italique avec lien)
+
+### Collaboration
+
+**Moment clé — L'outil `commands` fonctionne en exécution directe**
+
+Découverte importante pour toutes les sessions d'outillage futures : l'outil `commands` peut exécuter des binaires directs (`node script.js`) même avec `shellExecutionEnabled: false`. Il ne peut pas exécuter des commandes shell composées, mais suffit pour lancer et tester les scripts du projet depuis la session.
+
+> Noté dans `Methode.md` — à utiliser systématiquement pour valider les scripts sans quitter la session.
+
+**Moment clé — Deux bugs diagnostiqués et corrigés en direct**
+
+Le script a d'abord échoué sur deux points, tous deux détectés et corrigés via `commands` sans sortir de la session :
+
+1. **marked v12** : le renderer `heading` a changé d'API — `token.text` n'est plus une string. Contournement : post-traitement regex sur le HTML généré pour injecter les `id` sur les headings, sans toucher au renderer.
+
+2. **Niveau de heading dans Plan.md** : les chapitres sont en `###` (niveau 3) et non `##` (niveau 2). Le parser ne trouvait rien. Corrigé en rendant le regex plus permissif (`#{2,3}`).
+
+Le diagnostic par `commands` (exécution + lecture du stacktrace) a été plus rapide et fiable qu'une revue de code statique.

@@ -9,7 +9,73 @@ Définir le contenu attendu du guide guideIA : chapitres et ce qu'on veut y dire
 
 ## Guide de style figures
 
-*À développer — voir section "Rendu final du document" dans `Methode.md` pour les contraintes par cible de rendu.*
+*Voir section "Rendu final du document" dans `Methode.md` pour les contraintes par cible de rendu.*
+
+### Style général
+
+- **Dimensions** : 700×420px, `viewBox="0 0 700 420"`
+- **Fond** : blanc `#ffffff`
+- **Typographie** : `font-family="sans-serif"` — labels 12-13px, titres/annotations 14-15px
+- **Langue** : français pour tous les labels visibles
+
+### Palette commune
+
+| Rôle | Couleur |
+|---|---|
+| Humain | `#6b7280` (gris) |
+| Orchestrateur / éléments structurels | `#0d9488` (teal) |
+| Modèle / LLM | `#7c3aed` (violet) |
+| Données / points | `#3b82f6` (bleu) |
+| Outliers / alerte | `#f97316` (orange) |
+| Inadéquation (underfitting) | `#ef4444` (rouge) |
+| Surajustement (overfitting) | `#7c3aed` (violet) |
+| Zone interpolation | fond `#d1fae5`, contour `#10b981` (vert) |
+| Zone extrapolation | fond `#fee2e2`, contour `#ef4444` (rouge) |
+
+---
+
+### Groupe `prompt` — diagrammes de flux et de structure
+
+Figures : `flux-orchestrateur`, `prompt-etendu-historique`, `prompt-etendu-complet`
+
+**Nœuds (flux-orchestrateur)**
+- Rectangles à coins arrondis (`rx="8"`), largeur fixe 140px, hauteur 48px
+- Couleurs selon palette : humain gris, orchestrateur teal, modèle violet
+- Label centré, blanc, 14px
+
+**Flèches**
+- Directionnelles, épaisseur 2px, couleur `#6b7280`
+- Label court au-dessus (flux aller), en-dessous (flux retour), 12px, `#374151`
+
+**Blocs de structure (`prompt-etendu-*`)**
+- Empilement vertical, chaque couche rectangle plein, hauteur uniforme par type
+- Couleurs par type de couche : prompt système teal `#0d9488`, instructions utilisateur bleu `#3b82f6`, historique gris `#9ca3af`, dernier prompt violet `#7c3aed`
+- Label centré, blanc, 13px
+- Indication visuelle de croissance de l'historique (hauteur variable ou annotation fléchée)
+
+---
+
+### Groupe `immo` — graphiques cartésiens
+
+Figures : `immo-regression`, `immo-outliers`, `immo-deux-segments`, `immo-underfitting`, `immo-overfitting`, `immo-interpolation-extrapolation`
+
+**Axes**
+- x = surface (m²), y = prix (€)
+- Labels courts, sans valeurs numériques précises (figures pédagogiques)
+- Couleur axes : `#374151`, épaisseur 1.5px
+- Graduation légère : tirets fins `#e5e7eb`
+
+**Jeu de données**
+- ~15 points, **même distribution dans toutes les figures du groupe**
+- Cercles bleus `#3b82f6`, rayon 5px, `fill-opacity="0.75"`
+
+**Éléments spécifiques par figure**
+- `immo-regression` : droite teal `#0d9488`, épaisseur 2px ; lignes de lecture tiretées `#6b7280` pour un bien exemple
+- `immo-outliers` : 2-3 outliers orange `#f97316`, contour distinct, rayon 6px
+- `immo-deux-segments` : deux segments de droite, teal et violet, avec point de coupure visible
+- `immo-underfitting` : droite rouge `#ef4444` qui ne suit pas la tendance ; annotation "modèle trop simple"
+- `immo-overfitting` : courbe violette `#7c3aed` qui passe par tous les points, ondulée, trait 1.5px ; annotation "modèle trop complexe"
+- `immo-interpolation-extrapolation` : zones colorées fond vert/rouge délimitant les données, labels "interpolation" / "extrapolation"
 
 ## Chapitres
 
@@ -21,6 +87,17 @@ Définir le contenu attendu du guide guideIA : chapitres et ce qu'on veut y dire
 6. [C'est quoi le contexte ?](#6-cest-quoi-le-contexte-)
 7. [Le problème de l'attention](#7-le-problème-de-lattention)
 8. [Conclusion](#8-conclusion)
+
+<!-- ============================================================
+     CONTENU DU GUIDE
+     Tout ce qui suit appartient au guide, pas aux méta-données
+     du plan. Lors d'une harmonisation plan/guide, ne modifier
+     que le contenu des sections (#### Contenu, #### Figures,
+     #### Encadrés, #### Mots-clés) — pas les sections
+     précédentes.
+     ============================================================ -->
+
+# Guide pratique de l'assistant IA
 
 ---
 

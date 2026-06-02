@@ -1,18 +1,5 @@
 # Guide pratique de l'assistant IA
 
-## Sommaire
-
-1. [Introduction](#1-introduction)
-2. [Travailler avec une IA](#2-travailler-avec-une-ia)
-3. [Le modèle et l'orchestrateur](#3-le-modèle-et-lorchestrateu r)
-4. [C'est quoi la génération ?](#4-cest-quoi-la-génération-)
-5. [Le problème du poisson rouge](#5-le-problème-du-poisson-rouge)
-6. [C'est quoi le contexte ?](#6-cest-quoi-le-contexte-)
-7. [Le problème de l'attention](#7-le-problème-de-lattention)
-8. [Conclusion](#8-conclusion)
-
----
-
 ## 1. Introduction
 
 Vous avez sans doute déjà utilisé un assistant IA — pour rédiger un email, poser une question, ou simplement tester ce dont il est capable. Vous avez peut-être été impressionné. Peut-être aussi déçu, ou surpris par une réponse à côté. Ce guide n'est pas un tutoriel. C'est une explication : comment ça marche vraiment, et comment en tirer le meilleur parti.

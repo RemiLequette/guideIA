@@ -9,8 +9,9 @@
  *   2. Parse GuideIA.md — resolve {{def:...}} and {{ref:...}} tags
  *   3. Convert markdown to HTML (via marked, default renderer)
  *   4. Post-process HTML: inject id attributes on headings
- *   5. Build TOC, figure table, keyword index, encadre table
- *   6. Write output/GuideIA.html (self-contained, CSS inline)
+ *   5. Extract h1 from body HTML (placed before TOC in output)
+ *   6. Build TOC (chapters + index sections), figure table, keyword index, encadre table
+ *   7. Write output/GuideIA.html (self-contained, CSS inline)
  *
  * Usage:
  *   node tools/render_html.js
@@ -36,6 +37,9 @@ const PLAN_PATH   = path.join(ROOT, 'Plan.md');
 const GUIDE_PATH  = path.join(ROOT, 'GuideIA.md');
 const FIGURES_DIR = path.join(ROOT, 'figures', 'html');
 const OUTPUT_PATH = path.join(ROOT, 'output', 'GuideIA.html');
+
+// Reusable back-to-TOC link
+const BACK_TO_TOC = ' <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a>';
 
 // ---------------------------------------------------------------------------
 // Plan parser — extracts declared tags per chapter
@@ -164,7 +168,7 @@ function resolveTags(src, registry) {
         if (mode === 'def') {
           const file   = resolveFigureFile(id);
           const imgTag = file
-            ? `<img src="figures/html/${file}" alt="${escapeHtml(caption)}">`
+            ? `<img src="../figures/html/${file}" alt="${escapeHtml(caption)}">`
             : `<div class="fig-missing">[figure manquante : ${escapeHtml(id)}]</div>`;
           return (
             `\n\n<figure id="fig-${id}">\n` +
@@ -195,7 +199,7 @@ function resolveTags(src, registry) {
 }
 
 // ---------------------------------------------------------------------------
-// Post-process HTML: inject id on headings that don't have one
+// Post-process HTML: inject id on headings; add back-to-toc link on h2
 // ---------------------------------------------------------------------------
 
 function injectHeadingIds(html) {
@@ -205,16 +209,29 @@ function injectHeadingIds(html) {
       if (attrs && /\bid\s*=/.test(attrs)) return match;
       const plainText = inner.replace(/<[^>]+>/g, '');
       const anchor    = slugify(plainText);
-      return `<${tag} id="${anchor}"${attrs || ''}>${inner}</${tag}>`;
+      const backLink  = tag === 'h2' ? BACK_TO_TOC : '';
+      return `<${tag} id="${anchor}"${attrs || ''}>${inner}${backLink}</${tag}>`;
     }
   );
 }
 
 // ---------------------------------------------------------------------------
-// TOC builder — scans markdown source for headings
+// Extract and remove the h1 from body HTML
 // ---------------------------------------------------------------------------
 
-function buildTOC(src) {
+function extractH1(html) {
+  const match = html.match(/<h1[^>]*>.*?<\/h1>/s);
+  if (!match) return { h1Html: '', bodyHtml: html };
+  const h1Html  = match[0];
+  const bodyHtml = html.replace(h1Html, '');
+  return { h1Html, bodyHtml };
+}
+
+// ---------------------------------------------------------------------------
+// TOC builder — scans markdown source for headings, appends index sections
+// ---------------------------------------------------------------------------
+
+function buildTOC(src, registry, figNumbers, encNumbers) {
   const entries = [];
   const re      = /^(#{1,3})\s+(.+)/gm;
   let firstH1   = true;
@@ -235,11 +252,24 @@ function buildTOC(src) {
     return `<li class="${cls}"><a href="#${e.anchor}">${escapeHtml(e.text)}</a></li>`;
   });
 
+  // Append index sections if present
+  const indexItems = [];
+  if (Object.keys(registry.mk).length)
+    indexItems.push(`<li class="toc-index"><a href="#index-mots-cles">Index des mots-clés</a></li>`);
+  if (Object.keys(figNumbers).length)
+    indexItems.push(`<li class="toc-index"><a href="#table-figures">Table des figures</a></li>`);
+  if (Object.keys(encNumbers).length)
+    indexItems.push(`<li class="toc-index"><a href="#table-encadres">Table des encadrés</a></li>`);
+
+  const allItems = indexItems.length
+    ? [...items, `<li class="toc-separator"></li>`, ...indexItems]
+    : items;
+
   return `
 <nav id="toc">
   <h2>Table des matières</h2>
   <ul>
-    ${items.join('\n    ')}
+    ${allItems.join('\n    ')}
   </ul>
 </nav>`;
 }
@@ -258,13 +288,13 @@ function buildKeywordIndex(registry, mkLabels) {
     const label = (mkLabels[id] || id).replace(/_/g, ' ');
     return `<tr>` +
       `<td><a href="#mk-${id}"><strong><em>${escapeHtml(label)}</em></strong></a></td>` +
-      `<td>Chapitre ${registry.mk[id].chapter} — ${escapeHtml(registry.mk[id].chapterTitle)}</td>` +
+      `<td>Chapitre ${registry.mk[id].chapter} — ${escapeHtml(registry.mk[id].chapterTitle)}${BACK_TO_TOC}</td>` +
       `</tr>`;
   });
 
   return `
 <section id="index-mots-cles" class="index-section">
-  <h2>Index des mots-clés</h2>
+  <h2 id="index-mots-cles-title">Index des mots-clés${BACK_TO_TOC}</h2>
   <table class="index-table">
     <thead><tr><th>Terme</th><th>Défini au</th></tr></thead>
     <tbody>${rows.join('\n')}</tbody>
@@ -278,12 +308,12 @@ function buildFigureTable(registry, figNumbers) {
 
   const rows = entries.map(([id, num]) => {
     const caption = registry.fig[id]?.caption || id;
-    return `<tr><td>${num}</td><td><a href="#fig-${id}">${escapeHtml(caption)}</a></td></tr>`;
+    return `<tr><td>${num}</td><td><a href="#fig-${id}">${escapeHtml(caption)}</a>${BACK_TO_TOC}</td></tr>`;
   });
 
   return `
 <section id="table-figures" class="index-section">
-  <h2>Table des figures</h2>
+  <h2 id="table-figures-title">Table des figures${BACK_TO_TOC}</h2>
   <table class="index-table">
     <thead><tr><th>N°</th><th>Légende</th></tr></thead>
     <tbody>${rows.join('\n')}</tbody>
@@ -297,12 +327,12 @@ function buildEncadreTable(registry, encNumbers) {
 
   const rows = entries.map(([id, num]) => {
     const title = registry.enc[id]?.title || id;
-    return `<tr><td>${num}</td><td><a href="#enc-${id}">${escapeHtml(title)}</a></td></tr>`;
+    return `<tr><td>${num}</td><td><a href="#enc-${id}">${escapeHtml(title)}</a>${BACK_TO_TOC}</td></tr>`;
   });
 
   return `
 <section id="table-encadres" class="index-section">
-  <h2>Table des encadrés</h2>
+  <h2 id="table-encadres-title">Table des encadrés${BACK_TO_TOC}</h2>
   <table class="index-table">
     <thead><tr><th>N°</th><th>Titre</th></tr></thead>
     <tbody>${rows.join('\n')}</tbody>
@@ -437,6 +467,18 @@ const CSS = `
   #toc li { margin: 0.25em 0; }
   #toc li.toc-sub    { padding-left: 1.25em; }
   #toc li.toc-subsub { padding-left: 2.5em; }
+  #toc li.toc-index  { font-size: 0.92em; color: var(--color-muted); }
+  #toc li.toc-separator { border-top: 1px solid var(--color-border); margin: 0.6em 0; padding: 0; }
+
+  .back-to-toc {
+    font-size: 0.75em;
+    font-weight: normal;
+    color: var(--color-muted);
+    text-decoration: none;
+    margin-left: 0.5em;
+    opacity: 0.5;
+  }
+  .back-to-toc:hover { opacity: 1; }
 
   .index-section { margin-top: 3em; }
 
@@ -462,17 +504,18 @@ const CSS = `
 // HTML template
 // ---------------------------------------------------------------------------
 
-function buildHTML(title, tocHtml, bodyHtml, indexHtml) {
+function buildHTML(h1Html, tocHtml, bodyHtml, indexHtml, titleText) {
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(title)}</title>
+  <title>${escapeHtml(titleText)}</title>
   <style>${CSS}</style>
 </head>
 <body>
   <div class="page-wrapper">
+    ${h1Html}
     ${tocHtml}
     ${bodyHtml}
     <hr>
@@ -525,13 +568,16 @@ function main() {
   const { resolvedSrc, figNumbers, encNumbers, mkLabels } = resolveTags(guideSrc, registry);
 
   console.log('Building TOC...');
-  const tocHtml = buildTOC(resolvedSrc);
+  const tocHtml = buildTOC(resolvedSrc, registry, figNumbers, encNumbers);
 
   console.log('Converting markdown to HTML...');
   const bodyHtmlRaw = marked.parse(resolvedSrc);
 
   console.log('Injecting heading ids...');
-  const bodyHtml = injectHeadingIds(bodyHtmlRaw);
+  const bodyHtmlWithIds = injectHeadingIds(bodyHtmlRaw);
+
+  console.log('Extracting h1...');
+  const { h1Html, bodyHtml } = extractH1(bodyHtmlWithIds);
 
   console.log('Building indexes...');
   const indexHtml =
@@ -540,10 +586,10 @@ function main() {
     buildEncadreTable(registry, encNumbers);
 
   const titleMatch = guideSrc.match(/^#\s+(.+)/m);
-  const title = titleMatch ? titleMatch[1].trim() : 'Guide IA';
+  const titleText = titleMatch ? titleMatch[1].trim() : 'Guide IA';
 
   console.log('Assembling HTML...');
-  const html = buildHTML(title, tocHtml, bodyHtml, indexHtml);
+  const html = buildHTML(h1Html, tocHtml, bodyHtml, indexHtml, titleText);
 
   console.log(`Writing ${OUTPUT_PATH}...`);
   fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });

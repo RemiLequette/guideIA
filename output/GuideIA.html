@@ -127,6 +127,18 @@
   #toc li { margin: 0.25em 0; }
   #toc li.toc-sub    { padding-left: 1.25em; }
   #toc li.toc-subsub { padding-left: 2.5em; }
+  #toc li.toc-index  { font-size: 0.92em; color: var(--color-muted); }
+  #toc li.toc-separator { border-top: 1px solid var(--color-border); margin: 0.6em 0; padding: 0; }
+
+  .back-to-toc {
+    font-size: 0.75em;
+    font-weight: normal;
+    color: var(--color-muted);
+    text-decoration: none;
+    margin-left: 0.5em;
+    opacity: 0.5;
+  }
+  .back-to-toc:hover { opacity: 1; }
 
   .index-section { margin-top: 3em; }
 
@@ -150,11 +162,11 @@
 </head>
 <body>
   <div class="page-wrapper">
+    <h1 id="guide-pratique-de-l39assistant-ia">Guide pratique de l&#39;assistant IA</h1>
     
 <nav id="toc">
   <h2>Table des matières</h2>
   <ul>
-    <li class=""><a href="#sommaire">Sommaire</a></li>
     <li class=""><a href="#1-introduction">1. Introduction</a></li>
     <li class="toc-sub"><a href="#ce-que-notre-cerveau-fait-tout-seul">Ce que notre cerveau fait tout seul</a></li>
     <li class="toc-sub"><a href="#un-collaborateur-au-cv-hors-norme">Un collaborateur au CV hors norme</a></li>
@@ -191,22 +203,14 @@
     <li class="toc-sub"><a href="#la-fenetre-de-contexte-et-la-dilution">La fenêtre de contexte et la dilution</a></li>
     <li class="toc-sub"><a href="#la-self-attention-et-la-polysemie">La self-attention et la polysémie</a></li>
     <li class=""><a href="#8-conclusion">8. Conclusion</a></li>
+    <li class="toc-separator"></li>
+    <li class="toc-index"><a href="#index-mots-cles">Index des mots-clés</a></li>
+    <li class="toc-index"><a href="#table-figures">Table des figures</a></li>
+    <li class="toc-index"><a href="#table-encadres">Table des encadrés</a></li>
   </ul>
 </nav>
-    <h1 id="guide-pratique-de-l39assistant-ia">Guide pratique de l&#39;assistant IA</h1>
-<h2 id="sommaire">Sommaire</h2>
-<ol>
-<li><a href="#1-introduction">Introduction</a></li>
-<li><a href="#2-travailler-avec-une-ia">Travailler avec une IA</a></li>
-<li>[Le modèle et l&#39;orchestrateur](#3-le-modèle-et-lorchestrateu r)</li>
-<li><a href="#4-cest-quoi-la-g%C3%A9n%C3%A9ration-">C&#39;est quoi la génération ?</a></li>
-<li><a href="#5-le-probl%C3%A8me-du-poisson-rouge">Le problème du poisson rouge</a></li>
-<li><a href="#6-cest-quoi-le-contexte-">C&#39;est quoi le contexte ?</a></li>
-<li><a href="#7-le-probl%C3%A8me-de-lattention">Le problème de l&#39;attention</a></li>
-<li><a href="#8-conclusion">Conclusion</a></li>
-</ol>
-<hr>
-<h2 id="1-introduction">1. Introduction</h2>
+    
+<h2 id="1-introduction">1. Introduction <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
 <p>Vous avez sans doute déjà utilisé un assistant IA — pour rédiger un email, poser une question, ou simplement tester ce dont il est capable. Vous avez peut-être été impressionné. Peut-être aussi déçu, ou surpris par une réponse à côté. Ce guide n&#39;est pas un tutoriel. C&#39;est une explication : comment ça marche vraiment, et comment en tirer le meilleur parti.</p>
 <h3 id="ce-que-notre-cerveau-fait-tout-seul">Ce que notre cerveau fait tout seul</h3>
 <p>Commençons par un aveu : nous sommes tous câblés pour prêter des intentions humaines à ce qui nous entoure. Un nuage qui &quot;menace&quot;, une voiture qui &quot;refuse de démarrer&quot;, un chat qui &quot;boude&quot;. C&#39;est <strong><em><span id="mk-anthropomorphisme">anthropomorphisme</span></em></strong> — la tendance naturelle à projeter des caractéristiques humaines sur ce qui n&#39;en a pas. Ce n&#39;est pas un défaut de raisonnement : c&#39;est une stratégie cognitive ancienne, efficace pour naviguer dans un monde social complexe.</p>
@@ -217,7 +221,7 @@
 <p>Et quelques particularités supplémentaires à bien noter pour la suite : il est distrait, il a une tendance marquée à vouloir faire plaisir coûte que coûte — parfois au détriment de l&#39;exactitude — et il lui arrive d&#39;inventer des choses. C&#39;est ce qu&#39;on appelle une <strong><em><span id="mk-hallucination">hallucination</span></em></strong> : une réponse construite avec confiance, mais déconnectée de la réalité. Parfois flagrant, parfois beaucoup moins détectable.</p>
 <p>Ce profil existe bel et bien. La bonne nouvelle : il est très gérable, si on sait comment l&#39;aborder. C&#39;est l&#39;objet de ce guide.</p>
 <hr>
-<h2 id="2-travailler-avec-une-ia">2. Travailler avec une IA</h2>
+<h2 id="2-travailler-avec-une-ia">2. Travailler avec une IA <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
 <p>Exploiter les qualités d&#39;un collaborateur tout en limitant ses défauts — ça n&#39;a rien de mystérieux. Deux principes suffisent.</p>
 <h3 id="etre-clair">Être clair</h3>
 <p>Une IA répond à ce qu&#39;on lui demande, pas à ce qu&#39;on voulait dire. Un <strong><em><span id="mk-prompt">prompt</span></em></strong> flou produit une réponse floue — ou pire, une réponse confiante qui part dans la mauvaise direction. Être précis dans ses questions et ses consignes, c&#39;est la compétence de base.</p>
@@ -230,7 +234,7 @@
 <p><strong>Elle peut vous aider à progresser.</strong> Elle connaît très bien ses propres limites — elle ne se les applique juste pas spontanément. Vous pouvez lui demander de reformuler, d&#39;expliquer son raisonnement, d&#39;identifier ce qui manquait dans votre demande initiale. Si quelque chose ne va pas, construisez avec elle une <strong><em><span id="mk-méthode_de_travail">méthode de travail</span></em></strong> meilleure. Une mise en garde cependant : ne la croyez pas quand elle dit que ça ne se reproduira plus. Ce n&#39;est pas de la mauvaise volonté — c&#39;est simplement qu&#39;elle n&#39;a pas de mémoire d&#39;une session à l&#39;autre. On reviendra là-dessus.</p>
 <p><strong>La documentation suit naturellement.</strong> Travailler en documentant au fur et à mesure est normalement pénible. Avec une IA, si on prend ce pli dès le début, c&#39;est fluide : elle rédige, reformule, structure. Le projet et sa méthode avancent ensemble.</p>
 <hr>
-<h2 id="3-le-modele-et-l39orchestrateur">3. Le modèle et l&#39;orchestrateur</h2>
+<h2 id="3-le-modele-et-l39orchestrateur">3. Le modèle et l&#39;orchestrateur <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
 <p>Un assistant IA n&#39;est pas un seul composant monolithique. Sous le capot, il y en a au moins deux — et comprendre leur rôle respectif change la façon dont on l&#39;utilise.</p>
 <h3 id="le-modele-de-langage">Le modèle de langage</h3>
 <p>Le premier composant est le <strong><em><span id="mk-modèle_de_langage">modèle de langage</span></em></strong> — souvent désigné par l&#39;acronyme <strong><em><span id="mk-LLM">LLM</span></em></strong> (<em>Large Language Model</em>). Son rôle est précis : compléter un texte inachevé.</p>
@@ -240,7 +244,7 @@
 <h3 id="l39orchestrateur">L&#39;orchestrateur</h3>
 <p>Le second composant est l&#39;<strong><em><span id="mk-orchestrateur">orchestrateur</span></em></strong>. C&#39;est lui qui fait l&#39;interface avec vous. Il reçoit votre message, le prépare pour le modèle, envoie le tout, récupère la réponse, et vous l&#39;affiche.</p>
 <figure id="fig-flux-orchestrateur">
-  <img src="figures/html/flux-orchestrateur.svg" alt="Diagramme du flux entre les deux composants : humain → prompt → orchestrateur → prompt étendu → modèle → complétion → orchestrateur → réponse → humain. Flux aller (prompt) et retour (réponse) distincts entre chaque composant. Trois nœuds : humain (gris, neutre), orchestrateur (teal), modèle/LLM (violet). Style épuré, flèches directionnelles, labels courts.">
+  <img src="../figures/html/flux-orchestrateur.svg" alt="Diagramme du flux entre les deux composants : humain → prompt → orchestrateur → prompt étendu → modèle → complétion → orchestrateur → réponse → humain. Flux aller (prompt) et retour (réponse) distincts entre chaque composant. Trois nœuds : humain (gris, neutre), orchestrateur (teal), modèle/LLM (violet). Style épuré, flèches directionnelles, labels courts.">
   <figcaption><strong>Figure 1</strong> — Diagramme du flux entre les deux composants : humain → prompt → orchestrateur → prompt étendu → modèle → complétion → orchestrateur → réponse → humain. Flux aller (prompt) et retour (réponse) distincts entre chaque composant. Trois nœuds : humain (gris, neutre), orchestrateur (teal), modèle/LLM (violet). Style épuré, flèches directionnelles, labels courts.</figcaption>
 </figure>
 
@@ -263,14 +267,14 @@ d&#39;informations complémentaires. [...]
 <p>Cet exemple est imaginaire — il illustre simplement l&#39;importance du prompt système : ton, format, gestion des relances, comportement face aux ambiguïtés. C&#39;est un secret de fabrication complexe, finement réglé, propre à chaque assistant.</p>
 <p>Votre propre formulation compte autant. Mais si on comprend le principe, c&#39;est d&#39;abord du bon sens : être clair, fournir du contexte. N&#39;écoutez pas trop les pseudo-gourous qui vendent des prompts soi-disant tunés — <em>&quot;Tu es un professeur de danse spécialisé dans les claquettes...&quot;</em> Ce genre de formule peut même être contre-productif, comme on le verra plus loin.</p>
 <hr>
-<h2 id="4-c39est-quoi-la-generation">4. C&#39;est quoi la génération ?</h2>
+<h2 id="4-c39est-quoi-la-generation">4. C&#39;est quoi la génération ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
 <p>Il y a quelque chose de presque magique dans ce que fait un LLM. On comprend que ses connaissances viennent de textes humains — mais nulle part dans la littérature humaine il n&#39;existe un texte aussi spécifique que le verbiage d&#39;un prompt système sur mesure. Comment le modèle peut-il produire quelque chose d&#39;utile à partir de ça ?</p>
 <p>La réponse tient en un mot : interpolation. Pour l&#39;expliquer, partons d&#39;un exemple volontairement simple.</p>
 <h3 id="un-modele-immobilier">Un modèle immobilier</h3>
 <p>Je veux estimer la valeur d&#39;un appartement. Je dispose d&#39;une liste de transactions immobilières avec les surfaces et les prix.</p>
 <p>Approche classique : calculer le prix moyen au m², puis multiplier par la surface de mon appartement.</p>
 <figure id="fig-immo-regression">
-  <img src="figures/html/immo-regression.svg" alt="Graphique axes surface (x) / prix (y). Points représentant les transactions. Droite de régression représentant le prix moyen au m². Ligne verticale rouge partant de la surface de l'appartement cible, ligne horizontale arrivant à son prix estimé. Style pédagogique, épuré.">
+  <img src="../figures/html/immo-regression.svg" alt="Graphique axes surface (x) / prix (y). Points représentant les transactions. Droite de régression représentant le prix moyen au m². Ligne verticale rouge partant de la surface de l'appartement cible, ligne horizontale arrivant à son prix estimé. Style pédagogique, épuré.">
   <figcaption><strong>Figure 2</strong> — Graphique axes surface (x) / prix (y). Points représentant les transactions. Droite de régression représentant le prix moyen au m². Ligne verticale rouge partant de la surface de l'appartement cible, ligne horizontale arrivant à son prix estimé. Style pédagogique, épuré.</figcaption>
 </figure>
 
@@ -296,7 +300,7 @@ d&#39;informations complémentaires. [...]
 <p>Notre modèle immobilier peut donner des évaluations irréalistes. Pourquoi ? Deux raisons : la qualité des données et la puissance du modèle.</p>
 <p><strong>La qualité des données.</strong> <em>Garbage in, garbage out.</em> Un exemple typique : des valeurs aberrantes — un bien bradé, un vendu très au-dessus du marché — qui faussent le calcul des paramètres.</p>
 <figure id="fig-immo-outliers">
-  <img src="figures/html/immo-outliers.svg" alt="Mêmes données que immo-regression, avec quelques points aberrants bien exagérés (un bien bradé, un vendu très au-dessus du marché). Montrer comment ils dévient la droite de régression.">
+  <img src="../figures/html/immo-outliers.svg" alt="Mêmes données que immo-regression, avec quelques points aberrants bien exagérés (un bien bradé, un vendu très au-dessus du marché). Montrer comment ils dévient la droite de régression.">
   <figcaption><strong>Figure 3</strong> — Mêmes données que immo-regression, avec quelques points aberrants bien exagérés (un bien bradé, un vendu très au-dessus du marché). Montrer comment ils dévient la droite de régression.</figcaption>
 </figure>
 
@@ -305,7 +309,7 @@ d&#39;informations complémentaires. [...]
 <p>Pour les LLM, c&#39;est le même principe : gros travail de préparation des données, filtrage, nettoyage. Wikipedia, c&#39;est bien. Les forums complotistes, beaucoup moins.</p>
 <p><strong>La puissance du modèle.</strong> Il y a peut-être plus que juste la surface : quartier, âge de l&#39;immeuble, étage... Et même avec une seule variable, la puissance du modèle joue. Les petites surfaces sont souvent plus chères au m² — notre droite ne capture pas ça. On peut enrichir le modèle : deux pentes, une pour les petites surfaces, une pour les grandes.</p>
 <figure id="fig-immo-deux-segments">
-  <img src="figures/html/immo-deux-segments.svg" alt="Modèle à deux pentes : une pour les petites surfaces (prix/m² élevé), une pour les grandes (prix/m² plus faible). Illustre l'enrichissement du modèle par rapport à immo-regression.">
+  <img src="../figures/html/immo-deux-segments.svg" alt="Modèle à deux pentes : une pour les petites surfaces (prix/m² élevé), une pour les grandes (prix/m² plus faible). Illustre l'enrichissement du modèle par rapport à immo-regression.">
   <figcaption><strong>Figure 4</strong> — Modèle à deux pentes : une pour les petites surfaces (prix/m² élevé), une pour les grandes (prix/m² plus faible). Illustre l'enrichissement du modèle par rapport à immo-regression.</figcaption>
 </figure>
 
@@ -314,7 +318,7 @@ d&#39;informations complémentaires. [...]
 <p>Quand un modèle n&#39;est pas assez puissant pour produire des résultats satisfaisants, on dit qu&#39;il fait de l&#39;<strong><em><span id="mk-underfitting">underfitting</span></em></strong>. Vous aurez beau l&#39;entraîner davantage, il ne progressera pas — il lui manque la structure pour répondre à la question.</p>
 <p>À l&#39;inverse, un modèle très complexe avec trop de paramètres par rapport aux données disponibles peut &quot;apprendre par cœur&quot; les exemples sans généraliser. Sa courbe passe par tous les points connus, mais part dans des directions improbables entre eux. C&#39;est l&#39;<strong><em><span id="mk-overfitting">overfitting</span></em></strong>.</p>
 <figure id="fig-immo-underfitting">
-  <img src="figures/html/immo-underfitting.svg" alt="Données avec une structure visible (courbe), modèle trop simple (droite) qui ne capture pas la tendance. Le modèle &quot;n'est pas assez intelligent&quot;.">
+  <img src="../figures/html/immo-underfitting.svg" alt="Données avec une structure visible (courbe), modèle trop simple (droite) qui ne capture pas la tendance. Le modèle &quot;n'est pas assez intelligent&quot;.">
   <figcaption><strong>Figure 5</strong> — Données avec une structure visible (courbe), modèle trop simple (droite) qui ne capture pas la tendance. Le modèle &quot;n'est pas assez intelligent&quot;.</figcaption>
 </figure>
 
@@ -323,7 +327,7 @@ d&#39;informations complémentaires. [...]
 
 
 <figure id="fig-immo-overfitting">
-  <img src="figures/html/immo-overfitting.svg" alt="Même données, modèle trop complexe dont la courbe passe par tous les points mais part dans des directions improbables entre les données. Le modèle &quot;apprend par cœur&quot; au lieu de généraliser.">
+  <img src="../figures/html/immo-overfitting.svg" alt="Même données, modèle trop complexe dont la courbe passe par tous les points mais part dans des directions improbables entre les données. Le modèle &quot;apprend par cœur&quot; au lieu de généraliser.">
   <figcaption><strong>Figure 6</strong> — Même données, modèle trop complexe dont la courbe passe par tous les points mais part dans des directions improbables entre les données. Le modèle &quot;apprend par cœur&quot; au lieu de généraliser.</figcaption>
 </figure>
 
@@ -331,14 +335,14 @@ d&#39;informations complémentaires. [...]
 
 <p>Techniquement, on parle d&#39;<strong><em><span id="mk-interpolation">interpolation</span></em></strong> quand les questions tombent <em>entre</em> les données d&#39;entraînement, et d&#39;<strong><em><span id="mk-extrapolation">extrapolation</span></em></strong> quand elles tombent <em>en dehors</em>. Dans les deux cas, le modèle fait de son mieux — mais extrapoler l&#39;amène encore plus facilement dans la science-fiction.</p>
 <figure id="fig-immo-interpolation-extrapolation">
-  <img src="figures/html/immo-interpolation-extrapolation.svg" alt="Distinction visuelle : zone entre les données d'entraînement (interpolation, en vert) et zones en dehors (extrapolation, en rouge). Montrer qu'extrapoler amplifie les erreurs du modèle.">
+  <img src="../figures/html/immo-interpolation-extrapolation.svg" alt="Distinction visuelle : zone entre les données d'entraînement (interpolation, en vert) et zones en dehors (extrapolation, en rouge). Montrer qu'extrapoler amplifie les erreurs du modèle.">
   <figcaption><strong>Figure 7</strong> — Distinction visuelle : zone entre les données d'entraînement (interpolation, en vert) et zones en dehors (extrapolation, en rouge). Montrer qu'extrapoler amplifie les erreurs du modèle.</figcaption>
 </figure>
 
 
 
 <hr>
-<h2 id="5-le-probleme-du-poisson-rouge">5. Le problème du poisson rouge</h2>
+<h2 id="5-le-probleme-du-poisson-rouge">5. Le problème du poisson rouge <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
 <p>Le poisson rouge a la réputation d&#39;oublier tout toutes les trente secondes. C&#39;est inexact — mais c&#39;est une bonne métaphore pour décrire un aspect fondamental des LLM.</p>
 <h3 id="pas-de-memoire">Pas de mémoire</h3>
 <p>Entre deux générations, le modèle repart de zéro. Aucune mémoire, aucun état — on dit qu&#39;il est <strong><em><span id="mk-stateless">stateless</span></em></strong> (<strong><em><span id="mk-sans_état">sans état</span></em></strong>). Chaque génération est entièrement indépendante de la précédente.</p>
@@ -346,7 +350,7 @@ d&#39;informations complémentaires. [...]
 <h3 id="la-solution-de-l39orchestrateur">La solution de l&#39;orchestrateur</h3>
 <p>L&#39;<em><a href="#mk-orchestrateur">orchestrateur</a></em> s&#39;en charge. À chaque échange, il reconstruit un message complet incluant tout l&#39;<strong><em><span id="mk-historique">historique</span></em></strong> de la conversation, et l&#39;envoie au modèle. Le modèle ne se souvient de rien — mais il reçoit tout.</p>
 <figure id="fig-prompt-etendu-historique">
-  <img src="figures/html/prompt-etendu-historique.svg" alt="Schéma de la structure du message envoyé au modèle : [prompt système] + [historique de la conversation] + [dernière question]. Mettre en évidence que l'historique grossit à chaque échange.">
+  <img src="../figures/html/prompt-etendu-historique.svg" alt="Schéma de la structure du message envoyé au modèle : [prompt système] + [historique de la conversation] + [dernière question]. Mettre en évidence que l'historique grossit à chaque échange.">
   <figcaption><strong>Figure 8</strong> — Schéma de la structure du message envoyé au modèle : [prompt système] + [historique de la conversation] + [dernière question]. Mettre en évidence que l'historique grossit à chaque échange.</figcaption>
 </figure>
 
@@ -362,7 +366,7 @@ d&#39;informations complémentaires. [...]
 <p>Des conversations courtes, centrées sur un seul sujet. Si le sujet change, commencez une nouvelle session.</p>
 <p><em>(Si toutes les réunions étaient organisées comme ça...)</em></p>
 <hr>
-<h2 id="6-c39est-quoi-le-contexte">6. C&#39;est quoi le contexte ?</h2>
+<h2 id="6-c39est-quoi-le-contexte">6. C&#39;est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
 <p>On a déjà croisé ce mot plusieurs fois. Il est temps de le définir proprement.</p>
 <h3 id="definition">Définition</h3>
 <p>Le <strong><em><span id="mk-contexte">contexte</span></em></strong> — ou <strong><em><span id="mk-prompt_étendu">prompt étendu</span></em></strong> — c&#39;est tout ce qu&#39;on envoie au modèle, au-delà de votre question immédiate. On en a déjà vu deux exemples : le prompt système, ajouté par l&#39;orchestrateur, et l&#39;historique de la session. Le contexte a plusieurs rôles : contrôler le style de la réponse, orienter les priorités, et donner de la mémoire artificielle au modèle.</p>
@@ -374,7 +378,7 @@ d&#39;informations complémentaires. [...]
 <h3 id="ce-que-l39orchestrateur-vous-offre">Ce que l&#39;orchestrateur vous offre</h3>
 <p>L&#39;orchestrateur propose des outils pour enrichir le contexte de façon statique. Vous pouvez enregistrer des <strong><em><span id="mk-instructions_utilisateur">instructions utilisateur</span></em></strong> personnelles qui seront automatiquement insérées dans chaque prompt étendu.</p>
 <figure id="fig-prompt-etendu-complet">
-  <img src="figures/html/prompt-etendu-complet.svg" alt="Schéma de la structure complète du prompt étendu avec toutes les couches : [prompt système] → [instructions utilisateur] → [historique de la session] → [dernier prompt]. Variante enrichie de la figure prompt-etendu-historique.">
+  <img src="../figures/html/prompt-etendu-complet.svg" alt="Schéma de la structure complète du prompt étendu avec toutes les couches : [prompt système] → [instructions utilisateur] → [historique de la session] → [dernier prompt]. Variante enrichie de la figure prompt-etendu-historique.">
   <figcaption><strong>Figure 9</strong> — Schéma de la structure complète du prompt étendu avec toutes les couches : [prompt système] → [instructions utilisateur] → [historique de la session] → [dernier prompt]. Variante enrichie de la figure prompt-etendu-historique.</figcaption>
 </figure>
 
@@ -399,7 +403,7 @@ d&#39;informations complémentaires. [...]
 <p>Le concept ultime est le <strong><strong><em><span id="mk-MCP">MCP</span></em></strong></strong> — <em>Model Context Protocol</em>, défini par Anthropic. Un MCP est une description fournie à l&#39;orchestrateur pour accéder à un service externe. Il expose une liste de commandes disponibles et des instructions en langage naturel décrivant quand et comment les utiliser.</p>
 <p>L&#39;industrie a réagi avec enthousiasme : on trouve maintenant des centaines de MCP permettant, en langage naturel, de lire et envoyer des emails, d&#39;accéder à des fichiers et au cloud, d&#39;interroger des bases de données, de créer des factures dans un ERP, de générer des modèles 3D...</p>
 <hr>
-<h2 id="7-le-probleme-de-l39attention">7. Le problème de l&#39;attention</h2>
+<h2 id="7-le-probleme-de-l39attention">7. Le problème de l&#39;attention <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
 <p>Ce chapitre revient sur le mécanisme qui a tout changé — et explique pourquoi les contextes longs peuvent nuire à la qualité des réponses.</p>
 <h3 id="l39insight-fondateur">L&#39;insight fondateur</h3>
 <p>Le langage est ambigu par nature. Ce n&#39;est pas un défaut — c&#39;est sa caractéristique fondamentale. Le sens d&#39;un mot dépend des mots qui l&#39;entourent.</p>
@@ -411,7 +415,7 @@ d&#39;informations complémentaires. [...]
 <h3 id="le-probleme-de-la-dilution">Le problème de la dilution</h3>
 <p>Un contexte long ne signifie pas une meilleure compréhension. L&#39;<strong><em><span id="mk-attention">attention</span></em></strong> doit se répartir sur l&#39;ensemble du texte. Si ce texte contient beaucoup d&#39;éléments peu pertinents, la concentration se dilue sur des informations inutiles.</p>
 <figure id="fig-attention-dilution">
-  <img src="figures/html/attention-dilution.svg" alt="Illustration du mécanisme de dilution de l'attention : un contexte court où l'attention est concentrée sur les éléments pertinents, vs un contexte long où elle se disperse sur de nombreux éléments peu pertinents.">
+  <img src="../figures/html/attention-dilution.svg" alt="Illustration du mécanisme de dilution de l'attention : un contexte court où l'attention est concentrée sur les éléments pertinents, vs un contexte long où elle se disperse sur de nombreux éléments peu pertinents.">
   <figcaption><strong>Figure 10</strong> — Illustration du mécanisme de dilution de l'attention : un contexte court où l'attention est concentrée sur les éléments pertinents, vs un contexte long où elle se disperse sur de nombreux éléments peu pertinents.</figcaption>
 </figure>
 
@@ -434,7 +438,7 @@ d&#39;informations complémentaires. [...]
 <p>Le mécanisme d&#39;attention résout la polysémie — mais il le fait dans les deux sens. Tout comme le contexte aide à désambiguïser un mot, un contexte trop chargé ou mal structuré peut introduire de nouvelles ambiguïtés. Un document qui traite de plusieurs sujets à la fois peut amener le modèle à mélanger des fils pourtant distincts.</p>
 <p>C&#39;est une raison supplémentaire pour la règle d&#39;or : une session, un sujet.</p>
 <hr>
-<h2 id="8-conclusion">8. Conclusion</h2>
+<h2 id="8-conclusion">8. Conclusion <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
 <p>Ce guide a parcouru le fonctionnement d&#39;un assistant IA, de l&#39;architecture de base jusqu&#39;aux mécanismes qui expliquent ses forces et ses limites.</p>
 <p>Quelques points à garder en tête.</p>
 <p><strong>Ce n&#39;est pas de la magie — et c&#39;est mieux comme ça.</strong> Comprendre que la génération repose sur l&#39;interpolation, que la mémoire est artificielle, que le contexte est déclaratif — ce n&#39;est pas désenchantant. Au contraire : ça permet de travailler de façon plus efficace, et d&#39;éviter les déceptions inutiles.</p>
@@ -446,68 +450,68 @@ d&#39;informations complémentaires. [...]
     <hr>
     
 <section id="index-mots-cles" class="index-section">
-  <h2>Index des mots-clés</h2>
+  <h2 id="index-mots-cles-title">Index des mots-clés <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
   <table class="index-table">
     <thead><tr><th>Terme</th><th>Défini au</th></tr></thead>
-    <tbody><tr><td><a href="#mk-anthropomorphisme"><strong><em>anthropomorphisme</em></strong></a></td><td>Chapitre 1 — Introduction</td></tr>
-<tr><td><a href="#mk-attention"><strong><em>attention</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention</td></tr>
-<tr><td><a href="#mk-bienveillance"><strong><em>bienveillance</em></strong></a></td><td>Chapitre 2 — Travailler avec une IA</td></tr>
-<tr><td><a href="#mk-collaborateur"><strong><em>collaborateur</em></strong></a></td><td>Chapitre 1 — Introduction</td></tr>
-<tr><td><a href="#mk-complétion"><strong><em>complétion</em></strong></a></td><td>Chapitre 3 — Le modèle et l'orchestrateur</td></tr>
-<tr><td><a href="#mk-contexte"><strong><em>contexte</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-déclaratif"><strong><em>déclaratif</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-dilution"><strong><em>dilution</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention</td></tr>
-<tr><td><a href="#mk-données"><strong><em>données</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ?</td></tr>
-<tr><td><a href="#mk-extrapolation"><strong><em>extrapolation</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ?</td></tr>
-<tr><td><a href="#mk-fenêtre"><strong><em>fenêtre</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention</td></tr>
-<tr><td><a href="#mk-génération"><strong><em>génération</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ?</td></tr>
-<tr><td><a href="#mk-hallucination"><strong><em>hallucination</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ?</td></tr>
-<tr><td><a href="#mk-historique"><strong><em>historique</em></strong></a></td><td>Chapitre 5 — Le problème du poisson rouge</td></tr>
-<tr><td><a href="#mk-instructions"><strong><em>instructions</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-intention"><strong><em>intention</em></strong></a></td><td>Chapitre 1 — Introduction</td></tr>
-<tr><td><a href="#mk-interpolation"><strong><em>interpolation</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ?</td></tr>
-<tr><td><a href="#mk-LLM"><strong><em>LLM</em></strong></a></td><td>Chapitre 3 — Le modèle et l'orchestrateur</td></tr>
-<tr><td><a href="#mk-lost"><strong><em>lost</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention</td></tr>
-<tr><td><a href="#mk-MCP"><strong><em>MCP</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-mémoire"><strong><em>mémoire</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-méthode"><strong><em>méthode</em></strong></a></td><td>Chapitre 2 — Travailler avec une IA</td></tr>
-<tr><td><a href="#mk-modèle"><strong><em>modèle</em></strong></a></td><td>Chapitre 3 — Le modèle et l'orchestrateur</td></tr>
-<tr><td><a href="#mk-orchestrateur"><strong><em>orchestrateur</em></strong></a></td><td>Chapitre 3 — Le modèle et l'orchestrateur</td></tr>
-<tr><td><a href="#mk-outil"><strong><em>outil</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-overfitting"><strong><em>overfitting</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ?</td></tr>
-<tr><td><a href="#mk-polysémie"><strong><em>polysémie</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention</td></tr>
-<tr><td><a href="#mk-projet"><strong><em>projet</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-prompt"><strong><em>prompt</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-sans"><strong><em>sans</em></strong></a></td><td>Chapitre 5 — Le problème du poisson rouge</td></tr>
-<tr><td><a href="#mk-self-attention"><strong><em>self-attention</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention</td></tr>
-<tr><td><a href="#mk-skill"><strong><em>skill</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ?</td></tr>
-<tr><td><a href="#mk-stateless"><strong><em>stateless</em></strong></a></td><td>Chapitre 5 — Le problème du poisson rouge</td></tr>
-<tr><td><a href="#mk-token"><strong><em>token</em></strong></a></td><td>Chapitre 5 — Le problème du poisson rouge</td></tr>
-<tr><td><a href="#mk-underfitting"><strong><em>underfitting</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ?</td></tr>
-<tr><td><a href="#mk-validation"><strong><em>validation</em></strong></a></td><td>Chapitre 2 — Travailler avec une IA</td></tr></tbody>
+    <tbody><tr><td><a href="#mk-anthropomorphisme"><strong><em>anthropomorphisme</em></strong></a></td><td>Chapitre 1 — Introduction <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-attention"><strong><em>attention</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-bienveillance"><strong><em>bienveillance</em></strong></a></td><td>Chapitre 2 — Travailler avec une IA <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-collaborateur"><strong><em>collaborateur</em></strong></a></td><td>Chapitre 1 — Introduction <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-complétion"><strong><em>complétion</em></strong></a></td><td>Chapitre 3 — Le modèle et l'orchestrateur <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-contexte"><strong><em>contexte</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-déclaratif"><strong><em>déclaratif</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-dilution"><strong><em>dilution</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-données"><strong><em>données</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-extrapolation"><strong><em>extrapolation</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-fenêtre"><strong><em>fenêtre</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-génération"><strong><em>génération</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-hallucination"><strong><em>hallucination</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-historique"><strong><em>historique</em></strong></a></td><td>Chapitre 5 — Le problème du poisson rouge <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-instructions"><strong><em>instructions</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-intention"><strong><em>intention</em></strong></a></td><td>Chapitre 1 — Introduction <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-interpolation"><strong><em>interpolation</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-LLM"><strong><em>LLM</em></strong></a></td><td>Chapitre 3 — Le modèle et l'orchestrateur <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-lost"><strong><em>lost</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-MCP"><strong><em>MCP</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-mémoire"><strong><em>mémoire</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-méthode"><strong><em>méthode</em></strong></a></td><td>Chapitre 2 — Travailler avec une IA <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-modèle"><strong><em>modèle</em></strong></a></td><td>Chapitre 3 — Le modèle et l'orchestrateur <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-orchestrateur"><strong><em>orchestrateur</em></strong></a></td><td>Chapitre 3 — Le modèle et l'orchestrateur <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-outil"><strong><em>outil</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-overfitting"><strong><em>overfitting</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-polysémie"><strong><em>polysémie</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-projet"><strong><em>projet</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-prompt"><strong><em>prompt</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-sans"><strong><em>sans</em></strong></a></td><td>Chapitre 5 — Le problème du poisson rouge <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-self-attention"><strong><em>self-attention</em></strong></a></td><td>Chapitre 7 — Le problème de l'attention <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-skill"><strong><em>skill</em></strong></a></td><td>Chapitre 6 — C'est quoi le contexte ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-stateless"><strong><em>stateless</em></strong></a></td><td>Chapitre 5 — Le problème du poisson rouge <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-token"><strong><em>token</em></strong></a></td><td>Chapitre 5 — Le problème du poisson rouge <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-underfitting"><strong><em>underfitting</em></strong></a></td><td>Chapitre 4 — C'est quoi la génération ? <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td><a href="#mk-validation"><strong><em>validation</em></strong></a></td><td>Chapitre 2 — Travailler avec une IA <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr></tbody>
   </table>
 </section>
 <section id="table-figures" class="index-section">
-  <h2>Table des figures</h2>
+  <h2 id="table-figures-title">Table des figures <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
   <table class="index-table">
     <thead><tr><th>N°</th><th>Légende</th></tr></thead>
-    <tbody><tr><td>1</td><td><a href="#fig-flux-orchestrateur">Diagramme du flux entre les deux composants : humain → prompt → orchestrateur → prompt étendu → modèle → complétion → orchestrateur → réponse → humain. Flux aller (prompt) et retour (réponse) distincts entre chaque composant. Trois nœuds : humain (gris, neutre), orchestrateur (teal), modèle/LLM (violet). Style épuré, flèches directionnelles, labels courts.</a></td></tr>
-<tr><td>2</td><td><a href="#fig-immo-regression">Graphique axes surface (x) / prix (y). Points représentant les transactions. Droite de régression représentant le prix moyen au m². Ligne verticale rouge partant de la surface de l'appartement cible, ligne horizontale arrivant à son prix estimé. Style pédagogique, épuré.</a></td></tr>
-<tr><td>3</td><td><a href="#fig-immo-outliers">Mêmes données que immo-regression, avec quelques points aberrants bien exagérés (un bien bradé, un vendu très au-dessus du marché). Montrer comment ils dévient la droite de régression.</a></td></tr>
-<tr><td>4</td><td><a href="#fig-immo-deux-segments">Modèle à deux pentes : une pour les petites surfaces (prix/m² élevé), une pour les grandes (prix/m² plus faible). Illustre l'enrichissement du modèle par rapport à immo-regression.</a></td></tr>
-<tr><td>5</td><td><a href="#fig-immo-underfitting">Données avec une structure visible (courbe), modèle trop simple (droite) qui ne capture pas la tendance. Le modèle &quot;n'est pas assez intelligent&quot;.</a></td></tr>
-<tr><td>6</td><td><a href="#fig-immo-overfitting">Même données, modèle trop complexe dont la courbe passe par tous les points mais part dans des directions improbables entre les données. Le modèle &quot;apprend par cœur&quot; au lieu de généraliser.</a></td></tr>
-<tr><td>7</td><td><a href="#fig-immo-interpolation-extrapolation">Distinction visuelle : zone entre les données d'entraînement (interpolation, en vert) et zones en dehors (extrapolation, en rouge). Montrer qu'extrapoler amplifie les erreurs du modèle.</a></td></tr>
-<tr><td>8</td><td><a href="#fig-prompt-etendu-historique">Schéma de la structure du message envoyé au modèle : [prompt système] + [historique de la conversation] + [dernière question]. Mettre en évidence que l'historique grossit à chaque échange.</a></td></tr>
-<tr><td>9</td><td><a href="#fig-prompt-etendu-complet">Schéma de la structure complète du prompt étendu avec toutes les couches : [prompt système] → [instructions utilisateur] → [historique de la session] → [dernier prompt]. Variante enrichie de la figure prompt-etendu-historique.</a></td></tr>
-<tr><td>10</td><td><a href="#fig-attention-dilution">Illustration du mécanisme de dilution de l'attention : un contexte court où l'attention est concentrée sur les éléments pertinents, vs un contexte long où elle se disperse sur de nombreux éléments peu pertinents.</a></td></tr></tbody>
+    <tbody><tr><td>1</td><td><a href="#fig-flux-orchestrateur">Diagramme du flux entre les deux composants : humain → prompt → orchestrateur → prompt étendu → modèle → complétion → orchestrateur → réponse → humain. Flux aller (prompt) et retour (réponse) distincts entre chaque composant. Trois nœuds : humain (gris, neutre), orchestrateur (teal), modèle/LLM (violet). Style épuré, flèches directionnelles, labels courts.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>2</td><td><a href="#fig-immo-regression">Graphique axes surface (x) / prix (y). Points représentant les transactions. Droite de régression représentant le prix moyen au m². Ligne verticale rouge partant de la surface de l'appartement cible, ligne horizontale arrivant à son prix estimé. Style pédagogique, épuré.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>3</td><td><a href="#fig-immo-outliers">Mêmes données que immo-regression, avec quelques points aberrants bien exagérés (un bien bradé, un vendu très au-dessus du marché). Montrer comment ils dévient la droite de régression.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>4</td><td><a href="#fig-immo-deux-segments">Modèle à deux pentes : une pour les petites surfaces (prix/m² élevé), une pour les grandes (prix/m² plus faible). Illustre l'enrichissement du modèle par rapport à immo-regression.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>5</td><td><a href="#fig-immo-underfitting">Données avec une structure visible (courbe), modèle trop simple (droite) qui ne capture pas la tendance. Le modèle &quot;n'est pas assez intelligent&quot;.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>6</td><td><a href="#fig-immo-overfitting">Même données, modèle trop complexe dont la courbe passe par tous les points mais part dans des directions improbables entre les données. Le modèle &quot;apprend par cœur&quot; au lieu de généraliser.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>7</td><td><a href="#fig-immo-interpolation-extrapolation">Distinction visuelle : zone entre les données d'entraînement (interpolation, en vert) et zones en dehors (extrapolation, en rouge). Montrer qu'extrapoler amplifie les erreurs du modèle.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>8</td><td><a href="#fig-prompt-etendu-historique">Schéma de la structure du message envoyé au modèle : [prompt système] + [historique de la conversation] + [dernière question]. Mettre en évidence que l'historique grossit à chaque échange.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>9</td><td><a href="#fig-prompt-etendu-complet">Schéma de la structure complète du prompt étendu avec toutes les couches : [prompt système] → [instructions utilisateur] → [historique de la session] → [dernier prompt]. Variante enrichie de la figure prompt-etendu-historique.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr>
+<tr><td>10</td><td><a href="#fig-attention-dilution">Illustration du mécanisme de dilution de l'attention : un contexte court où l'attention est concentrée sur les éléments pertinents, vs un contexte long où elle se disperse sur de nombreux éléments peu pertinents.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr></tbody>
   </table>
 </section>
 <section id="table-encadres" class="index-section">
-  <h2>Table des encadrés</h2>
+  <h2 id="table-encadres-title">Table des encadrés <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></h2>
   <table class="index-table">
     <thead><tr><th>N°</th><th>Titre</th></tr></thead>
-    <tbody><tr><td>1</td><td><a href="#enc-polysemie">Explication de la polysémie : pourquoi le langage est intrinsèquement ambigu.</a></td></tr></tbody>
+    <tbody><tr><td>1</td><td><a href="#enc-polysemie">Explication de la polysémie : pourquoi le langage est intrinsèquement ambigu.</a> <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a></td></tr></tbody>
   </table>
 </section>
   </div>

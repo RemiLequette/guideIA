@@ -1,9 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
-  <rect width="600" height="340" fill="#f8f8f8" rx="8"/>
-  <rect x="2" y="2" width="596" height="336" fill="none" stroke="#cccccc" stroke-width="2" rx="7" stroke-dasharray="8,4"/>
-  <rect x="230" y="80" width="140" height="100" fill="none" stroke="#aaaaaa" stroke-width="2" rx="4"/>
-  <circle cx="260" cy="110" r="14" fill="#dddddd"/>
-  <polygon points="230,180 290,130 340,160 370,130 370,180" fill="#dddddd"/>
-  <text x="300" y="230" font-family="monospace" font-size="10" fill="#555555" text-anchor="middle">immo-interpolation-extrapolation</text>
-  <text x="300" y="258" font-family="sans-serif" font-size="12" fill="#999999" text-anchor="middle">[figure placeholder]</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 680 400" role="img">
+  <title>Modèle immobilier — interpolation et extrapolation</title>
+  <desc>Zone verte entre les données (interpolation fiable), zones rouges hors des données (extrapolation risquée).</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Zones de fond -->
+  <rect x="80"  y="40" width="83"  height="280" fill="#fee2e2" opacity="0.6"/>
+  <rect x="163" y="40" width="408" height="280" fill="#d1fae5" opacity="0.5"/>
+  <rect x="571" y="40" width="49"  height="280" fill="#fee2e2" opacity="0.6"/>
+
+  <!-- Axes -->
+  <line x1="80" y1="320" x2="632" y2="320" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="80" y1="320" x2="80"  y2="28"  stroke="#374151" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text class="ts" x="638" y="324" text-anchor="start" fill="var(--color-text-secondary)">surface (m²)</text>
+  <text class="ts" x="76"  y="22"  text-anchor="end"   fill="var(--color-text-secondary)">prix (k€)</text>
+
+  <!-- Délimiteurs des zones -->
+  <line x1="163" y1="40" x2="163" y2="320" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <line x1="571" y1="40" x2="571" y2="320" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+  <!-- Graduations X -->
+  <line x1="80"  y1="318" x2="80"  y2="324" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="80"  y="334" text-anchor="middle" fill="var(--color-text-secondary)">0</text>
+  <line x1="163" y1="318" x2="163" y2="324" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="163" y="334" text-anchor="middle" fill="var(--color-text-secondary)">20</text>
+  <line x1="247" y1="318" x2="247" y2="324" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="247" y="334" text-anchor="middle" fill="var(--color-text-secondary)">40</text>
+  <line x1="330" y1="318" x2="330" y2="324" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="330" y="334" text-anchor="middle" fill="var(--color-text-secondary)">60</text>
+  <line x1="414" y1="318" x2="414" y2="324" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="414" y="334" text-anchor="middle" fill="var(--color-text-secondary)">80</text>
+  <line x1="497" y1="318" x2="497" y2="324" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="497" y="334" text-anchor="middle" fill="var(--color-text-secondary)">100</text>
+  <line x1="581" y1="318" x2="581" y2="324" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="581" y="334" text-anchor="middle" fill="var(--color-text-secondary)">120</text>
+
+  <!-- Graduations Y -->
+  <line x1="78" y1="320" x2="84" y2="320" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="74" y="324" text-anchor="end" fill="var(--color-text-secondary)">0</text>
+  <line x1="78" y1="273" x2="84" y2="273" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="74" y="277" text-anchor="end" fill="var(--color-text-secondary)">100</text>
+  <line x1="78" y1="227" x2="84" y2="227" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="74" y="231" text-anchor="end" fill="var(--color-text-secondary)">200</text>
+  <line x1="78" y1="180" x2="84" y2="180" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="74" y="184" text-anchor="end" fill="var(--color-text-secondary)">300</text>
+  <line x1="78" y1="133" x2="84" y2="133" stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="74" y="137" text-anchor="end" fill="var(--color-text-secondary)">400</text>
+  <line x1="78" y1="87"  x2="84" y2="87"  stroke="#374151" stroke-width="1"/>
+  <text class="ts" x="74" y="91"  text-anchor="end" fill="var(--color-text-secondary)">500</text>
+
+  <!-- Droite de régression -->
+  <line x1="80" y1="320" x2="620" y2="86" stroke="#0d9488" stroke-width="2"/>
+
+  <!-- Points -->
+  <circle cx="163" cy="287" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="196" cy="280" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="213" cy="259" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="238" cy="269" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="267" cy="245" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="279" cy="227" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="296" cy="241" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="321" cy="213" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="338" cy="222" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="358" cy="199" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="371" cy="180" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="392" cy="203" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="412" cy="166" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="433" cy="152" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="454" cy="175" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="475" cy="133" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="487" cy="147" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="516" cy="110" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="537" cy="124" r="5" fill="#3b82f6" fill-opacity="0.75"/>
+  <circle cx="571" cy="87"  r="5" fill="#3b82f6" fill-opacity="0.75"/>
+
+  <!-- Labels zones -->
+  <text class="ts" x="121" y="75" text-anchor="middle" fill="#ef4444">extra-</text>
+  <text class="ts" x="121" y="90" text-anchor="middle" fill="#ef4444">polation</text>
+  <text class="ts" x="367" y="70" text-anchor="middle" fill="#059669">interpolation</text>
+  <text class="ts" x="596" y="75" text-anchor="middle" fill="#ef4444">extra-</text>
+  <text class="ts" x="596" y="90" text-anchor="middle" fill="#ef4444">polation</text>
+
+  <!-- Légende -->
+  <rect x="84"  y="360" width="14" height="14" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
+  <text class="ts" x="104" y="372" fill="var(--color-text-secondary)">interpolation (fiable)</text>
+  <rect x="264" y="360" width="14" height="14" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text class="ts" x="284" y="372" fill="var(--color-text-secondary)">extrapolation (risquée)</text>
+
 </svg>

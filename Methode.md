@@ -24,7 +24,7 @@ Décrire la méthode de travail du projet guideIA : organisation des sessions, g
 | Fichier | Rôle |
 |---|---|
 | `Methode.md` | Méthode de travail et conventions du projet |
-| `Plan.md` | Contenu attendu du guide : chapitres et ce qu'on veut y dire |
+| `Plan.md` | Contenu attendu du guide. Deux parties distinctes séparées par un délimiteur HTML commenté : (1) méta-données du plan (objectif, sommaire, guide de style figures, liste des chapitres) — propres au plan ; (2) contenu du guide chapitre par chapitre (mots-clés, figures, encadrés, contenu attendu) — partagé avec `GuideIA.md`. Lors d'une harmonisation, seule la partie (2) est concernée. |
 | `Todo.md` | Tâches en attente, idées, et suggestions de l'assistant |
 | `GuideIA.md` | Le guide final (document livrable) |
 | `Journal.md` | Journal de bord du projet |
@@ -206,6 +206,10 @@ Les outils de rendu produisent le document final à partir de `Plan.md`, `GuideI
 - `{{def:enc:id}}` → insertion du bloc encadré tel que rédigé dans le guide, avec numéro
 - `{{ref:enc:id}}` → "voir encadré N" avec lien vers l'encadré
 
+**Navigation HTML :**
+- La TOC inclut en fin de liste (après un séparateur) des liens vers les trois sections d'index
+- Chaque `h2` de chapitre, chaque titre de section d'index, et chaque entrée des index (mots-clés, figures, encadrés) comportent un lien de retour vers la TOC (`↑`)
+
 **Index générés en fin de document :**
 - Index des mots-clés (alphabétique, avec lien vers la définition)
 - Table des figures (numéro, légende, lien)
@@ -244,6 +248,8 @@ Les conventions de balisage doivent être sans ambiguïté pour éviter les erre
 Elles ne doivent pas entrer en conflit avec la syntaxe markdown standard.
 
 Les scripts d'outillage sont écrits en **JavaScript** et exécutés avec **Node.js**.
+
+**Exécution depuis une session :** l'outil `commands` peut lancer des scripts directement (`node tools/script.js`) même sans accès shell complet. C'est le moyen privilégié pour tester les scripts sans quitter la session.
 
 Des outils seront développés pour automatiser les tâches mécaniques :
 - **Check** : vérification de la cohérence entre `Plan.md` et `GuideIA.md` (voir section Balises)

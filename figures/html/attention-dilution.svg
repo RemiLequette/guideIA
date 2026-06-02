@@ -1,9 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
-  <rect width="600" height="340" fill="#f8f8f8" rx="8"/>
-  <rect x="2" y="2" width="596" height="336" fill="none" stroke="#cccccc" stroke-width="2" rx="7" stroke-dasharray="8,4"/>
-  <rect x="230" y="80" width="140" height="100" fill="none" stroke="#aaaaaa" stroke-width="2" rx="4"/>
-  <circle cx="260" cy="110" r="14" fill="#dddddd"/>
-  <polygon points="230,180 290,130 340,160 370,130 370,180" fill="#dddddd"/>
-  <text x="300" y="230" font-family="monospace" font-size="16" fill="#555555" text-anchor="middle">attention-dilution</text>
-  <text x="300" y="258" font-family="sans-serif" font-size="12" fill="#999999" text-anchor="middle">[figure placeholder]</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 680 360" role="img">
+  <title>Dilution de l'attention</title>
+  <desc>Comparaison entre un contexte court où l'attention est concentrée et un contexte long où elle se disperse.</desc>
+
+  <!-- Titre gauche -->
+  <text class="th" x="160" y="36" text-anchor="middle" fill="var(--color-text-primary)">Contexte court</text>
+  <!-- Titre droit -->
+  <text class="th" x="510" y="36" text-anchor="middle" fill="var(--color-text-primary)">Contexte long</text>
+
+  <!-- CAS GAUCHE : 5 blocs, 3 pertinents forts -->
+  <rect x="60" y="56" width="200" height="38" rx="6" fill="#0d9488" opacity="0.85"/>
+  <text class="ts" x="160" y="79" text-anchor="middle" fill="white">élément clé</text>
+  <rect x="60" y="102" width="200" height="20" rx="6" fill="#d1d5db"/>
+  <text class="ts" x="160" y="116" text-anchor="middle" fill="#6b7280">contexte secondaire</text>
+  <rect x="60" y="130" width="200" height="36" rx="6" fill="#0d9488" opacity="0.85"/>
+  <text class="ts" x="160" y="152" text-anchor="middle" fill="white">élément clé</text>
+  <rect x="60" y="174" width="200" height="20" rx="6" fill="#d1d5db"/>
+  <text class="ts" x="160" y="188" text-anchor="middle" fill="#6b7280">contexte secondaire</text>
+  <rect x="60" y="202" width="200" height="36" rx="6" fill="#0d9488" opacity="0.85"/>
+  <text class="ts" x="160" y="224" text-anchor="middle" fill="white">élément clé</text>
+
+  <!-- Question gauche -->
+  <rect x="60" y="258" width="200" height="32" rx="6" fill="#7c3aed"/>
+  <text class="ts" x="160" y="278" text-anchor="middle" fill="white">question</text>
+
+  <!-- Annotation gauche -->
+  <text class="ts" x="160" y="314" text-anchor="middle" fill="#059669">attention concentrée ✓</text>
+
+  <!-- CAS DROIT : 12 blocs, 2 pertinents noyés -->
+  <rect x="400" y="56"  width="220" height="14" rx="4" fill="#d1d5db"/>
+  <rect x="400" y="76"  width="220" height="14" rx="4" fill="#d1d5db"/>
+  <rect x="400" y="96"  width="220" height="14" rx="4" fill="#d1d5db"/>
+  <rect x="400" y="116" width="220" height="18" rx="4" fill="#0d9488" opacity="0.45"/>
+  <text class="ts" x="510" y="129" text-anchor="middle" fill="#065f46">élément clé</text>
+  <rect x="400" y="140" width="220" height="14" rx="4" fill="#d1d5db"/>
+  <rect x="400" y="160" width="220" height="14" rx="4" fill="#d1d5db"/>
+  <rect x="400" y="180" width="220" height="14" rx="4" fill="#d1d5db"/>
+  <rect x="400" y="200" width="220" height="18" rx="4" fill="#0d9488" opacity="0.45"/>
+  <text class="ts" x="510" y="213" text-anchor="middle" fill="#065f46">élément clé</text>
+  <rect x="400" y="224" width="220" height="14" rx="4" fill="#d1d5db"/>
+  <rect x="400" y="244" width="220" height="14" rx="4" fill="#d1d5db"/>
+
+  <!-- Question droite -->
+  <rect x="400" y="264" width="220" height="32" rx="6" fill="#7c3aed"/>
+  <text class="ts" x="510" y="284" text-anchor="middle" fill="white">question</text>
+
+  <!-- Annotation droite -->
+  <text class="ts" x="510" y="314" text-anchor="middle" fill="#ef4444">attention diluée ✗</text>
+
+  <!-- Séparateur central -->
+  <line x1="340" y1="50" x2="340" y2="330" stroke="#e5e7eb" stroke-width="1.5"/>
+
 </svg>
