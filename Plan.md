@@ -4,18 +4,23 @@
 Définir le contenu attendu du guide guideIA : chapitres et ce qu'on veut y dire.
 
 ## Sommaire
+- [Guide de style figures](#guide-de-style-figures)
 - [Chapitres](#chapitres)
+
+## Guide de style figures
+
+*À développer — voir section "Rendu final du document" dans `Methode.md` pour les contraintes par cible de rendu.*
 
 ## Chapitres
 
-1. Introduction
-2. Travailler avec une IA
-3. Le modèle et l'orchestrateur
-4. C'est quoi la génération ?
-5. Le problème du poisson rouge
-6. C'est quoi le contexte ?
-7. Le problème de l'attention
-8. Conclusion
+1. [Introduction](#1-introduction)
+2. [Travailler avec une IA](#2-travailler-avec-une-ia)
+3. [Le modèle et l'orchestrateur](#3-le-modèle-et-lorchestrat eur)
+4. [C'est quoi la génération ?](#4-cest-quoi-la-génération-)
+5. [Le problème du poisson rouge](#5-le-problème-du-poisson-rouge)
+6. [C'est quoi le contexte ?](#6-cest-quoi-le-contexte-)
+7. [Le problème de l'attention](#7-le-problème-de-lattention)
+8. [Conclusion](#8-conclusion)
 
 ---
 
@@ -107,14 +112,16 @@ le pli, c'est fluide.
 - orchestrateur
 - prompt
 - complétion
+- prompt système
 
 #### Figures
 
 > 🖼️ **figure** `flux-orchestrateur`
-> Diagramme du flux simplifié entre les deux composants :
-> humain → prompt → orchestrateur → modèle → complétion → orchestrateur → humain.
-> Style épuré, flèches directionnelles, les deux composants (orchestrateur, modèle)
-> clairement distincts.
+> Diagramme du flux entre les deux composants :
+> humain → prompt → orchestrateur → prompt étendu → modèle → complétion → orchestrateur → réponse → humain.
+> Flux aller (prompt) et retour (réponse) distincts entre chaque composant.
+> Trois nœuds : humain (gris, neutre), orchestrateur (teal), modèle/LLM (violet).
+> Style épuré, flèches directionnelles, labels courts.
 
 #### Encadrés
 
@@ -124,17 +131,58 @@ le pli, c'est fluide.
 L'architecture d'un assistant IA repose sur deux éléments distincts.
 
 **Le modèle de langage (LLM)**
-Un modèle entraîné pour compléter des textes. Expliquer ce qu'est l'entraînement,
-ce que ça signifie concrètement : le modèle prédit la suite la plus probable d'un texte.
-Ce n'est pas une base de données, ce n'est pas un moteur de recherche.
+Un modèle entraîné sur des milliers de textes pour compléter des textes inachevés.
+
+"La capitale de la France est" — cette phrase reste suspendue, sa complétion la plus
+probable est "Paris". Le consensus est fort. (Vichy reste une réponse plausible, mais
+minoritaire — le modèle reflète le consensus de ses données d'entraînement.)
+
+"La meilleure équipe de foot en France est" — c'est plus intéressant. Plusieurs
+complétions sont plausibles, le consensus moins évident.
+
+Et si on reformule : "De l'avis des principaux commentateurs sportifs, les trois
+meilleures équipes de foot en France sont" — la complétion devient plus riche, plus
+nuancée. C'est déjà une introduction au rôle du prompt : la façon de formuler
+oriente le résultat.
 
 **L'orchestrateur**
 Le composant qui fait l'interface avec l'humain. Il reçoit le prompt, l'envoie au modèle,
-récupère la réponse (une complétion de texte) et l'affiche. C'est lui qui gère
-la conversation, l'historique, et les éventuels outils connectés.
+récupère la complétion et l'affiche.
 
 **Le flux simplifié**
 Utiliser la figure flux-orchestrateur ici.
+
+**Le problème de l'interface**
+Personne ne veut parler directement au modèle — en lui soumettant des débuts de phrase à
+compléter. C'est là que l'orchestrateur prend la main : il rajoute devant la question —
+sans la comprendre — des instructions pour que la réponse soit utile et cohérente.
+C'est ce qu'on appelle le prompt système. Ça ressemble à quelque chose comme :
+
+[bloc de code]
+Tu es un assistant IA qui répond à une question posée par un utilisateur. Tu dois donner
+des informations claires et précises, avec une explication courte, voire plusieurs
+possibilités s'il y a des ambiguïtés. Tu poses des questions de clarification si
+nécessaire. Tu peux ajouter quelques informations complémentaires qui restent dans le
+thème, et tu relances la conversation avec une question ouverte pour engager des demandes
+d'informations complémentaires. [...]
+[fin de bloc]
+
+Avec ce prompt système, on peut espérer une complétion du style :
+
+> La capitale de la France est Paris, sur la Seine. C'est aussi la plus grande ville du
+> pays avec 2 millions d'habitants. Y a-t-il d'autres pays dont vous voudriez connaître
+> la capitale ?
+
+Cet exemple est purement imaginaire — il veut simplement mettre en évidence l'importance
+du prompt système pour la qualité de la réponse : ton, format, gestion des relances,
+comportement en cas d'ambiguïté. C'est un secret de fabrication : complexe, finement
+réglé, propre à chaque IA. Tout n'est pas dans le modèle.
+
+La rédaction de votre propre prompt est aussi importante. Mais si on comprend le
+principe, c'est d'abord du bon sens : être clair et fournir du contexte. N'écoutez pas
+trop les pseudo-gourous qui vendent des prompts soi-disant tunés — "Tu es un professeur
+de danse spécialisé dans les claquettes..." — comme on le verra plus tard, ça peut être
+contre-productif.
 
 ---
 
@@ -142,37 +190,138 @@ Utiliser la figure flux-orchestrateur ici.
 
 #### Mots-clés
 - génération
-- complétion
 - données d'entraînement
-- prompt système
 - interpolation
+- extrapolation
+- hallucination
+- underfitting
+- overfitting
 
 #### Figures
+
+> 🖼️ **figure** `immo-regression`
+> Graphique axes surface (x) / prix (y). Points représentant les transactions.
+> Droite de régression représentant le prix moyen au m². Ligne verticale rouge
+> partant de la surface de l'appartement cible, ligne horizontale arrivant à son
+> prix estimé. Style pédagogique, épuré.
+
+> 🖼️ **figure** `immo-outliers`
+> Mêmes données que immo-regression, avec quelques points aberrants bien exagérés
+> (un bien bradé, un vendu très au-dessus du marché). Montrer comment ils dévient
+> la droite de régression.
+
+> 🖼️ **figure** `immo-deux-segments`
+> Modèle à deux pentes : une pour les petites surfaces (prix/m² élevé), une pour
+> les grandes (prix/m² plus faible). Illustre l'enrichissement du modèle par rapport
+> à immo-regression.
+
+> 🖼️ **figure** `immo-underfitting`
+> Données avec une structure visible (courbe), modèle trop simple (droite) qui ne
+> capture pas la tendance. Le modèle "n'est pas assez intelligent".
+
+> 🖼️ **figure** `immo-overfitting`
+> Même données, modèle trop complexe dont la courbe passe par tous les points mais
+> part dans des directions improbables entre les données. Le modèle "apprend par
+> cœur" au lieu de généraliser.
+
+> 🖼️ **figure** `immo-interpolation-extrapolation`
+> Distinction visuelle : zone entre les données d'entraînement (interpolation, en vert)
+> et zones en dehors (extrapolation, en rouge). Montrer qu'extrapoler amplifie les
+> erreurs du modèle.
 
 #### Encadrés
 
 #### Contenu
 
-**Compléter un texte de façon probable**
-Le modèle prédit la suite la plus probable d'un texte, vis-à-vis de ses données
-d'entraînement. Exemple simple : "La capitale de la France est..." → "Paris".
-Illustrer que ce n'est pas toujours consensuel — avec humour
-(ex : "Le meilleur langage de programmation est...").
+**Accroche**
+Il y a quelque chose de magique dans cette génération : on comprend que la connaissance
+vient des données d'entraînement, mais on se doute bien que nulle part dans la littérature
+humaine il n'y a un texte aussi tarabiscoté que le verbiage d'un prompt système ! Comment
+ça marche alors ?
 
-**Le problème de l'interface**
-Personne ne veut parler à une IA comme ça. D'où le besoin du prompt système,
-géré par l'orchestrateur. Expliquer comment il prépare et enveloppe la question
-— sans la comprendre — pour que la réponse soit utile et cohérente.
+Ça repose sur le concept d'interpolation. Je vais l'expliquer en partant d'un exemple
+volontairement très simple.
 
-**Le prompt système**
-Son influence sur le style de communication : ton, format des réponses,
-gestion des relances, comportement en cas d'ambiguïté.
-C'est un secret de fabrication : complexe, finement réglé, propre à chaque produit.
+**L'exemple immobilier**
+Je voudrais estimer la valeur d'un appartement. Je dispose d'une liste de transactions
+immobilières avec les surfaces et les prix.
 
-**Note : interpolation et hallucinations**
-Introduire et expliquer la notion d'interpolation : le modèle ne récite pas, il interpole
-entre les patterns appris. C'est ce qui explique les hallucinations — quand l'interpolation
-produit quelque chose de plausible en apparence mais factuellement faux.
+Une approche que nous connaissons toutes et tous : calculer le prix moyen au m², puis
+multiplier par la surface de mon appartement.
+
+Utiliser la figure immo-regression ici.
+
+Et bien, comme Monsieur Jourdain, j'ai fait un modèle ! Un modèle c'est :
+- une procédure pour calculer une sortie à partir d'une entrée : multiplier par le prix au m²
+- des paramètres qui changent le calcul : ici un seul, le prix au m²
+- une méthode d'apprentissage pour trouver les paramètres qui reflètent le mieux un jeu
+  de données connues (entrée, sortie) dits données d'entraînement — ici les transactions
+  immobilières, et la méthode le calcul de la moyenne
+
+Même si la surface de mon bien ne figure pas dans les transactions historiques, ou qu'il
+y en a plusieurs avec la même surface et des prix différents, je trouve une valeur qui est
+une bonne base de réflexion. Elle est là la magie de l'interpolation.
+
+**Le LLM, même concept, échelle différente**
+
+- Les entrées/sorties : des débuts de texte et leur complétion
+- Les données d'entraînement : une immense base de textes, chacun découpé en plusieurs
+  couples (début, complétion)
+- La procédure de calcul : c'est la fameuse génération, complexe, mais pas besoin
+  d'entrer dans les détails — juste que ça demande de bonnes capacités de calcul
+  (les fameux GPU) mais peut se faire assez vite
+- Les paramètres : plusieurs milliards, voire dizaines de milliards
+- L'apprentissage : extrêmement complexe, des capacités de calcul gigantesques,
+  ça ne se fait pas tous les jours
+
+**D'où viennent les hallucinations**
+
+On voit tout de suite que notre modèle immobilier peut halluciner et donner des
+évaluations plus ou moins irréalistes. Pourquoi ? Deux raisons : la qualité des données
+et la puissance du modèle.
+
+*La qualité des données*
+Comme on dit : garbage in, garbage out. Un exemple typique est la présence d'outliers
+(valeurs aberrantes) — un bien bradé, un vendu très au-dessus du marché — qui vont
+dérailler le calcul des paramètres.
+
+Utiliser la figure immo-outliers ici.
+
+Pour les LLM, on voit bien ce que ça veut dire : gros travail de préparation des données,
+filtrage, nettoyage. Wikipedia c'est bien, les forums conspirationnistes c'est moins bien.
+
+*La puissance du modèle*
+Il y a peut-être plus que juste la surface : quartier, âge de l'immeuble, étage... Le
+modèle pourrait inclure plus de variables. Mais même avec une seule variable, la puissance
+joue. Les petites surfaces sont souvent plus chères au m² — notre modèle ne capture pas ça.
+
+Utiliser la figure immo-deux-segments ici.
+
+On peut l'enrichir : une surface de coupure, un prix au m² pour les petites surfaces, un
+autre pour les grandes. On capture grossièrement notre connaissance du marché.
+
+Quand un modèle n'est pas assez puissant pour donner des prévisions satisfaisantes, on dit
+qu'il underfit. Il n'est pas assez intelligent pour répondre à la question — vous aurez beau
+l'entraîner, il ne fera pas de progrès.
+
+Utiliser la figure immo-underfitting ici.
+
+Plus un modèle est complexe, plus il a de paramètres — des milliards dans un LLM. Donc plus
+il faut de données, plus elles doivent être bonnes, plus la procédure d'apprentissage doit
+être efficace.
+
+Mais si on n'a pas assez de données, ou qu'elles ne sont pas bien réparties, plusieurs jeux
+de paramètres différents peuvent coller aux données et donner des résultats très différents
+en dehors. L'apprentissage est incapable de choisir le bon. Le modèle n'est pas robuste —
+on dit qu'il overfit.
+
+Utiliser la figure immo-overfitting ici.
+
+Et voilà d'autres hallucinations. Techniquement on parle d'interpolation quand les questions
+sont "entre" les données d'entraînement, d'extrapolation en dehors. C'est la même idée,
+mais on voit bien qu'extrapoler nous amène encore plus dans le monde de la science-fiction.
+
+Utiliser la figure immo-interpolation-extrapolation ici.
 
 ---
 
@@ -469,4 +618,3 @@ information critique, ne la noyez pas au milieu d'un long document.
 #### Encadrés
 
 #### Contenu
-

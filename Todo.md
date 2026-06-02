@@ -19,6 +19,7 @@ Sert aussi à noter les suggestions de l'assistant pour les prochaines sessions.
 
 ## Outillage
 
+- **Outil de relecture et coopération** (prochaine session prioritaire) : un outil permettant de relire le guide section par section avec l'assistant — navigation dans le texte, annotations, propositions de reformulation, validation collaborative. Format et interface à définir ensemble en session.
 - Générateur de TOC du guide (à faire une fois la rédaction du guide commencée)
 - Générateur d'index à partir des balises `{{mot-clé}}` (à faire une fois la rédaction du guide commencée)
 - Générateur du sommaire des sessions dans `Journal.md`

@@ -1,0 +1,11 @@
+{
+  "name": "guideia-tools",
+  "version": "1.0.0",
+  "description": "Tooling scripts for the guideIA project",
+  "scripts": {
+    "render": "node tools/render_html.js"
+  },
+  "dependencies": {
+    "marked": "^12.0.0"
+  }
+}

@@ -6,6 +6,7 @@
 - [Session 2026-06-02c — Todo et snapshots](#session-2026-06-02c--todo-et-snapshots)
 - [Session 2026-06-02d — Plan chapitre 6](#session-2026-06-02d--plan-chapitre-6)
 - [Session 2026-06-02e — Plan chapitre 7 (en cours)](#session-2026-06-02e--plan-chapitre-7-en-cours)
+- [Session 2026-06-02f — Balises : mots-clés, figures, encadrés](#session-2026-06-02f--balises--mots-clés-figures-encadrés)
 
 ---
 
@@ -166,3 +167,24 @@ Ce qui est en soi une illustration du biais statistique : le modèle choisit les
 "Il grimpe dans les tours" ajoute une couche : double ambiguïté entre deux sens figurés (régime moteur / quelqu'un qui s'énerve), sans même avoir besoin du sens propre. Et écho avec "il a pris la mouche", conservé pour un autre passage — les deux parlent d'énervement par des chemins complètement différents.
 
 Un exemple trouvé en session qui illustre mieux le concept que ce que l'assistant aurait produit seul.
+
+---
+
+## Session 2026-06-02f — Balises : mots-clés, figures, encadrés
+
+### Décisions
+- Création du concept de **balise** dans `Methode.md` : trois types (`mk`, `fig`, `enc`), syntaxe `{{def:type:id}}` et `{{ref:type:id}}`
+- Les balises sont déclarées dans le plan (sous-sections `#### Mots-clés`, `#### Figures`, `#### Encadrés`) et utilisées dans le guide
+- Ajout des outils de check (5 règles) et des outils de rendu dans `Methode.md`
+- `Plan.md` mis à jour : structure harmonisée avec les trois sous-sections dans chaque chapitre, figures et encadrés existants formalisés
+- Dossier `figures/` (et non `images/`) ajouté aux fichiers du projet
+
+### Collaboration
+
+**Moment clé — Du concret, pas du métaphorique**
+
+La session a démarré sur un malentendu productif : "illustration" a d'abord évoqué analogies et exemples (le sens du guide de style), avant que l'utilisateur précise qu'il parlait d'images et de diagrammes concrets. Ce recadrage immédiat a orienté toute la session.
+
+**Moment clé — La logique check/rendu émerge de la logique mots-clés**
+
+Le parallèle avec les mots-clés (déjà présents dans le plan) a naturellement amené la syntaxe `{{def:...}}` / `{{ref:...}}`. Et c'est en poussant cette logique jusqu'au bout — "un outil peut vérifier que chaque balise est définie une fois et dans le bon chapitre" — que le concept d'outils de check a pris forme, avec ses 5 règles explicites.
