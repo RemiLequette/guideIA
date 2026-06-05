@@ -8,7 +8,9 @@
  *   parsePlan(text)   → tableau de chapitres
  *   parseGuide(text)  → dictionnaire { num: chapitre }
  *
- * Voir tools/guide-parser.md pour la spec complète du format.
+ * Références :
+ *   - tools/guide-parser.md  — spec du format Plan.md et GuideIA.md, et de l'API
+ *   - Methode.md             — convention des niveaux de titres (source de vérité)
  */
 
 (function (root, factory) {
@@ -166,7 +168,7 @@
 
   function parseGuide(text) {
     const map = {};
-    const chapterRe = /^### +(\d+)[.\-\s]+(.+)$/gm;
+    const chapterRe = /^## +(\d+)[.\-\s]+(.+)$/gm;
     const positions = [];
     let m;
     while ((m = chapterRe.exec(text)) !== null) {

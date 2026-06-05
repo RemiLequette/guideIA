@@ -155,11 +155,7 @@ L'architecture d'un assistant IA repose sur deux éléments distincts.
 
 ### Chapitres
 
-Même format que dans `Plan.md` :
-
-```
-### N. Titre du chapitre
-```
+Convention des niveaux de titres : voir `Methode.md`, section **Structure technique du guide** (source de vérité).
 
 Un chapitre s'étend de son titre jusqu'au début du chapitre suivant (ou la fin du fichier). Le corps du chapitre est tout ce qui suit la ligne de titre, après suppression des espaces de tête et de queue.
 
@@ -278,6 +274,15 @@ Les fonctions suivantes sont internes à la librairie et ne font pas partie de l
 |-------|-------------|
 
 ## Changelog
+
+### Version 1.1 - Renvoi vers Methode.md pour la convention des titres
+**Date:** 2026-06-05
+**Reason:** La section "Chapitres" de GuideIA.md dupliquait la convention des niveaux de titres au lieu de pointer vers la source de vérité (`Methode.md`). Suppression de la duplication, renvoi explicite.
+
+**Changes:**
+- Format de GuideIA.md / Chapitres : bloc de spec remplacé par un renvoi vers `Methode.md`
+
+---
 
 ### Version 1.0 - Création
 **Date:** 2026-06-05

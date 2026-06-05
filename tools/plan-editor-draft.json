@@ -1,0 +1,13 @@
+{
+  "ops": [
+    {
+      "type": "add-chapter",
+      "chapter": "11",
+      "title": "essai"
+    },
+    {
+      "type": "remove-chapter",
+      "chapter": "3"
+    }
+  ]
+}

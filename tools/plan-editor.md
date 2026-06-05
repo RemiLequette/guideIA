@@ -59,11 +59,21 @@ Un outil dédié prend en charge ce que l'IA fait mal :
 
 **Vue Navigateur** — panneau permanent affichant la structure commune des chapitres. Indique les incohérences : chapitre présent dans un seul fichier, ordre différent entre plan et guide. Permet d'ajouter et supprimer un chapitre. La sélection d'un chapitre pilote les deux éditeurs et la vue éléments.
 
+Chaque chapitre affiche un badge à droite, avec tooltip au survol :
+
+| Badge | Couleur | Signification |
+|-------|---------|---------------|
+| ✓ | vert | Chapitre synchronisé — tous les éléments déclarés dans le plan ont un `{{def:...}}` dans le guide |
+| ⚠N | jaune | N éléments déclarés dans le plan sans `{{def:...}}` dans le guide — détail visible dans la Vue Éléments |
+| plan | bleu | Chapitre présent uniquement dans Plan.md |
+| guide | bleu | Chapitre présent uniquement dans GuideIA.md |
+| ✎ | orange | Modifications en attente dans la révision en cours (s'ajoute aux autres) |
+
 **Vue Plan du chapitre** — panneau supérieur gauche, permanent. Affiche et permet d'éditer le texte de la section `#### Contenu` du chapitre sélectionné dans `Plan.md`.
 
 **Vue Guide du chapitre** — panneau supérieur droit, permanent. Affiche et permet d'éditer le texte du chapitre sélectionné dans `GuideIA.md`.
 
-**Vue Éléments du chapitre** — panneau inférieur, permanent. Gestion des mots-clés, figures et encadrés du chapitre sélectionné. Pour chaque élément : statut (déclaré / défini / référencé), actions ajouter / renommer / supprimer.
+**Vue Éléments du chapitre** — panneau inférieur, permanent. Affiche les mots-clés, figures et encadrés déclarés dans le plan pour le chapitre sélectionné, répartis en trois colonnes. Pour chaque élément, un badge indique s'il est défini dans le guide (`{{def:...}}` présent — badge vert ✓) ou seulement déclaré dans le plan (badge jaune ○). Actions disponibles : ajouter ou supprimer un élément.
 
 ### Cycle de vie de la révision
 
@@ -149,6 +159,17 @@ Fichier d'entrée `tools/plan-editor-bootstrap.html`, ouvert via `file://` :
 |-------|-------------|
 
 ## Changelog
+
+### Version 1.3 - Tooltips badges et documentation Vue Éléments
+**Date:** 2026-06-05
+**Raison:** Les badges du navigateur n'étaient pas documentés et n'avaient pas de tooltip. La Vue Éléments n'était pas décrite avec précision.
+
+**Modifications :**
+- plan-editor.html : ajout de tooltips sur les quatre badges du navigateur
+- What / Vues / Vue Navigateur : tableau des badges avec signification et couleur
+- What / Vues / Vue Éléments : description du badge ✓/○ par élément, clarification des actions disponibles
+
+---
 
 ### Version 1.2 - Parsing délégué à guide-parser.js
 **Date:** 2026-06-05
