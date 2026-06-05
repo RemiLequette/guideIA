@@ -1,53 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 680 360" role="img">
-  <title>Dilution de l'attention</title>
-  <desc>Comparaison entre un contexte court où l'attention est concentrée et un contexte long où elle se disperse.</desc>
-
-  <!-- Titre gauche -->
-  <text class="th" x="160" y="36" text-anchor="middle" fill="var(--color-text-primary)">Contexte court</text>
-  <!-- Titre droit -->
-  <text class="th" x="510" y="36" text-anchor="middle" fill="var(--color-text-primary)">Contexte long</text>
-
-  <!-- CAS GAUCHE : 5 blocs, 3 pertinents forts -->
-  <rect x="60" y="56" width="200" height="38" rx="6" fill="#0d9488" opacity="0.85"/>
-  <text class="ts" x="160" y="79" text-anchor="middle" fill="white">élément clé</text>
-  <rect x="60" y="102" width="200" height="20" rx="6" fill="#d1d5db"/>
-  <text class="ts" x="160" y="116" text-anchor="middle" fill="#6b7280">contexte secondaire</text>
-  <rect x="60" y="130" width="200" height="36" rx="6" fill="#0d9488" opacity="0.85"/>
-  <text class="ts" x="160" y="152" text-anchor="middle" fill="white">élément clé</text>
-  <rect x="60" y="174" width="200" height="20" rx="6" fill="#d1d5db"/>
-  <text class="ts" x="160" y="188" text-anchor="middle" fill="#6b7280">contexte secondaire</text>
-  <rect x="60" y="202" width="200" height="36" rx="6" fill="#0d9488" opacity="0.85"/>
-  <text class="ts" x="160" y="224" text-anchor="middle" fill="white">élément clé</text>
-
-  <!-- Question gauche -->
-  <rect x="60" y="258" width="200" height="32" rx="6" fill="#7c3aed"/>
-  <text class="ts" x="160" y="278" text-anchor="middle" fill="white">question</text>
-
-  <!-- Annotation gauche -->
-  <text class="ts" x="160" y="314" text-anchor="middle" fill="#059669">attention concentrée ✓</text>
-
-  <!-- CAS DROIT : 12 blocs, 2 pertinents noyés -->
-  <rect x="400" y="56"  width="220" height="14" rx="4" fill="#d1d5db"/>
-  <rect x="400" y="76"  width="220" height="14" rx="4" fill="#d1d5db"/>
-  <rect x="400" y="96"  width="220" height="14" rx="4" fill="#d1d5db"/>
-  <rect x="400" y="116" width="220" height="18" rx="4" fill="#0d9488" opacity="0.45"/>
-  <text class="ts" x="510" y="129" text-anchor="middle" fill="#065f46">élément clé</text>
-  <rect x="400" y="140" width="220" height="14" rx="4" fill="#d1d5db"/>
-  <rect x="400" y="160" width="220" height="14" rx="4" fill="#d1d5db"/>
-  <rect x="400" y="180" width="220" height="14" rx="4" fill="#d1d5db"/>
-  <rect x="400" y="200" width="220" height="18" rx="4" fill="#0d9488" opacity="0.45"/>
-  <text class="ts" x="510" y="213" text-anchor="middle" fill="#065f46">élément clé</text>
-  <rect x="400" y="224" width="220" height="14" rx="4" fill="#d1d5db"/>
-  <rect x="400" y="244" width="220" height="14" rx="4" fill="#d1d5db"/>
-
-  <!-- Question droite -->
-  <rect x="400" y="264" width="220" height="32" rx="6" fill="#7c3aed"/>
-  <text class="ts" x="510" y="284" text-anchor="middle" fill="white">question</text>
-
-  <!-- Annotation droite -->
-  <text class="ts" x="510" y="314" text-anchor="middle" fill="#ef4444">attention diluée ✗</text>
-
-  <!-- Séparateur central -->
-  <line x1="340" y1="50" x2="340" y2="330" stroke="#e5e7eb" stroke-width="1.5"/>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 260" width="100%" height="100%" style="background-color: #fafafa;">
+  <rect x="20" y="40" width="220" height="190" rx="6" fill="none" stroke="#2ecc71" stroke-width="1.5" />
+  <text x="130" y="30" font-family="sans-serif" font-size="12" fill="#27ae60" font-weight="bold" text-anchor="middle">Contexte court &amp; ciblé</text>
+  <rect x="35" y="60" width="190" height="35" rx="4" fill="#2ecc71" fill-opacity="0.2" stroke="#27ae60" />
+  <text x="130" y="82" font-family="sans-serif" font-size="11" fill="#27ae60" font-weight="bold" text-anchor="middle">Information Cruciale</text>
+  <circle cx="130" cy="180" r="25" fill="#e67e22" />
+  <text x="130" y="184" font-family="sans-serif" font-size="11" fill="white" font-weight="bold" text-anchor="middle">Attention</text>
+  <path d="M 130 145 L 130 105" fill="none" stroke="#2ecc71" stroke-width="6" marker-end="url(#arrow-green)" />
+  <rect x="280" y="40" width="220" height="190" rx="6" fill="none" stroke="#e74c3c" stroke-width="1.5" />
+  <text x="390" y="30" font-family="sans-serif" font-size="12" fill="#c0392b" font-weight="bold" text-anchor="middle">Contexte trop lourd (Dilution)</text>
+  <rect x="295" y="60" width="190" height="25" rx="4" fill="#2ecc71" fill-opacity="0.2" stroke="#27ae60" />
+  <text x="390" y="76" font-family="sans-serif" font-size="10" fill="#27ae60" font-weight="bold" text-anchor="middle">Information Cruciale</text>
+  <rect x="295" y="95" width="85" height="20" rx="3" fill="#95a5a6" fill-opacity="0.3" />
+  <text x="337" y="108" font-family="sans-serif" font-size="8" fill="#7f8c8d" text-anchor="middle">Token inutile</text>
+  <rect x="395" y="95" width="90" height="20" rx="3" fill="#95a5a6" fill-opacity="0.3" />
+  <text x="440" y="108" font-family="sans-serif" font-size="8" fill="#7f8c8d" text-anchor="middle">Hors sujet</text>
+  <rect x="295" y="125" width="190" height="20" rx="3" fill="#95a5a6" fill-opacity="0.3" />
+  <text x="390" y="138" font-family="sans-serif" font-size="8" fill="#7f8c8d" text-anchor="middle">Blabla d'historique trop long...</text>
+  <circle cx="390" cy="195" r="25" fill="#e67e22" />
+  <text x="390" y="199" font-family="sans-serif" font-size="11" fill="white" font-weight="bold" text-anchor="middle">Attention</text>
+  <path d="M 390 165 L 390 95" fill="none" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow-green-small)" />
+  <path d="M 370 180 L 335 125" fill="none" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrow-gray)" />
+  <path d="M 410 180 L 445 125" fill="none" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrow-gray)" />
+  <path d="M 380 175 L 360 155" fill="none" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrow-gray)" />
+  <defs>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2ecc71" /></marker>
+    <marker id="arrow-green-small" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#27ae60" /></marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7f8c8d" /></marker>
+  </defs>
 </svg>

@@ -1,0 +1,25 @@
+# Guide 1 : Le Fond Essentiel – Rendre un document utile
+
+Ce guide définit les trois briques logiques obligatoires pour rendre tout document immédiatement exploitable.
+
+### 1. L'Accroche (Pourquoi)
+L'intérêt du document est validé dès les premières lignes.
+* Utilité : Quel problème est résolu ?
+* Promesse : Qu'est-ce que le lecteur saura faire après ?
+* Exemple : "Ce guide permet de rédiger des documents clairs pour éviter les malentendus avec vos collaborateurs ou votre IA."
+
+### 2. Le Périmètre (Quoi & Qui)
+Le lecteur sait immédiatement si ce document le concerne ou non.
+* Cible : À qui s'adresse le texte ?
+* Prérequis : Que faut-il savoir ou posséder avant de lire ?
+* Limites : Qu'est-ce qui est explicitement exclu ?
+* Exemple : "Ce guide s'adresse à tout rédacteur. Aucun prérequis technique n'est nécessaire. Limite : Il traite uniquement du fond (la substance), pas de la mise en page."
+
+### 3. Le Cœur (Comment)
+L'information est brute, logique et incontestable.
+* Ancrage : Remplacer le flou par des faits ou des chiffres.
+    * Non : "Traiter les demandes rapidement." -> Oui : "Traiter les demandes en moins de 48 heures."
+* Logique : Expliciter les conditions (Si / Alors / Sinon) et les exceptions.
+    * Exemple : "Si l'appareil est sous garantie, la réparation est gratuite. Sinon, elle est facturée au forfait."
+* Autonomie : Définir le jargon dès sa première apparition. Le texte se suffit à lui-même.
+* Modèles : Illustrer par un bon exemple et un contre-exemple.

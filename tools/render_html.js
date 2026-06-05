@@ -27,6 +27,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { marked } = require('marked');
+const { parsePlan } = require('./lib/guide-parser');
 
 // ---------------------------------------------------------------------------
 // Paths
@@ -42,90 +43,69 @@ const OUTPUT_PATH = path.join(ROOT, 'output', 'GuideIA.html');
 const BACK_TO_TOC = ' <a href="#toc" class="back-to-toc" title="Retour à la table des matières">↑</a>';
 
 // ---------------------------------------------------------------------------
-// Plan parser — extracts declared tags per chapter
+// Plan parser — délégué à guide-parser.js
+// Construit le registre { mk, fig, enc } attendu par render_html.js
+// à partir du tableau de chapitres retourné par parsePlan().
 // ---------------------------------------------------------------------------
 
-/**
- * Parses Plan.md and returns a registry of all declared tags.
- * Chapter headings in Plan.md use ### N. Title (level 3).
- */
-function parsePlan(src) {
+function buildRegistry(planSrc) {
+  const chapters = parsePlan(planSrc);
   const registry = { mk: {}, fig: {}, enc: {} };
-  const lines = src.split('\n');
 
-  let currentChapter      = null;
-  let currentChapterTitle = null;
-  let section             = null;
-  let blockquoteLines     = [];
+  for (const ch of chapters) {
+    const chNum   = parseInt(ch.num, 10);
+    const chTitle = ch.title;
 
-  const flushBlockquote = () => {
-    if (!blockquoteLines.length || !section || !currentChapter) return;
-    const text = blockquoteLines.join('\n');
-
-    if (section === 'fig') {
-      const m = text.match(/\*\*figure\*\*\s+`([^`]+)`/);
-      if (m) {
-        const id = m[1];
-        const captionLines = blockquoteLines
-          .slice(1)
-          .map(l => l.replace(/^>\s?/, '').trim())
-          .filter(Boolean);
-        registry.fig[id] = { id, chapter: currentChapter, chapterTitle: currentChapterTitle, caption: captionLines.join(' ') };
-      }
-    } else if (section === 'enc') {
-      const m = text.match(/\*\*encadr[eé]\*\*\s+`([^`]+)`/);
-      if (m) {
-        const id = m[1];
-        const titleLines = blockquoteLines
-          .slice(1)
-          .map(l => l.replace(/^>\s?/, '').trim())
-          .filter(Boolean);
-        registry.enc[id] = { id, chapter: currentChapter, chapterTitle: currentChapterTitle, title: titleLines[0] || id };
-      }
+    for (const kw of ch.keywords) {
+      registry.mk[kw] = { id: kw, chapter: chNum, chapterTitle: chTitle };
     }
-    blockquoteLines = [];
-  };
-
-  for (const line of lines) {
-    // Chapter headings in Plan.md: ### N. Title  (level 3)
-    const chapterMatch = line.match(/^#{2,3}\s+(\d+)\.\s+(.+)/);
-    if (chapterMatch) {
-      flushBlockquote();
-      currentChapter      = parseInt(chapterMatch[1], 10);
-      currentChapterTitle = chapterMatch[2].trim();
-      section = null;
-      continue;
+    for (const fig of ch.figures) {
+      registry.fig[fig.id] = { id: fig.id, chapter: chNum, chapterTitle: chTitle, caption: fig.caption };
     }
-
-    if (line.match(/^####\s+Mots-cl/))  { flushBlockquote(); section = 'mk';  continue; }
-    if (line.match(/^####\s+Figures/))  { flushBlockquote(); section = 'fig'; continue; }
-    if (line.match(/^####\s+Encadr/))   { flushBlockquote(); section = 'enc'; continue; }
-    if (line.match(/^####\s+/))         { flushBlockquote(); section = null;  continue; }
-
-    if (!currentChapter || !section) continue;
-
-    if (section === 'mk') {
-      const m = line.match(/^-\s+(\S+)/);
-      if (m) registry.mk[m[1]] = { id: m[1], chapter: currentChapter, chapterTitle: currentChapterTitle };
-    } else if (section === 'fig' || section === 'enc') {
-      if (line.startsWith('>'))    blockquoteLines.push(line);
-      else if (line.trim() === '') flushBlockquote();
+    for (const enc of ch.encadres) {
+      registry.enc[enc.id] = { id: enc.id, chapter: chNum, chapterTitle: chTitle, title: enc.title };
     }
   }
 
-  flushBlockquote();
   return registry;
 }
 
 // ---------------------------------------------------------------------------
-// Figure file resolver
+// Figure file resolver — returns inline HTML (SVG inlined, raster as base64)
 // ---------------------------------------------------------------------------
 
 const SUPPORTED_EXTENSIONS = ['.svg', '.png', '.jpg', '.jpeg', '.webp', '.gif'];
 
-function resolveFigureFile(id) {
+const MIME_TYPES = {
+  '.png':  'image/png',
+  '.jpg':  'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.gif':  'image/gif',
+};
+
+function resolveFigureInline(id, caption) {
   for (const ext of SUPPORTED_EXTENSIONS) {
-    if (fs.existsSync(path.join(FIGURES_DIR, id + ext))) return id + ext;
+    const filePath = path.join(FIGURES_DIR, id + ext);
+    if (!fs.existsSync(filePath)) continue;
+
+    if (ext === '.svg') {
+      // Inline SVG directly — strip XML declaration if present
+      let svgContent = fs.readFileSync(filePath, 'utf8');
+      svgContent = svgContent.replace(/<\?xml[^?]*\?>\s*/i, '').trim();
+      // Inject role and title if not present
+      if (!svgContent.includes('role="img"')) {
+        svgContent = svgContent.replace('<svg', `<svg role="img"`);
+      }
+      return svgContent;
+    } else {
+      // Raster: base64 data URI
+      const data    = fs.readFileSync(filePath);
+      const b64     = data.toString('base64');
+      const mime    = MIME_TYPES[ext] || 'application/octet-stream';
+      const altAttr = escapeHtml(caption);
+      return `<img src="data:${mime};base64,${b64}" alt="${altAttr}" style="max-width:100%;height:auto;">`;
+    }
   }
   return null;
 }
@@ -166,13 +146,13 @@ function resolveTags(src, registry) {
         const num     = figNumbers[id];
         const caption = registry.fig[id]?.caption || id;
         if (mode === 'def') {
-          const file   = resolveFigureFile(id);
-          const imgTag = file
-            ? `<img src="../figures/html/${file}" alt="${escapeHtml(caption)}">`
+          const inline  = resolveFigureInline(id, caption);
+          const figBody = inline
+            ? inline
             : `<div class="fig-missing">[figure manquante : ${escapeHtml(id)}]</div>`;
           return (
             `\n\n<figure id="fig-${id}">\n` +
-            `  ${imgTag}\n` +
+            `  ${figBody}\n` +
             `  <figcaption><strong>Figure ${num}</strong> — ${escapeHtml(caption)}</figcaption>\n` +
             `</figure>\n\n`
           );
@@ -559,7 +539,7 @@ function main() {
   const guideSrc = fs.readFileSync(GUIDE_PATH, 'utf8');
 
   console.log('Parsing plan registry...');
-  const registry = parsePlan(planSrc);
+  const registry = buildRegistry(planSrc);
   console.log(`  mk:  ${Object.keys(registry.mk).length} keywords`);
   console.log(`  fig: ${Object.keys(registry.fig).length} figures`);
   console.log(`  enc: ${Object.keys(registry.enc).length} encadres`);

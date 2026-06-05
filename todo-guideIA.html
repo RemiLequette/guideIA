@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todo — guideIA</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: #1a1a18;
+    color: #ccc;
+  }
+  .msg {
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.8;
+  }
+  .msg a { color: #60a5fa; }
+  .error { color: #f87171; margin-top: 12px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="msg" id="msg">Connexion au serveur local…</div>
+<script>
+// ── CONFIGURE THIS FOR EACH PROJECT ──────────────────────────────────────
+const TODO_PATH = 'C:/Users/RemiLequette/Development/with-claude/guideIA/TODO.md';
+// ─────────────────────────────────────────────────────────────────────────
+
+const TOOL_ABS  = 'C:/Users/RemiLequette/Development/with-claude/knowledgebase/public/tools/todo-tool.html';
+
+const PORT = 3000;
+const PING_URL = `http://localhost:${PORT}/ping`;
+const APP_URL  = `http://localhost:${PORT}/${TOOL_ABS}?todo=${encodeURIComponent(TODO_PATH)}`;
+
+async function boot() {
+  try {
+    const res = await fetch(PING_URL, { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      window.location.href = APP_URL;
+    } else {
+      showError('Le serveur a répondu mais avec une erreur inattendue.');
+    }
+  } catch {
+    showError('Serveur local introuvable. Lance <code>start-server.bat</code> puis recharge cette page.');
+  }
+}
+
+function showError(html) {
+  document.getElementById('msg').innerHTML =
+    `<span class="error">${html}</span><br><br>` +
+    `<small>URL cible : <a href="${APP_URL}">${APP_URL}</a></small>`;
+}
+
+boot();
+</script>
+</body>
+</html>

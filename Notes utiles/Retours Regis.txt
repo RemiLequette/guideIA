@@ -1,0 +1,30 @@
+Hello Rémi, super boulot.
+
+Mes remarques ci-dessous :
+
+Donner un peu de chair à l’anthropomorphisme en tant que stratégie cognitive
+
+“Ce profil existe bel et bien” : c’est que que l’on appelle un grand modèle de langage (LLM), tel que ChatGPT ou ses concurrents.
+
+Introduire “prompt” ? (Invite en français)
+Donner un exemple de prompt flou et clair
+
+Le paragraphe “Valider” est un peu court, pas à la hauteur de l’importance du sujet. Donner des exemples (par exemple regarder les sources produites, croiser avec le bon sens)
+
+“Méthode de travail” : il y a un pattern plus général avec l’IA : on fait des allers-retours fréquents entre “Pourquoi”, “Comment” et “Quoi” - différents niveaux d’abstraction
+
+“La documentation suit naturellement” : attention quand même à la consommation de tokens (qui a un coût et un impact sur la consommation d’énergie)
+
+Dans le diagramme de flux (figure 1), l’orchestrateur va chercher des données (par exemple sites web, fichiers joints, fichiers locaux si autorisé) pour enrichir le prompt (c’est développé plus loin mais on peut l’introduire ici)
+
+Parler de la représentation numérique des tokens (dans l’espace latent), et la distance sémantique ?
+
+Figure 9 : pas sûr que la mention du RAG soit nécessaire, pour le grand public. Le sujet est d’ailleurs couvert par les tools un peu plus loin
+
+La mémoire : mentionner qu’il a différents types de mémoire (exemple de classification: sémantique, procédurale, épisodique), c’est un sujet encore peu mûr. Mentionner le “dream” d’Anthropy, la “compaction” effectuée par les orchestrateurs de temps à autre
+
+Serveur MCP : donner un ou deux exemples, suggérer de demander au LLM comment s’y brancher (exemple d’aller-retour “Quoi - Comment”)
+
+Parler de la donnée. Que devient la donnée privée donnée comme prompt ou fichier ? Est-ce que les modèles apprennent à partir de ces données ?
+
+Terminer par un paragraphe un peu prospectif avec notamment la modélisation du monde, le rythme d’innovation, les Capex, la mise en perspective historique et les parallèles faits avec les révolutions industrielle, de l’électricité, les espoirs et les craintes ?

@@ -32,6 +32,9 @@ Décrire la méthode de travail du projet guideIA : organisation des sessions, g
 | `figures/` | Figures du guide (générées ou trouvées), référencées par identifiant |
 | `figures/html/` | Figures pour la cible de rendu HTML (formats supportés par les navigateurs : SVG, PNG, JPEG...) |
 | `tools/` | Scripts d'outillage (check, rendu, génération) — écrits en JavaScript, exécutés avec Node.js |
+| `tools/plan-editor.html` | Outil de visualisation et d'édition du plan et du guide — voir `tools/plan-editor.md` |
+| `tools/plan-editor.md` | Spec de l'outil plan-editor (Why/What/How) |
+| `tools/plan-editor-draft.json` | Révision en cours de plan-editor — fichier généré, ne pas modifier manuellement |
 
 Chaque fichier de travail (`Methode.md`, `Plan.md`) doit maintenir une TOC simple juste après son objectif : une liste des sections avec une référence (ancre markdown).
 
@@ -252,6 +255,7 @@ Les scripts d'outillage sont écrits en **JavaScript** et exécutés avec **Node
 **Exécution depuis une session :** l'outil `commands` peut lancer des scripts directement (`node tools/script.js`) même sans accès shell complet. C'est le moyen privilégié pour tester les scripts sans quitter la session.
 
 Des outils seront développés pour automatiser les tâches mécaniques :
+- **plan-editor** (`tools/plan-editor.html`) : outil de navigation et d'édition du plan et du guide — spec dans `tools/plan-editor.md`
 - **Check** : vérification de la cohérence entre `Plan.md` et `GuideIA.md` (voir section Balises)
 - **Rendu** : transformation des balises et génération des index (voir section Balises)
 - Génération de la TOC du guide

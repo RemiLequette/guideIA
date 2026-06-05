@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Plan Editor — démarrage</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #1e1e2e; color: #cdd6f4; display: flex; align-items: center;
+         justify-content: center; height: 100vh; margin: 0; }
+  .box { text-align: center; max-width: 420px; }
+  h1 { color: #cba6f7; font-size: 22px; margin-bottom: 12px; }
+  p  { color: #a6adc8; font-size: 14px; line-height: 1.6; }
+  .spinner { font-size: 28px; animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error { color: #f38ba8; font-size: 15px; margin-top: 16px; }
+  code { background: #313244; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Plan Editor</h1>
+  <div id="msg"><span class="spinner">⟳</span><br><br><p>Connexion au serveur local…</p></div>
+</div>
+<script>
+(async () => {
+  // Chemin absolu de ce fichier : file:///C:/Users/.../guideIA/tools/plan-editor-bootstrap.html
+  // On reconstruit le chemin absolu pour l'URL du serveur
+  const filePath = window.location.pathname; // /C:/Users/.../tools/plan-editor-bootstrap.html  (sur certains OS)
+  // Sur Windows via file://, pathname = /C:/Users/...
+  const absPath = decodeURIComponent(filePath.replace(/^\/([A-Z]:)/, '$1'));
+  const toolPath = absPath.replace(/plan-editor-bootstrap\.html$/, 'plan-editor.html');
+  const serverUrl = 'http://localhost:3000/' + toolPath.replace(/\\/g, '/').replace(/^\//, '');
+
+  try {
+    const r = await fetch('http://localhost:3000/ping', { signal: AbortSignal.timeout(2000) });
+    if (r.ok) {
+      window.location.href = serverUrl;
+    } else {
+      throw new Error('ping non-OK');
+    }
+  } catch {
+    document.getElementById('msg').innerHTML = `
+      <p class="error">⚠ Serveur local introuvable</p>
+      <p>Démarrez le serveur local avant d'ouvrir cet outil :</p>
+      <p><code>node tools/local-server.js "C:\\Users\\RemiLequette\\Development"</code></p>
+      <p style="margin-top:12px;font-size:12px;color:#585b70">
+        Ou lancez <code>start-server.bat</code> depuis la KB.
+      </p>`;
+  }
+})();
+</script>
+</body>
+</html>

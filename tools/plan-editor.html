@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Editor — guideIA</title>
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; background: #1e1e2e; color: #cdd6f4; overflow: hidden; }
+
+/* ── Layout racine ── */
+#app { display: flex; flex-direction: column; height: 100vh; }
+
+/* ── Topbar ── */
+#topbar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 14px; background: #181825; border-bottom: 1px solid #313244;
+  flex-shrink: 0; font-size: 13px;
+}
+#topbar h1 { font-size: 15px; font-weight: 700; color: #cba6f7; margin-right: 4px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; transition: background .3s; }
+.dot-green  { background: #a6e3a1; }
+.dot-orange { background: #fab387; }
+.dot-red    { background: #f38ba8; }
+#status-text { color: #585b70; font-size: 12px; }
+#badge-revision {
+  padding: 2px 10px; border-radius: 10px; background: #f9e2af22;
+  color: #f9e2af; font-size: 11px; font-weight: 700; border: 1px solid #f9e2af44;
+  display: none;
+}
+.spacer { flex: 1; }
+.btn-top {
+  padding: 4px 13px; border-radius: 5px; border: none; cursor: pointer;
+  font-size: 12px; font-weight: 700;
+}
+#btn-save    { background: #a6e3a1; color: #1e1e2e; }
+#btn-discard { background: #f38ba844; color: #f38ba8; border: 1px solid #f38ba844; }
+#btn-save:disabled, #btn-discard:disabled { opacity: 0.3; cursor: default; }
+
+/* ── Corps principal ── */
+#main { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Navigateur ── */
+#nav {
+  width: 240px; flex-shrink: 0; background: #181825;
+  border-right: 1px solid #313244; display: flex; flex-direction: column;
+}
+#nav-head {
+  padding: 9px 12px; font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  color: #45475a; text-transform: uppercase; border-bottom: 1px solid #313244;
+  display: flex; align-items: center; justify-content: space-between;
+}
+#btn-add-ch {
+  background: #313244; border: none; color: #89b4fa; border-radius: 4px;
+  padding: 2px 8px; cursor: pointer; font-size: 11px; font-weight: 600;
+}
+#btn-add-ch:hover { background: #45475a; }
+#chapter-list { flex: 1; overflow-y: auto; padding: 4px 0; }
+
+.ch-item {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 10px; cursor: pointer; border-left: 3px solid transparent;
+  transition: background .1s; position: relative;
+}
+.ch-item:hover  { background: #1e1e2e; }
+.ch-item.active { background: #2a2a3e; border-left-color: #cba6f7; }
+.ch-num   { font-weight: 700; color: #cba6f7; font-size: 13px; min-width: 20px; }
+.ch-title { flex: 1; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #cdd6f4; }
+.ch-badges { display: flex; gap: 2px; }
+.badge {
+  font-size: 9px; padding: 1px 4px; border-radius: 8px; font-weight: 700;
+  white-space: nowrap;
+}
+.b-ok   { background: #a6e3a122; color: #a6e3a1; }
+.b-warn { background: #f9e2af22; color: #f9e2af; }
+.b-err  { background: #f38ba822; color: #f38ba8; }
+.b-only { background: #89b4fa22; color: #89b4fa; }
+.b-mod  { background: #fab38722; color: #fab387; }
+.ch-del {
+  background: none; border: none; color: #313244; cursor: pointer;
+  font-size: 15px; line-height: 1; padding: 0; opacity: 0; transition: opacity .1s;
+}
+.ch-item:hover .ch-del { opacity: 1; color: #f38ba8; }
+
+#nav-foot {
+  padding: 7px 12px; border-top: 1px solid #313244;
+  font-size: 11px; color: #45475a;
+}
+
+/* ── Zone chapitre ── */
+#detail {
+  flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #1e1e2e;
+}
+
+#ch-header {
+  padding: 8px 16px; background: #181825; border-bottom: 1px solid #313244;
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+#ch-title { font-size: 15px; font-weight: 700; color: #cdd6f4; }
+#ch-sync  { font-size: 11px; color: #6c7086; }
+
+/* ── Rangée haute : Plan + Guide côte à côte ── */
+#row-top {
+  flex: 1; display: flex; overflow: hidden; min-height: 0;
+  border-bottom: 2px solid #313244;
+}
+
+.editor-pane {
+  flex: 1; display: flex; flex-direction: column; overflow: hidden;
+  border-right: 1px solid #313244;
+}
+.editor-pane:last-child { border-right: none; }
+
+.pane-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px; background: #181825; border-bottom: 1px solid #313244;
+  flex-shrink: 0; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: #6c7086;
+}
+.pane-label-plan  { color: #89b4fa; }
+.pane-label-guide { color: #a6e3a1; }
+.pane-modified { color: #f9e2af; font-weight: 700; }
+.pane-actions { margin-left: auto; display: flex; gap: 5px; }
+.btn-pane {
+  padding: 3px 10px; border-radius: 4px; border: none; cursor: pointer;
+  font-size: 11px; font-weight: 700;
+}
+.btn-apply  { background: #cba6f744; color: #cba6f7; }
+.btn-apply:hover  { background: #cba6f766; }
+.btn-cancel { background: #31324488; color: #6c7086; }
+.btn-cancel:hover { background: #45475a; color: #cdd6f4; }
+
+textarea.editor {
+  flex: 1; resize: none; border: none; outline: none;
+  padding: 14px 16px; background: #1e1e2e; color: #cdd6f4;
+  font-family: 'Fira Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 12.5px; line-height: 1.7; tab-size: 2;
+}
+textarea.editor.modified { background: #2a2510; }
+textarea.editor:focus { background: #22222e; }
+textarea.editor.modified:focus { background: #2e2812; }
+
+/* ── Rangée basse : Éléments ── */
+#row-bottom {
+  height: 220px; flex-shrink: 0; overflow: hidden;
+  display: flex; flex-direction: column; background: #181825;
+}
+#elem-head {
+  padding: 6px 14px; border-bottom: 1px solid #313244;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: #45475a; display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+}
+#elem-head span { color: #cba6f7; }
+#elem-body { flex: 1; overflow-x: auto; overflow-y: auto; display: flex; gap: 0; }
+
+.elem-col {
+  flex: 1; min-width: 220px; border-right: 1px solid #313244;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.elem-col:last-child { border-right: none; }
+.elem-col-head {
+  padding: 5px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: #585b70; background: #1e1e2e;
+  border-bottom: 1px solid #313244; display: flex; align-items: center; gap: 5px;
+  flex-shrink: 0;
+}
+.elem-col-body { flex: 1; overflow-y: auto; padding: 4px 8px; }
+
+.elem-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 6px; border-radius: 4px; margin-bottom: 2px;
+  font-size: 11px;
+}
+.elem-row:hover { background: #2a2a3e; }
+.elem-id  { font-family: monospace; color: #cba6f7; font-weight: 700; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.elem-del { background: none; border: none; color: #45475a; cursor: pointer; font-size: 13px; padding: 0 2px; opacity: 0; }
+.elem-row:hover .elem-del { opacity: 1; color: #f38ba8; }
+.elem-add {
+  padding: 3px 8px; margin: 4px 8px; border: 1px dashed #313244;
+  border-radius: 4px; background: none; color: #45475a; cursor: pointer;
+  font-size: 11px; text-align: left; width: calc(100% - 16px);
+}
+.elem-add:hover { border-color: #cba6f7; color: #cba6f7; }
+
+/* ── Empty state ── */
+#empty-state {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px; color: #45475a;
+}
+#empty-state p { font-size: 15px; }
+#empty-state small { font-size: 12px; }
+
+/* ── Modal ── */
+#modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: #00000088; z-index: 100; align-items: center; justify-content: center;
+}
+#modal-overlay.open { display: flex; }
+#modal {
+  background: #24273a; border: 1px solid #45475a; border-radius: 10px;
+  padding: 22px; width: 480px; max-width: 95vw; max-height: 80vh;
+  overflow-y: auto; box-shadow: 0 8px 40px #00000066;
+}
+#modal h3 { font-size: 15px; margin-bottom: 14px; color: #cdd6f4; }
+#modal label { display: block; font-size: 11px; color: #6c7086; margin: 10px 0 3px; text-transform: uppercase; letter-spacing: .05em; }
+#modal input, #modal textarea, #modal select {
+  width: 100%; background: #1e1e2e; border: 1px solid #45475a;
+  border-radius: 5px; padding: 7px 10px; font-size: 13px; color: #cdd6f4; outline: none;
+}
+#modal input:focus, #modal textarea:focus { border-color: #cba6f7; }
+#modal textarea { height: 100px; resize: vertical; font-family: monospace; font-size: 12px; }
+#modal p { color: #a6adc8; font-size: 13px; line-height: 1.6; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+.btn-primary   { padding: 7px 18px; background: #cba6f7; color: #1e1e2e; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; }
+.btn-primary:hover { background: #b4a0e5; }
+.btn-secondary { padding: 7px 18px; background: #31324488; color: #6c7086; border: 1px solid #45475a; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.btn-secondary:hover { background: #45475a; color: #cdd6f4; }
+
+/* ── Toast ── */
+#toast {
+  position: fixed; bottom: 18px; right: 18px;
+  background: #24273a; color: #cdd6f4; border: 1px solid #45475a;
+  padding: 9px 16px; border-radius: 7px; font-size: 12px;
+  opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 200;
+}
+#toast.show { opacity: 1; }
+#toast.err  { border-color: #f38ba8; color: #f38ba8; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Topbar -->
+  <div id="topbar">
+    <h1>Plan Editor</h1>
+    <span class="dot dot-orange" id="conn-dot"></span>
+    <span id="status-text">Connexion…</span>
+    <span id="badge-revision">● révision en cours</span>
+    <span class="spacer"></span>
+    <button class="btn-top" id="btn-discard" disabled>Abandonner</button>
+    <button class="btn-top" id="btn-save" disabled>💾 Enregistrer</button>
+  </div>
+
+  <div id="main">
+
+    <!-- Navigateur -->
+    <div id="nav">
+      <div id="nav-head">
+        Chapitres
+        <button id="btn-add-ch">+ Nouveau</button>
+      </div>
+      <div id="chapter-list"></div>
+      <div id="nav-foot"></div>
+    </div>
+
+    <!-- Zone chapitre -->
+    <div id="detail">
+
+      <!-- Empty state -->
+      <div id="empty-state">
+        <p>Sélectionnez un chapitre</p>
+        <small>ou ajoutez-en un nouveau →</small>
+      </div>
+
+      <!-- Vue chapitre (masquée jusqu'à sélection) -->
+      <div id="chapter-view" style="display:none; flex-direction:column; height:100%; overflow:hidden;">
+
+        <!-- Header -->
+        <div id="ch-header">
+          <span id="ch-title"></span>
+          <span id="ch-sync"></span>
+        </div>
+
+        <!-- Rangée haute : Plan + Guide -->
+        <div id="row-top">
+
+          <!-- Pane Plan -->
+          <div class="editor-pane" id="pane-plan">
+            <div class="pane-head">
+              <span class="pane-label-plan">📋 Plan.md</span>
+              <span id="plan-mod" class="pane-modified" style="display:none">● modifié</span>
+              <div class="pane-actions">
+                <button class="btn-pane btn-cancel" id="btn-cancel-plan">Annuler</button>
+                <button class="btn-pane btn-apply"  id="btn-apply-plan">Appliquer</button>
+              </div>
+            </div>
+            <textarea class="editor" id="editor-plan" placeholder="Contenu attendu du chapitre dans le plan…"></textarea>
+          </div>
+
+          <!-- Pane Guide -->
+          <div class="editor-pane" id="pane-guide">
+            <div class="pane-head">
+              <span class="pane-label-guide">📖 GuideIA.md</span>
+              <span id="guide-mod" class="pane-modified" style="display:none">● modifié</span>
+              <div class="pane-actions">
+                <button class="btn-pane btn-cancel" id="btn-cancel-guide">Annuler</button>
+                <button class="btn-pane btn-apply"  id="btn-apply-guide">Appliquer</button>
+              </div>
+            </div>
+            <textarea class="editor" id="editor-guide" placeholder="Texte rédigé dans le guide…"></textarea>
+          </div>
+
+        </div><!-- /row-top -->
+
+        <!-- Rangée basse : Éléments -->
+        <div id="row-bottom">
+          <div id="elem-head">
+            Éléments du chapitre <span id="elem-ch-title"></span>
+          </div>
+          <div id="elem-body">
+
+            <!-- Mots-clés -->
+            <div class="elem-col" id="col-keywords">
+              <div class="elem-col-head">🏷️ Mots-clés</div>
+              <div class="elem-col-body" id="list-keywords"></div>
+              <button class="elem-add" id="btn-add-keyword">+ Ajouter</button>
+            </div>
+
+            <!-- Figures -->
+            <div class="elem-col" id="col-figures">
+              <div class="elem-col-head">🖼️ Figures</div>
+              <div class="elem-col-body" id="list-figures"></div>
+              <button class="elem-add" id="btn-add-figure">+ Ajouter</button>
+            </div>
+
+            <!-- Encadrés -->
+            <div class="elem-col" id="col-encadres">
+              <div class="elem-col-head">📦 Encadrés</div>
+              <div class="elem-col-body" id="list-encadres"></div>
+              <button class="elem-add" id="btn-add-encadre">+ Ajouter</button>
+            </div>
+
+          </div>
+        </div><!-- /row-bottom -->
+
+      </div><!-- /chapter-view -->
+    </div><!-- /detail -->
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- Modal -->
+<div id="modal-overlay">
+  <div id="modal">
+    <h3 id="modal-title"></h3>
+    <div id="modal-body"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="modal-cancel">Annuler</button>
+      <button class="btn-primary"   id="modal-confirm">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="lib/guide-parser.js"></script>
+<script>
+'use strict';
+
+// ─────────────────────────────────────────────────────────────
+// Chemins
+// ─────────────────────────────────────────────────────────────
+const BASE = (() => {
+  const p = window.location.pathname.replace(/^\//, '').replace(/[^/\\]+$/, '');
+  return p.endsWith('/') || p.endsWith('\\') ? p : p + '/';
+})();
+const PROJECT = BASE.replace(/tools[/\\]$/, '');
+const PATH = {
+  plan:  PROJECT + 'Plan.md',
+  guide: PROJECT + 'GuideIA.md',
+  draft: BASE    + 'plan-editor-draft.json',
+};
+
+// ─────────────────────────────────────────────────────────────
+// État
+// ─────────────────────────────────────────────────────────────
+const S = {
+  connected: false,
+  planText:  '',
+  guideText: '',
+  chapters:  [],
+  draft:     null,
+  selected:  null,
+  edits:     {},
+};
+
+// ─────────────────────────────────────────────────────────────
+// API
+// ─────────────────────────────────────────────────────────────
+const api = {
+  async get(path) {
+    const r = await fetch(`/file?path=${encodeURIComponent(path)}`);
+    if (!r.ok) throw new Error(`GET ${path} → ${r.status}`);
+    return r.text();
+  },
+  async post(path, body) {
+    const r = await fetch(`/file?path=${encodeURIComponent(path)}`, {
+      method: 'POST', headers: {'Content-Type': 'text/plain'}, body,
+    });
+    if (!r.ok) throw new Error(`POST ${path} → ${r.status}`);
+  },
+  async del(path) {
+    await fetch(`/file?path=${encodeURIComponent(path)}`, { method: 'DELETE' }).catch(() => {});
+  },
+  async ping() {
+    try { return (await fetch('/ping')).ok; } catch { return false; }
+  },
+};
+
+// ─────────────────────────────────────────────────────────────
+// Parsing Plan.md et GuideIA.md — délégué à guide-parser.js
+// ─────────────────────────────────────────────────────────────
+const { parsePlan, parseGuide } = GuideParser;
+
+// ─────────────────────────────────────────────────────────────
+// Construction de l'état
+// ─────────────────────────────────────────────────────────────
+function buildState(planText, guideText, draft) {
+  const planChs  = parsePlan(planText);
+  const guideChs = parseGuide(guideText);
+  const planNums  = new Set(planChs.map(c => c.num));
+  const guideNums = new Set(Object.keys(guideChs));
+  const allNums   = [...new Set([...planNums, ...guideNums])].sort((a,b) => +a - +b);
+
+  const chapters = allNums.map(num => {
+    const p = planChs.find(c => c.num === num);
+    const g = guideChs[num];
+    const syncStatus = !p ? 'guide-only' : !g ? 'plan-only' : 'ok';
+    const declaredIds = p ? [...p.keywords, ...(p.figures||[]).map(f=>f.id), ...(p.encadres||[]).map(e=>e.id)] : [];
+    const definedIds  = g ? g.defs : [];
+    const missingDefs = declaredIds.filter(id => !definedIds.includes(id));
+    return {
+      num, title: p ? p.title : '[guide seulement]',
+      planContent:  p ? p.planContent : '',
+      guideContent: g ? g.content    : '',
+      keywords: p ? p.keywords : [],
+      figures:  p ? p.figures  : [],
+      encadres: p ? p.encadres : [],
+      defs: g ? g.defs : [],
+      refs: g ? g.refs : [],
+      syncStatus, missingDefs,
+    };
+  });
+
+  const edits = {};
+  chapters.forEach(ch => {
+    edits[ch.num] = {
+      planContent:  ch.planContent,
+      guideContent: ch.guideContent,
+      keywords:     [...ch.keywords],
+      figures:      ch.figures.map(f => ({...f})),
+      encadres:     ch.encadres.map(e => ({...e})),
+      planModified:  false,
+      guideModified: false,
+    };
+  });
+
+  if (draft && draft.ops) draft.ops.forEach(op => replayOp(op, chapters, edits));
+  return { chapters, edits };
+}
+
+function replayOp(op, chapters, edits) {
+  const edit = edits[op.chapter];
+  switch (op.type) {
+    case 'edit-plan-content':
+      if (edit) { edit.planContent = op.content; edit.planModified = true; } break;
+    case 'edit-guide-content':
+      if (edit) { edit.guideContent = op.content; edit.guideModified = true; } break;
+    case 'add-element':
+      if (edit) {
+        const arr = op.elType === 'keyword' ? edit.keywords : op.elType === 'figure' ? edit.figures : edit.encadres;
+        if (!arr.find(x => (x.id||x) === op.id))
+          arr.push(op.elType === 'keyword' ? op.id : { id: op.id });
+      } break;
+    case 'remove-element':
+      if (edit) {
+        edit.keywords = edit.keywords.filter(k => k !== op.id);
+        edit.figures  = edit.figures.filter(f => f.id !== op.id);
+        edit.encadres = edit.encadres.filter(e => e.id !== op.id);
+      } break;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Draft
+// ─────────────────────────────────────────────────────────────
+function addOp(op) {
+  if (!S.draft) S.draft = { ops: [] };
+  if (op.type === 'edit-plan-content' || op.type === 'edit-guide-content')
+    S.draft.ops = S.draft.ops.filter(o => !(o.type === op.type && o.chapter === op.chapter));
+  S.draft.ops.push(op);
+  api.post(PATH.draft, JSON.stringify(S.draft, null, 2)).catch(console.error);
+  updateTopbar();
+}
+
+// ─────────────────────────────────────────────────────────────
+// Rendu Navigateur
+// ─────────────────────────────────────────────────────────────
+function renderNav() {
+  const list = document.getElementById('chapter-list');
+  list.innerHTML = '';
+  S.chapters.forEach(ch => {
+    const edit = S.edits[ch.num] || {};
+    const modified = edit.planModified || edit.guideModified;
+    const item = document.createElement('div');
+    item.className = 'ch-item' + (ch.num === S.selected ? ' active' : '');
+    item.dataset.num = ch.num;
+
+    const num = document.createElement('span');
+    num.className = 'ch-num'; num.textContent = ch.num;
+
+    const title = document.createElement('span');
+    title.className = 'ch-title'; title.textContent = ch.title;
+
+    const badges = document.createElement('span');
+    badges.className = 'ch-badges';
+    if      (ch.syncStatus === 'plan-only')  badges.innerHTML = `<span class="badge b-only">plan</span>`;
+    else if (ch.syncStatus === 'guide-only') badges.innerHTML = `<span class="badge b-only">guide</span>`;
+    else if (ch.missingDefs.length)          badges.innerHTML = `<span class="badge b-warn">⚠${ch.missingDefs.length}</span>`;
+    else                                     badges.innerHTML = `<span class="badge b-ok">✓</span>`;
+    if (modified) badges.innerHTML += `<span class="badge b-mod">✎</span>`;
+
+    const del = document.createElement('button');
+    del.className = 'ch-del'; del.textContent = '×'; del.title = 'Supprimer';
+    del.onclick = e => { e.stopPropagation(); confirmDeleteCh(ch.num, ch.title); };
+
+    item.append(num, title, badges, del);
+    item.onclick = () => selectCh(ch.num);
+    list.appendChild(item);
+  });
+
+  const total  = S.chapters.length;
+  const issues = S.chapters.filter(c => c.missingDefs.length || c.syncStatus !== 'ok').length;
+  document.getElementById('nav-foot').textContent =
+    `${total} chapitre${total>1?'s':''} · ${issues ? issues+' problème(s)' : 'tout OK'}`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Rendu détail
+// ─────────────────────────────────────────────────────────────
+function selectCh(num) {
+  S.selected = num;
+  renderNav();
+  renderDetail();
+}
+
+function renderDetail() {
+  const ch = S.chapters.find(c => c.num === S.selected);
+  document.getElementById('empty-state').style.display    = ch ? 'none' : 'flex';
+  document.getElementById('chapter-view').style.display   = ch ? 'flex' : 'none';
+  if (!ch) return;
+
+  const edit = S.edits[ch.num] || {};
+
+  // Header
+  document.getElementById('ch-title').textContent = `${ch.num}. ${ch.title}`;
+  const syncEl = document.getElementById('ch-sync');
+  if      (ch.syncStatus === 'plan-only')  syncEl.textContent = '⚠ plan seulement';
+  else if (ch.syncStatus === 'guide-only') syncEl.textContent = '⚠ guide seulement';
+  else if (ch.missingDefs.length)          syncEl.textContent = `⚠ ${ch.missingDefs.length} balise(s) sans {{def}} dans le guide`;
+  else                                     syncEl.textContent = '✓ synchronisé';
+
+  // Éditeurs
+  const ePlan  = document.getElementById('editor-plan');
+  const eGuide = document.getElementById('editor-guide');
+  ePlan.value  = edit.planContent  || '';
+  eGuide.value = edit.guideContent || '';
+  ePlan.classList.toggle('modified',  edit.planModified  || false);
+  eGuide.classList.toggle('modified', edit.guideModified || false);
+  document.getElementById('plan-mod').style.display  = edit.planModified  ? 'inline' : 'none';
+  document.getElementById('guide-mod').style.display = edit.guideModified ? 'inline' : 'none';
+
+  // Éléments
+  document.getElementById('elem-ch-title').textContent = `— ch. ${ch.num}`;
+  renderElemList('keywords', edit.keywords || [], ch.defs);
+  renderElemList('figures',  edit.figures  || [], ch.defs);
+  renderElemList('encadres', edit.encadres || [], ch.defs);
+}
+
+function renderElemList(type, items, definedIds) {
+  const container = document.getElementById('list-' + type);
+  container.innerHTML = '';
+  const ids = items.map(x => typeof x === 'string' ? x : x.id);
+  ids.forEach(id => {
+    const row = document.createElement('div');
+    row.className = 'elem-row';
+    const isDef = definedIds.includes(id);
+    row.innerHTML = `
+      <span class="badge ${isDef ? 'b-ok' : 'b-warn'}">${isDef ? '✓' : '○'}</span>
+      <span class="elem-id">${id}</span>
+      <button class="elem-del" title="Supprimer">×</button>`;
+    row.querySelector('.elem-del').onclick = () => deleteElem(type, id);
+    container.appendChild(row);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// Actions éditeurs
+// ─────────────────────────────────────────────────────────────
+function applyPlan() {
+  const num = S.selected; if (!num) return;
+  const content = document.getElementById('editor-plan').value;
+  addOp({ type: 'edit-plan-content', chapter: num, content });
+  if (S.edits[num]) { S.edits[num].planContent = content; S.edits[num].planModified = true; }
+  renderNav(); renderDetail();
+  toast('Plan — modification enregistrée dans la révision');
+}
+function cancelPlan() {
+  const ch = S.chapters.find(c => c.num === S.selected);
+  if (ch) document.getElementById('editor-plan').value = ch.planContent;
+}
+function applyGuide() {
+  const num = S.selected; if (!num) return;
+  const content = document.getElementById('editor-guide').value;
+  addOp({ type: 'edit-guide-content', chapter: num, content });
+  if (S.edits[num]) { S.edits[num].guideContent = content; S.edits[num].guideModified = true; }
+  renderNav(); renderDetail();
+  toast('Guide — modification enregistrée dans la révision');
+}
+function cancelGuide() {
+  const ch = S.chapters.find(c => c.num === S.selected);
+  if (ch) document.getElementById('editor-guide').value = ch.guideContent;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Actions éléments
+// ─────────────────────────────────────────────────────────────
+function deleteElem(type, id) {
+  const num = S.selected; if (!num) return;
+  addOp({ type: 'remove-element', chapter: num, elType: type, id });
+  const edit = S.edits[num];
+  if (edit) {
+    if (type === 'keywords') edit.keywords = edit.keywords.filter(k => k !== id);
+    if (type === 'figures')  edit.figures  = edit.figures.filter(f => f.id !== id);
+    if (type === 'encadres') edit.encadres = edit.encadres.filter(e => e.id !== id);
+  }
+  renderDetail(); renderNav();
+  toast('Élément supprimé (révision)');
+}
+
+function promptAddElem(type) {
+  const num = S.selected; if (!num) return;
+  const labels = { keywords: 'mot-clé', figures: 'figure', encadres: 'encadré' };
+  showModal(`Ajouter un ${labels[type]}`, `
+    <label>Identifiant</label>
+    <input id="m-id" placeholder="ex: hallucination" autocomplete="off" />
+  `, () => {
+    const id = document.getElementById('m-id').value.trim();
+    if (!id) { toast('Identifiant requis', true); return false; }
+    addOp({ type: 'add-element', chapter: num, elType: type, id });
+    const edit = S.edits[num];
+    if (edit) {
+      if (type === 'keywords') edit.keywords.push(id);
+      if (type === 'figures')  edit.figures.push({ id });
+      if (type === 'encadres') edit.encadres.push({ id });
+    }
+    renderDetail(); renderNav();
+    toast(`${labels[type]} ajouté`);
+    return true;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// Actions chapitres
+// ─────────────────────────────────────────────────────────────
+function promptAddCh() {
+  showModal('Ajouter un chapitre', `
+    <label>Numéro</label>
+    <input id="m-num" type="number" min="1" placeholder="ex: 9" autocomplete="off" />
+    <label>Titre</label>
+    <input id="m-title" placeholder="ex: Conclusion" autocomplete="off" />
+  `, () => {
+    const num   = document.getElementById('m-num').value.trim();
+    const title = document.getElementById('m-title').value.trim();
+    if (!num || !title) { toast('Numéro et titre requis', true); return false; }
+    if (S.chapters.find(c => c.num === num)) { toast('Ce numéro existe déjà', true); return false; }
+    addOp({ type: 'add-chapter', chapter: num, title });
+    S.chapters.push({ num, title, planContent: '', guideContent: '', keywords: [], figures: [], encadres: [], defs: [], refs: [], syncStatus: 'plan-only', missingDefs: [] });
+    S.chapters.sort((a,b) => +a.num - +b.num);
+    S.edits[num] = { planContent: '', guideContent: '', keywords: [], figures: [], encadres: [], planModified: true, guideModified: false };
+    renderNav(); selectCh(num);
+    toast('Chapitre ajouté');
+    return true;
+  });
+}
+
+function confirmDeleteCh(num, title) {
+  showModal(`Supprimer le chapitre ${num}`, `
+    <p>Supprimer <strong style="color:#cdd6f4">${title}</strong> du plan et du guide ?<br>
+    Cette opération sera enregistrée dans la révision.</p>
+  `, () => {
+    addOp({ type: 'remove-chapter', chapter: num });
+    S.chapters = S.chapters.filter(c => c.num !== num);
+    if (S.selected === num) S.selected = null;
+    renderNav(); renderDetail();
+    toast('Chapitre supprimé (révision)');
+    return true;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// Save
+// ─────────────────────────────────────────────────────────────
+async function save() {
+  if (!S.draft || !S.draft.ops.length) { toast('Aucune modification à enregistrer'); return; }
+  const today   = new Date().toISOString().slice(0,10);
+  const summary = S.draft.ops.map(op => {
+    if (op.type === 'edit-plan-content')  return `Contenu plan ch.${op.chapter} modifié`;
+    if (op.type === 'edit-guide-content') return `Contenu guide ch.${op.chapter} modifié`;
+    if (op.type === 'add-chapter')        return `Chapitre ${op.chapter} "${op.title}" ajouté`;
+    if (op.type === 'remove-chapter')     return `Chapitre ${op.chapter} supprimé`;
+    if (op.type === 'add-element')        return `Élément "${op.id}" ajouté (ch.${op.chapter})`;
+    if (op.type === 'remove-element')     return `Élément "${op.id}" supprimé (ch.${op.chapter})`;
+    return op.type;
+  }).join('\n- ');
+  const entry = `\n### Révision ${today}\n- ${summary}`;
+
+  showModal('Confirmer l\'enregistrement', `
+    <p style="margin-bottom:10px">Les modifications seront appliquées à <strong style="color:#cdd6f4">Plan.md</strong> et <strong style="color:#cdd6f4">GuideIA.md</strong>.</p>
+    <label>Entrée Changelog (modifiable)</label>
+    <textarea id="m-cl">${entry}</textarea>
+  `, async () => {
+    try {
+      const cl = document.getElementById('m-cl').value;
+      let planText  = S.planText;
+      let guideText = S.guideText;
+      for (const op of S.draft.ops) {
+        if (op.type === 'edit-plan-content')
+          planText  = replacePlanContent(planText,  op.chapter, op.content);
+        if (op.type === 'edit-guide-content')
+          guideText = replaceGuideContent(guideText, op.chapter, op.content);
+      }
+      if (cl.trim()) { planText += '\n' + cl; guideText += '\n' + cl; }
+      await api.post(PATH.plan,  planText);
+      await api.post(PATH.guide, guideText);
+      await api.del(PATH.draft);
+      S.draft = null;
+      await load();
+      toast('✓ Enregistré');
+      return true;
+    } catch(e) { toast('Erreur : ' + e.message, true); return false; }
+  });
+}
+
+function replacePlanContent(text, num, content) {
+  const delimMatch = text.match(/<!--[^\n]*CONTENU[^\n]*-->/i);
+  if (!delimMatch) return text;
+  const idx    = text.indexOf(delimMatch[0]) + delimMatch[0].length;
+  const before = text.slice(0, idx);
+  let   after  = text.slice(idx);
+  after = after.replace(
+    new RegExp(`(^### +${num}[.\\-\\s][^\\n]+\\n[\\s\\S]*?)(^#### Contenu\\s*\\n)([\\s\\S]*?)(?=^####|^###|$)`, 'm'),
+    (_, h, c) => h + c + content + '\n'
+  );
+  return before + after;
+}
+function replaceGuideContent(text, num, content) {
+  return text.replace(
+    new RegExp(`(^### +${num}[.\\-\\s][^\\n]+\\n)([\\s\\S]*?)(?=^###|$)`, 'm'),
+    (_, h) => h + content + '\n\n'
+  );
+}
+
+async function discard() {
+  showModal('Abandonner la révision', `
+    <p>Toutes les modifications en cours seront perdues.<br>
+    Les fichiers sources ne seront pas modifiés.</p>
+  `, async () => {
+    S.draft = null;
+    await api.del(PATH.draft);
+    await load();
+    toast('Révision abandonnée');
+    return true;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// Chargement
+// ─────────────────────────────────────────────────────────────
+async function load() {
+  try {
+    S.planText  = await api.get(PATH.plan);
+    S.guideText = await api.get(PATH.guide);
+  } catch(e) { setConn(false, 'Fichiers introuvables'); return; }
+
+  let draft = null;
+  try { draft = JSON.parse(await api.get(PATH.draft)); } catch {}
+  S.draft = draft;
+
+  const { chapters, edits } = buildState(S.planText, S.guideText, draft);
+  S.chapters = chapters;
+  S.edits    = edits;
+
+  renderNav();
+  if (S.selected) renderDetail();
+  updateTopbar();
+}
+
+function setConn(ok, msg) {
+  S.connected = ok;
+  document.getElementById('conn-dot').className = 'dot ' + (ok ? 'dot-green' : 'dot-red');
+  document.getElementById('status-text').textContent = msg || (ok ? 'Connecté — ' + PROJECT : 'Déconnecté');
+  updateTopbar();
+}
+
+function updateTopbar() {
+  const hasOps = S.draft && S.draft.ops && S.draft.ops.length > 0;
+  document.getElementById('badge-revision').style.display = hasOps ? 'inline' : 'none';
+  document.getElementById('btn-save').disabled    = !S.connected || !hasOps;
+  document.getElementById('btn-discard').disabled = !S.connected || !hasOps;
+}
+
+// ─────────────────────────────────────────────────────────────
+// Modal
+// ─────────────────────────────────────────────────────────────
+let _cb = null;
+function showModal(title, body, cb) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = body;
+  _cb = cb;
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(() => { const f = document.querySelector('#modal-body input,#modal-body textarea'); if(f) f.focus(); }, 40);
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); _cb = null; }
+
+// ─────────────────────────────────────────────────────────────
+// Toast
+// ─────────────────────────────────────────────────────────────
+let _tt;
+function toast(msg, err) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show' + (err ? ' err' : '');
+  clearTimeout(_tt);
+  _tt = setTimeout(() => el.className = '', 2500);
+}
+
+// ─────────────────────────────────────────────────────────────
+// Listeners
+// ─────────────────────────────────────────────────────────────
+document.getElementById('btn-apply-plan').onclick   = applyPlan;
+document.getElementById('btn-cancel-plan').onclick  = cancelPlan;
+document.getElementById('btn-apply-guide').onclick  = applyGuide;
+document.getElementById('btn-cancel-guide').onclick = cancelGuide;
+document.getElementById('btn-add-ch').onclick       = promptAddCh;
+document.getElementById('btn-save').onclick         = save;
+document.getElementById('btn-discard').onclick      = discard;
+document.getElementById('btn-add-keyword').onclick  = () => promptAddElem('keywords');
+document.getElementById('btn-add-figure').onclick   = () => promptAddElem('figures');
+document.getElementById('btn-add-encadre').onclick  = () => promptAddElem('encadres');
+document.getElementById('modal-confirm').onclick    = async () => { if(_cb){ const r=await _cb(); if(r!==false) closeModal(); }};
+document.getElementById('modal-cancel').onclick     = closeModal;
+document.getElementById('modal-overlay').onclick    = e => { if(e.target===document.getElementById('modal-overlay')) closeModal(); };
+
+// ─────────────────────────────────────────────────────────────
+// Init
+// ─────────────────────────────────────────────────────────────
+(async () => {
+  const ok = await api.ping();
+  setConn(ok);
+  if (ok) await load();
+})();
+</script>
+</body>
+</html>
