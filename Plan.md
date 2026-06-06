@@ -86,7 +86,10 @@ Figures : `immo-regression`, `immo-outliers`, `immo-deux-segments`, `immo-underf
 5. [Le problème du poisson rouge](#5-le-problème-du-poisson-rouge)
 6. [C'est quoi le contexte ?](#6-cest-quoi-le-contexte-)
 7. [Le problème de l'attention](#7-le-problème-de-lattention)
-8. [Conclusion](#8-conclusion)
+8. [Annexe technique — Apprentissage et transformeurs](#8-annexe-technique--apprentissage-et-transformeurs)
+9. [Alors docteur, on fait quoi ?](#9-alors-docteur-on-fait-quoi-)
+10. [Cas pratiques](#10-cas-pratiques)
+11. [Conclusion](#11-conclusion)
 
 <!-- ============================================================
      CONTENU DU GUIDE
@@ -169,6 +172,10 @@ arrive au ch. 3.*
 *Note : ouvrir le chapitre sur l'anthropomorphisme comme stratégie cognitive — c'est naturel,
 c'est pratique, il suffit de garder les limites en tête. Transition naturelle depuis le ch. 1.*
 
+*Note : étoffer la section "Valider" — trop courte. Ajouter des exemples concrets : vérifier les sources citées, croiser avec le bon sens, tester les affirmations factuelles.*
+
+*Note : la section "Documenter en même temps" est intégrée dans le guide sous "Trois bonnes nouvelles", pas comme section séparée. Le plan est aligné sur cette structure.*
+
 **Comment gérer ce profil**
 Pas de secret : exploiter ses qualités en limitant ses défauts.
 - Être clair dans les questions et les directives
@@ -214,6 +221,9 @@ le pli, c'est fluide.
 > Flux aller (prompt) et retour (réponse) distincts entre chaque composant.
 > Trois nœuds : humain (gris, neutre), orchestrateur (teal), modèle/LLM (violet).
 > Style épuré, flèches directionnelles, labels courts.
+> Enrichir avec les données externes sur l'orchestrateur (web, fichiers...) — philosophie "complet mais juste assez" :
+> montrer que l'orchestrateur peut aller chercher des données externes sans les détailler dans le texte.
+> Le lecteur voit l'architecture complète dès le ch. 3 et la visite progressivement dans les chapitres suivants.
 
 #### Encadrés
 
@@ -334,6 +344,15 @@ humaine il n'y a un texte aussi tarabiscoté que le verbiage d'un prompt systèm
 Ça repose sur le concept d'interpolation. Je vais l'expliquer en partant d'un exemple
 volontairement très simple.
 
+*Note : introduire le biais de positivité dès ce chapitre, juste après l'explication de
+l'interpolation sur des textes humains. Idée : dans la base d'entraînement, il y a très
+peu de "je ne sais pas". Le modèle génère ce qu'il a vu — et il a rarement vu quelqu'un
+admettre son ignorance. Troisième grand problème structurel avec les hallucinations et l'attention.*
+
+*Note (Monsieur Jourdain) : réintroduire la référence — "Sans le savoir, je viens de
+construire un modèle" → "Comme Monsieur Jourdain faisait de la prose, je viens de
+construire un modèle."*
+
 **L'exemple immobilier**
 Je voudrais estimer la valeur d'un appartement. Je dispose d'une liste de transactions
 immobilières avec les surfaces et les prix.
@@ -444,10 +463,9 @@ Solution : l'orchestrateur renvoie tout l'historique dans le texte à compléter
 Utiliser la figure prompt-etendu-historique ici.
 
 Ce message complet s'appelle tantôt "prompt", tantôt "contexte" — parce qu'il contient
-à la fois la question et les éléments de contexte nécessaires pour y répondre. Glisser
-l'humour : ce paragraphe vient d'utiliser le mot "contexte" en lui donnant deux sens
-légèrement différents — exactement le genre d'ambiguïté que les chapitres suivants
-vont explorer.
+à la fois la question et les éléments de contexte nécessaires pour y répondre. La note
+d'humour sur la double signification de "contexte" est intégrée dans le guide de façon
+naturelle — plan aligné sur la structure du guide.
 
 **L'importance de maîtriser la longueur**
 Le message envoyé au modèle a une taille limite — la fenêtre de contexte —
@@ -456,6 +474,8 @@ Quand on approche de la limite, l'orchestrateur peut compresser l'historique
 (résumer les échanges anciens) pour faire de la place.
 
 Tout ce texte a un coût : c'est ce qu'on appelle les tokens — voir encadré tokens.
+(Inclure dans l'encadré : coût énergétique — calcul GPU, donc énergie — sans jugement
+de valeur, pour raccrocher ce que les gens entendent aux bons concepts.)
 
 Un contexte très long peut aussi créer de la confusion pour le modèle — on verra
 pourquoi dans le chapitre sur l'attention.
@@ -500,6 +520,21 @@ envoyé au moteur. On en a déjà vu deux exemples : le prompt système (géré 
 l'orchestrateur) et l'historique de la session. Le contexte a plusieurs rôles :
 contrôler le style de la réponse, orienter les priorités de génération, et donner
 de la mémoire au modèle.
+
+*Note : la section déclaratif/impératif est à supprimer du guide (décision de session).
+La supprimer aussi du plan — ne pas développer ce concept ici.*
+
+*Note : remplacer la référence à l'encadré `tokens-speciaux` dans le guide par un renvoi
+vers l'annexe technique.*
+
+*Note : ajouter un petit exemple narratif autour de l'email — sur le modèle de l'exemple
+météo du contexte dynamique. Renforce un concept important pour ceux qui n'ont pas encore
+généralisé. Rapide, en "racontant une histoire".*
+
+*Note : positionner ici le concept "boucle d'or" (Goldilocks) — niveau de détail optimal
+dans un prompt. Ni trop vague (le modèle improvise), ni trop contraint (on perd la valeur
+de l'IA). À placer après l'explication du contexte déclaratif, comme règle pratique issue
+du fonctionnement du modèle.*
 
 **Pourquoi "contexte" est bien choisi**
 Le langage humain est par essence ambigu et dépendant du contexte.
@@ -666,7 +701,9 @@ contexte mal structuré, traitant plusieurs sujets à la fois, peut introduire d
 ambiguïtés. Le modèle peut mélanger des fils pourtant distincts. Raison supplémentaire
 pour la règle d'or : une session, un sujet.
 
-**Conclusion pratique** (intégrée à la section dilution dans le guide)
+*Note : cette section est présente dans le guide mais absente du plan — ajoutée ici.*
+
+**Conclusion pratique** (fusionnée avec la section dilution dans le guide)
 - Des prompts courts et ciblés
 - Les informations importantes en tête ou en queue de contexte
 - Ne pas injecter de documents entiers si seules quelques sections sont pertinentes
@@ -675,7 +712,79 @@ pour la règle d'or : une session, un sujet.
 
 ---
 
-### 8. Conclusion
+### 8. Annexe technique — Apprentissage et transformeurs
+
+#### Mots-clés
+- transformer
+- self-attention
+- token
+- génération token par token
+- tokens spéciaux
+- apprentissage
+- RLHF
+- KV cache
+- espace latent
+- distance sémantique
+
+#### Figures
+
+#### Encadrés
+
+#### Contenu
+
+Annexe optionnelle — le livre est complet sans elle. Pour les lecteurs qui veulent comprendre
+vraiment comment ça marche sous le capot. Ton plus dense que les chapitres principaux.
+
+Contenu :
+- Transformer à haut niveau
+- Self-attention (version technique du ch. 7)
+- Génération token par token
+- Tokens spéciaux (encadré `tokens-speciaux` déplacé depuis ch. 6)
+- Apprentissage et coût de calcul
+- RLHF
+- KV cache (pourquoi ça compte)
+- Espace latent et distance sémantique
+
+*Note : l'encadré `tokens-speciaux` du ch. 6 est déplacé ici. Le guide ch. 6 doit
+remplacer la référence par un renvoi vers cette annexe.*
+
+---
+
+### 9. Alors docteur, on fait quoi ?
+
+#### Mots-clés
+- hallucination
+- biais de positivité
+- attention
+- dilution
+- boucle d'or
+- outillage
+
+#### Figures
+
+#### Encadrés
+
+#### Contenu
+
+Chapitre pratique — boîte à outils face aux limites identifiées dans le guide.
+
+**Pattern Pourquoi / Comment / Quoi** (retour Régis) : allers-retours fréquents entre
+niveaux d'abstraction dans le travail avec une IA. Comment naviguer entre ces niveaux.
+
+**Trois grands problèmes structurels et leurs remèdes pratiques :**
+- Hallucinations : comment les détecter, comment limiter le risque
+- Biais de positivité : pourquoi l'IA dit rarement "je ne sais pas", comment le forcer
+- Attention/dilution : prompts courts, information critique en tête ou en queue
+
+**L'outillage comme réponse concrète aux limites** : présenter les outils non pas en
+annexe mais comme une réponse directe aux problèmes structurels. L'outillage change ce
+que l'IA peut faire, pas seulement comment on lui parle.
+
+*(à compléter au fil des chapitres)*
+
+---
+
+### 10. Cas pratiques
 
 #### Mots-clés
 
@@ -684,3 +793,41 @@ pour la règle d'or : une session, un sujet.
 #### Encadrés
 
 #### Contenu
+
+Cas tirés de l'expérience de l'auteur :
+
+1. Écriture de documentation technique
+2. Gouvernance
+3. Codage
+4. Comment nous avons écrit ce guide — Claude et moi (bouclage narratif)
+
+Cas supplémentaires à envisager :
+- Recommandations instructions / setup du système — comment bien configurer son assistant
+- Gérer deux IA : une perso et une pro — séparation des contextes, des données, des usages
+
+---
+
+### 11. Conclusion
+
+#### Mots-clés
+
+#### Figures
+
+#### Encadrés
+
+#### Contenu
+
+**Structure à vérifier** : bouclantes (limites structurelles, réflexes) présentes et
+solides — ouvrante manquante, à ajouter.
+
+**Paragraphe prospectif** (retour Régis) : ouvrante finale — modélisation du monde,
+rythme d'innovation, Capex, mise en perspective historique (révolution industrielle,
+électricité), espoirs et craintes. Se place en fin de conclusion après les bouclantes
+existantes, à la place de "Bonne collaboration" qui est trop plat.
+
+**Remerciements** : ajouter en fin de conclusion — les personnes avec qui l'auteur
+a discuté, y compris les IA.
+
+**Note données privées / RGPD** : hors périmètre du guide. Ajouter une phrase dans
+l'introduction qui délimite proprement : ce guide traite du fonctionnement et de
+l'utilisation, pas des aspects légaux, contractuels ou de confidentialité.

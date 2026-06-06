@@ -17,7 +17,8 @@ todo, backlog, guideIA, tâches, idées, contenu, méthode, outillage
 ## High priority
 
 - [ ] [O1] Finaliser le plan du chapitre 7 | Exemples, articulation avec ch. 5 et 6, lien "lost in the middle"
-- [ ] [O2] Travailler le plan du chapitre 8 | Conclusion
+- [ ] [O2] Travailler le plan des ch. 9 et 10 | Ch. 9 "Alors docteur, on fait quoi ?" et ch. 10 "Cas pratiques" — squelettes dans Plan.md à étoffer en session dédiée
+- [ ] [O13] Trancher — {{def:mk:prompt}} au ch. 1 ou ch. 3 | Mention en passant au ch. 1, définition formelle au ch. 3 — décider où se trouve la {{def:...}} officielle
 
 ## Normal
 
@@ -28,6 +29,16 @@ todo, backlog, guideIA, tâches, idées, contenu, méthode, outillage
 - [ ] [O7] Développer l'encadré technique | La polysémie — pourquoi le langage est intrinsèquement ambigu (mentionné dans le chapitre 7)
 - [ ] [O8] Explorer la possibilité de produire des présentations à partir du guide | Slides avec images et animations — format et outillage à définir
 - [ ] [O9] Définir la convention "encadré technique" dans Methode.md | Usage, format, place dans le guide
+- [ ] [O14] Corriger le guide ch. 1 | Introduire LLM et équivalents grand public (ChatGPT, Gemini) — absent de la version actuelle
+- [ ] [O15] Étoffer "Valider" au ch. 2 | Trop court — ajouter exemples concrets : vérifier les sources citées, croiser avec le bon sens, tester les affirmations factuelles
+- [ ] [O16] Supprimer déclaratif/impératif du guide ch. 6 | Décision de session — passage présent dans le guide, à retirer
+- [ ] [O17] Introduire le biais de positivité au ch. 4 | Après l'explication de l'interpolation — troisième grand problème structurel avec hallucinations et attention
+- [ ] [O18] Réintroduire Monsieur Jourdain au ch. 4 | "Sans le savoir, je viens de construire un modèle" → "Comme Monsieur Jourdain faisait de la prose..."
+- [ ] [O19] Ajouter exemple narratif email au ch. 6 | Sur le modèle de l'exemple météo — renforce le concept de contexte dynamique
+- [ ] [O20] Positionner la "boucle d'or" au ch. 6 | Niveau de détail optimal dans un prompt (Goldilocks) — après l'explication du contexte déclaratif
+- [ ] [O21] Ajouter paragraphe prospectif en conclusion | Retour Régis — perspective historique, rythme d'innovation, espoirs et craintes. Remplace "Bonne collaboration"
+- [ ] [O22] Ajouter remerciements en conclusion | Y compris les IA
+- [ ] [O23] Ajouter phrase RGPD/données privées en introduction | Délimiter le périmètre : ce guide traite du fonctionnement et de l'utilisation, pas des aspects légaux ou de confidentialité
 
 ## Low priority
 
@@ -52,6 +63,17 @@ todo, backlog, guideIA, tâches, idées, contenu, méthode, outillage
 |------|-------------|
 
 ## Changelog
+
+### Version 6.0 - Consolidation notes tmp/ + nouveaux chapitres
+**Date:** 2026-06-06
+**Reason:** Intégration des notes tmp/notes-alignement-plan-guide.md et tmp/notes-retours-regis.md.
+Renumérotation des chapitres suite à l'ajout de ch. 9 "Alors docteur" et ch. 10 "Cas pratiques".
+
+**Changes:**
+- High priority : O2 mis à jour (ch. 8 Conclusion → ch. 9 et 10 nouveaux) ; O13 ajouté (trancher {{def:mk:prompt}})
+- Normal : O14 à O23 ajoutés (corrections guide ch. 1/2/4/6, boucle d'or, biais de positivité, conclusion)
+
+---
 
 ### Version 5.0 - W3 ajouté + batch thème/démarrage
 **Date:** 2026-06-05
