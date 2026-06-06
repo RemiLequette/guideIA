@@ -1,6 +1,7 @@
 # Journal
 
 ## Sessions
+- [Session 2026-06-06b — Structure du plan et méta](#session-2026-06-06b--structure-du-plan-et-méta)
 - [Session 2026-06-06 — Consolidation notes tmp/ dans Plan.md et Todo.md](#session-2026-06-06--consolidation-notes-tmp-dans-planmd-et-todomd)
 - [Session 2026-06-02 — Mise en place du projet et rédaction du plan](#session-2026-06-02--mise-en-place-du-projet-et-rédaction-du-plan)
 - [Session 2026-06-02b — Appendice et mise à jour de la méthode](#session-2026-06-02b--appendice-et-mise-à-jour-de-la-méthode)
@@ -10,6 +11,24 @@
 - [Session 2026-06-02f — Balises : mots-clés, figures, encadrés](#session-2026-06-02f--balises--mots-clés-figures-encadrés)
 - [Session 2026-06-02g — Outillage : script de rendu HTML](#session-2026-06-02g--outillage--script-de-rendu-html)
 - [Session 2026-06-05 — plan-editor : bugs, thème, poubelle](#session-2026-06-05--plan-editor--bugs-thème-poubelle)
+
+---
+
+## Session 2026-06-06b — Structure du plan et méta
+
+### Décisions
+- Structure en parties introduite : Intro → Partie 1 (Comprendre pour bien utiliser) → Partie 2 (Retours d'expérience) → Partie 3 (Pour aller plus loin) → Conclusion
+- 4 nouveaux chapitres en Partie 2 : Cas pratiques, Discours de la méthode, Développer sa base de connaissance, Exemples de conversations
+- Ancienne annexe technique (ex ch. 8) devient ch. 13 en Partie 3
+- "Alors docteur" repositionné en clôture de Partie 1 (ch. 8)
+- Deux éléments méta ajoutés dans Plan.md : philosophie du guide (*on n'utilise bien que ce que l'on comprend bien*) et structure narrative des trois parties
+- TODO O24 (présentation structure intro), O25 (convention remerciements), O26 (convention parties dans Methode.md)
+- WIP W4/W5/W6 : renumérotation par Rémi avec le plan-editor, puis deux sessions dédiées (convention parties, injection dans le guide)
+
+### Collaboration
+- HOC appliqué en temps réel : recadrage net quand je dérivais vers le contenu alors qu'on travaillait la structure. Bel exemple de la méthode appliquée à elle-même.
+- La vision est arrivée complète et cohérente d'un coup — la session a été essentiellement de la mise en forme et de la validation, pas de l'exploration. Efficace.
+- Bootstrap de la prochaine session préparé : séquence W4 → W5 → W6 documentée dans le TODO, métas suffisamment robustes pour que la renumérotation n'affecte pas la reprise.
 
 ---
 

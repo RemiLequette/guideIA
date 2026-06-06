@@ -19,6 +19,9 @@ todo, backlog, guideIA, tâches, idées, contenu, méthode, outillage
 - [ ] [O1] Finaliser le plan du chapitre 7 | Exemples, articulation avec ch. 5 et 6, lien "lost in the middle"
 - [ ] [O2] Travailler le plan des ch. 9 et 10 | Ch. 9 "Alors docteur, on fait quoi ?" et ch. 10 "Cas pratiques" — squelettes dans Plan.md à étoffer en session dédiée
 - [ ] [O13] Trancher — {{def:mk:prompt}} au ch. 1 ou ch. 3 | Mention en passant au ch. 1, définition formelle au ch. 3 — décider où se trouve la {{def:...}} officielle
+- [ ] [O24] Présentation de la structure dans l'introduction | Comment annoncer l'arc narratif (ancrage → mécanique → pratique) sans catalogue plat — à définir en session dédiée (voir note Plan.md ch. 1)
+- [ ] [O25] Convention remerciements dans Methode.md | Définir la bonne pratique : placement (fin de conclusion vs section séparée), forme, qui citer — pour ne pas être ingrat dans le futur
+- [ ] [O26] Ajouter la convention "parties" dans Methode.md | Structure technique et markdown pour les parties (niveau au-dessus des chapitres) — titre, numérotation, rendu HTML
 
 ## Normal
 
@@ -51,6 +54,9 @@ todo, backlog, guideIA, tâches, idées, contenu, méthode, outillage
 ## WIP
 
 - [ ] [WIP] [W1] Outil de relecture et coopération | Un outil permettant de relire le guide section par section avec l'assistant — navigation dans le texte, annotations, propositions de reformulation, validation collaborative. Format et interface à définir ensemble en session. [effort: XL]
+- [ ] [WIP] [W4] Renumérotation des chapitres avec le plan-editor | Suite à la restructuration en parties — à faire par Rémi avant les sessions suivantes
+- [ ] [WIP] [W5] Convention parties dans Methode.md | Définir la convention markdown et technique pour les parties (session dédiée)
+- [ ] [WIP] [W6] Injection des parties dans le guide | À partir des métas de Plan.md, après W4 et W5 (session dédiée)
 
 ## Done
 

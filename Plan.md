@@ -41,6 +41,18 @@ Ces règles gouvernent la façon dont les concepts et les idées sont introduits
 - **Structure** : définie par les chapitres ci-dessous
 - **Balises** : système `{{def:...}}` / `{{ref:...}}` décrit dans `Methode.md`
 
+### Philosophie du guide
+
+**On n'utilise bien que ce que l'on comprend bien.** Cette conviction est le fil directeur du guide : expliquer le fonctionnement interne des IA n'est pas une fin en soi, c'est la condition pour en tirer le meilleur parti et éviter les pièges.
+
+### Structure narrative
+
+Le guide est organisé en trois parties après l'introduction :
+
+- **Partie 1** — forme un tout autonome et suffisant pour la plupart des lecteurs. Elle s'ouvre sur les grandes limitations (ce que les gens ont entendu comme faits ou légendes urbaines), explique la mécanique qui les cause, et se conclut sur les remèdes pratiques. Le lecteur qui comprend pourquoi ces limitations existent est bien mieux armé pour les contourner.
+- **Partie 2** — retours d'expérience à la première personne. Cas pratiques, méthode, exemples de conversations.
+- **Partie 3** — annexes techniques pour ceux qui veulent aller plus loin sous le capot. Le guide est complet sans elle.
+
 ### Note de collaboration
 
 Ce projet est lui-même un exemple de collaboration humain-IA. La façon dont il se déroule — les échanges, les ajustements, les erreurs, les découvertes — constitue la matière première de l'appendice final du guide. Il faut donc documenter la collaboration au fil de l'eau, pas après coup.
@@ -119,6 +131,9 @@ Figures : `immo-regression`, `immo-outliers`, `immo-deux-segments`, `immo-underf
 
 ## Chapitres
 
+**Introduction** *(hors partie)*
+
+**Partie 1 — Comprendre pour bien utiliser**
 1. [Introduction](#1-introduction)
 2. [Travailler avec une IA](#2-travailler-avec-une-ia)
 3. [Le modèle et l'orchestrateur](#3-le-modèle-et-lorchestrat eur)
@@ -126,10 +141,18 @@ Figures : `immo-regression`, `immo-outliers`, `immo-deux-segments`, `immo-underf
 5. [Le problème du poisson rouge](#5-le-problème-du-poisson-rouge)
 6. [C'est quoi le contexte ?](#6-cest-quoi-le-contexte-)
 7. [Le problème de l'attention](#7-le-problème-de-lattention)
-8. [Annexe technique — Apprentissage et transformeurs](#8-annexe-technique--apprentissage-et-transformeurs)
-9. [Alors docteur, on fait quoi ?](#9-alors-docteur-on-fait-quoi-)
-10. [Cas pratiques](#10-cas-pratiques)
-11. [Conclusion](#11-conclusion)
+8. [Alors docteur, on fait quoi ?](#8-alors-docteur-on-fait-quoi-)
+
+**Partie 2 — Retours d'expérience** *(à la première personne)*
+9. [Cas pratiques](#9-cas-pratiques)
+10. [Discours de la méthode](#10-discours-de-la-méthode)
+11. [Développer sa base de connaissance](#11-développer-sa-base-de-connaissance)
+12. [Exemples de conversations](#12-exemples-de-conversations)
+
+**Partie 3 — Pour aller plus loin**
+13. [Apprentissage et transformeurs](#13-apprentissage-et-transformeurs)
+
+**Conclusion** *(hors partie)*
 
 <!-- ============================================================
      CONTENU DU GUIDE
@@ -192,6 +215,10 @@ fausses, parfois de façon moins détectable.
 *Note : glisser le mot "prompt" en passant, avec un exemple minimal montrant la différence
 entre un prompt flou et un prompt clair. Pas de développement ici — la définition formelle
 arrive au ch. 3.*
+
+*Note : présenter la structure du guide en fin d'introduction — à définir en session dédiée.
+Comment annoncer l'arc narratif au lecteur (ancrage → mécanique → pratique) sans tomber
+dans le catalogue plat "le chapitre 3 fait ceci, le chapitre 4 fait cela".*
 
 ---
 
