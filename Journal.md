@@ -8,6 +8,7 @@
 - [Session 2026-06-02e — Plan chapitre 7 (en cours)](#session-2026-06-02e--plan-chapitre-7-en-cours)
 - [Session 2026-06-02f — Balises : mots-clés, figures, encadrés](#session-2026-06-02f--balises--mots-clés-figures-encadrés)
 - [Session 2026-06-02g — Outillage : script de rendu HTML](#session-2026-06-02g--outillage--script-de-rendu-html)
+- [Session 2026-06-05 — plan-editor : bugs, thème, poubelle](#session-2026-06-05--plan-editor--bugs-thème-poubelle)
 
 ---
 
@@ -245,3 +246,26 @@ Le script a d'abord échoué sur deux points, tous deux détectés et corrigés 
 2. **Niveau de heading dans Plan.md** : les chapitres sont en `###` (niveau 3) et non `##` (niveau 2). Le parser ne trouvait rien. Corrigé en rendant le regex plus permissif (`#{2,3}`).
 
 Le diagnostic par `commands` (exécution + lecture du stacktrace) a été plus rapide et fiable qu'une revue de code statique.
+
+---
+
+## Session 2026-06-05 — plan-editor : bugs, thème, poubelle
+
+### Décisions
+- Thème clair — remplacement du dark mode Catppuccin
+- Correction du parser `parseGuide` : `###` → `##` (convention des titres définie dans `Methode.md`)
+- `guide-parser.md` pointe vers `Methode.md` plutôt que de dupliquer la convention ; références ajoutées dans le header de `guide-parser.js`
+- Tooltips sur les badges du navigateur ; Vue Éléments documentée dans `plan-editor.md`
+- Bouton Abandonner remplacé par Rafraîchir : recharge silencieuse, confirmation si révision en cours
+- Zone poubelle dans le navigateur : splitter redimensionnable, hauteur mémorisée en localStorage, suppression directe sans confirmation, restauration au survol (↩)
+- Todo [W2] : D&D + insertion fluide + renumérotation avec SortableJS — session dédiée à planifier
+
+### Collaboration
+
+**Moment clé — Remonter à la source de vérité plutôt que corriger le code**
+
+Le guide ne s'affichait pas dans le plan-editor. Première hypothèse : un parser manquant. Après lecture du code, le bug était dans le regex de `parseGuide` — `###` au lieu de `##`. Mais la vraie question était : d'où vient la convention ? La spec `guide-parser.md` disait `###`. `Methode.md` disait `##`. Le guide lui-même utilisait `##`.
+
+Plutôt que de corriger le code seul, on a corrigé les trois endroits cohéremment : le code, la spec, et la référence vers la source de vérité. Une ligne de code changée — et une restructuration documentaire qui évite que le bug se reproduise silencieusement.
+
+Bon exemple du réflexe à cultiver : quand un bug révèle une incohérence entre implémentation et documentation, corriger les deux.

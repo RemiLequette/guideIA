@@ -57,7 +57,9 @@ Un outil dédié prend en charge ce que l'IA fait mal :
 
 ### Vues
 
-**Vue Navigateur** — panneau permanent affichant la structure commune des chapitres. Indique les incohérences : chapitre présent dans un seul fichier, ordre différent entre plan et guide. Permet d'ajouter et supprimer un chapitre. La sélection d'un chapitre pilote les deux éditeurs et la vue éléments.
+**Vue Navigateur** — panneau permanent affichant la structure des chapitres dans leur ordre courant. Indique les incohérences : chapitre présent dans un seul fichier, éléments non définis. Permet d'ajouter, supprimer et réordonner les chapitres. La sélection d'un chapitre pilote les deux éditeurs et la vue éléments.
+
+Les chapitres sont réordonnables par glisser-déposer (SortableJS). Entre chaque chapitre, une ligne `+` apparaît au survol pour insérer un nouveau chapitre à cet emplacement précis. Le bouton `+ Nouveau` en tête de navigateur insère à la fin.
 
 Chaque chapitre affiche un badge à droite, avec tooltip au survol :
 
@@ -69,6 +71,8 @@ Chaque chapitre affiche un badge à droite, avec tooltip au survol :
 | guide | bleu | Chapitre présent uniquement dans GuideIA.md |
 | ✎ | orange | Modifications en attente dans la révision en cours (s'ajoute aux autres) |
 
+En bas du navigateur, une **zone poubelle** liste les chapitres supprimés dans la révision en cours (style barré, grisé). Un bouton ↩ visible au survol permet de restaurer un chapitre supprimé à la fin de la liste. Il est également possible de glisser-déposer un chapitre supprimé depuis la poubelle vers la liste principale pour le restaurer à une position précise.
+
 **Vue Plan du chapitre** — panneau supérieur gauche, permanent. Affiche et permet d'éditer le texte de la section `#### Contenu` du chapitre sélectionné dans `Plan.md`.
 
 **Vue Guide du chapitre** — panneau supérieur droit, permanent. Affiche et permet d'éditer le texte du chapitre sélectionné dans `GuideIA.md`.
@@ -79,8 +83,8 @@ Chaque chapitre affiche un badge à droite, avec tooltip au survol :
 
 - **Démarrage** — charge les fichiers sources et la révision en cours si elle existe
 - **Modification** — toute modification est ajoutée à la révision et persistée localement au fil de l'eau
-- **Save** — la révision est appliquée aux fichiers sources, le Changelog est mis à jour (après validation par l'utilisateur), la révision locale est effacée
-- **Abandon** — la révision peut être annulée explicitement, restaurant l'état des fichiers sources
+- **Save** — la révision est appliquée aux fichiers sources, les chapitres sont renumérotés en séquence selon leur ordre courant, le Changelog est mis à jour (après validation par l'utilisateur), la révision locale est effacée
+- **Rafraîchir** — recharge les fichiers sources depuis le disque. Si une révision est en cours, demande confirmation avant de l'abandonner. Utile si les fichiers ont été modifiés en dehors de l'outil.
 
 ### Contraintes
 
@@ -91,7 +95,10 @@ Chaque chapitre affiche un badge à droite, avec tooltip au survol :
 
 ### Stack
 
-Fichier unique `tools/plan-editor.html` — HTML + CSS + JS inline, aucune dépendance externe.
+Fichier unique `tools/plan-editor.html` — HTML + CSS + JS inline, aucune dépendance locale externe.
+Dépendances externes chargées via cdnjs :
+- **SortableJS 1.15.2** — glisser-déposer sur la liste des chapitres et la poubelle
+
 Accès aux fichiers via `local-server.js` — lecture et écriture de `Plan.md`, `GuideIA.md`, et du fichier de révision.
 
 ### Fichiers accédés
@@ -122,6 +129,7 @@ Fichier d'entrée `tools/plan-editor-bootstrap.html`, ouvert via `file://` :
 - **Éléments nommés** : sous-sections `#### Mots-clés`, `#### Figures`, `#### Encadrés` dans `Plan.md`
 - **Balises** : `{{def:type:id}}` et `{{ref:type:id}}` dans `GuideIA.md`
 - **Incohérences** : chapitres manquants d'un côté, ordre divergent, éléments déclarés sans définition
+- Parsing délégué à `guide-parser.js` — voir `tools/guide-parser.md` pour le format de référence
 
 ### Format de la révision
 
@@ -131,19 +139,24 @@ Fichier d'entrée `tools/plan-editor-bootstrap.html`, ouvert via `file://` :
 |-----------|---------|
 | `edit-plan-content` | `{ chapter, content }` |
 | `edit-guide-content` | `{ chapter, content }` |
-| `add-chapter` | `{ number, title, position }` |
-| `remove-chapter` | `{ chapter }` |
-| `reorder-chapters` | `{ order }` |
-| `add-element` | `{ chapter, type, id, description }` |
-| `remove-element` | `{ chapter, type, id }` |
-| `rename-element` | `{ chapter, type, id, newId }` |
+| `add-chapter` | `{ chapter, title }` — `chapter` est un numéro temporaire, renuméroté au Save |
+| `remove-chapter` | `{ chapter, title }` |
+| `reorder-chapters` | `{ order: [...nums] }` — une seule op conservée (la dernière remplace les précédentes) |
+| `add-element` | `{ chapter, elType, id }` |
+| `remove-element` | `{ chapter, elType, id }` |
+
+### Réordonnancement et renumérotation
+
+Le D&D sur la liste des chapitres (et le drag depuis la poubelle) enregistre une op `reorder-chapters` avec l'ordre courant des numéros. Au Save, la renumérotation est calculée à partir de l'ordre final de `S.chapters` : le premier chapitre devient 1, le deuxième 2, etc. Cette renumérotation est appliquée dans les titres `### N.` de `Plan.md` et `GuideIA.md`, ainsi que dans la liste des chapitres en en-tête de `Plan.md`.
 
 ### Save
 
-1. Applique la révision aux deux fichiers sources en mémoire
-2. Génère une entrée Changelog (date + résumé des opérations) — présentée à l'utilisateur pour validation
-3. Écrit `Plan.md` et `GuideIA.md` via `POST /file`
-4. Supprime `tmp/plan-editor-draft.json` via `DELETE /file`
+1. Applique les éditions de contenu (`edit-plan-content`, `edit-guide-content`) aux deux fichiers en mémoire
+2. Supprime les chapitres marqués `remove-chapter`
+3. Renumérotation séquentielle selon l'ordre courant de `S.chapters`
+4. Génère une entrée Changelog (date + résumé des opérations, dédupliqué) — présentée à l'utilisateur pour validation
+5. Écrit `Plan.md` et `GuideIA.md` via `POST /file`
+6. Supprime `tmp/plan-editor-draft.json` via `DELETE /file`
 
 ### Layout
 
@@ -159,6 +172,45 @@ Fichier d'entrée `tools/plan-editor-bootstrap.html`, ouvert via `file://` :
 |-------|-------------|
 
 ## Changelog
+
+### Version 2.0 - Réordonnancement D&D et insertion fluide
+**Date:** 2026-06-05
+**Raison:** W2 — trois fonctionnalités liées : ligne + au survol pour insérer à la position souhaitée, D&D pour réordonner, D&D depuis la poubelle pour restaurer à une position précise. Renumérotation automatique au Save.
+
+**Modifications :**
+- How / Stack : ajout de SortableJS 1.15.2 (cdnjs) comme dépendance externe
+- How / Format de la révision : `add-chapter` — `chapter` est désormais un num temporaire ; `reorder-chapters` — une seule op conservée (dernière remplace les précédentes) ; suppression du champ `position` devenu inutile
+- How / Save : étapes 2 (suppression) et 3 (renumérotation) ajoutées ; description mise à jour
+- How / Réordonnancement et renumérotation : nouvelle section décrivant le calcul du mapping et son application
+- What / Vue Navigateur : description du D&D, des séparateurs +, de la restauration depuis la poubelle
+- What / Cycle de vie : Save enrichi — mention de la renumérotation
+- plan-editor.html : SortableJS chargé en `<head>` ; `renderNav()` — séparateurs `ch-insert` entre chaque item ; `initListSortable()` + `initTrashSortable()` — SortableJS sur liste et poubelle ; `promptAddCh(insertIdx)` — titre seulement, position en paramètre, num temporaire ; `computeRenumber()` + `renumberPlanText()` + `renumberGuideText()` + `renumberPlanChapterList()` — renumérotation au Save ; `save()` — étapes suppression et renumérotation ajoutées
+
+---
+
+### Version 1.5 - Splitter poubelle, suppression directe, restauration au survol
+**Date:** 2026-06-05
+**Raison:** La zone poubelle était trop basse et de hauteur fixe. La suppression demandait une confirmation redondante. La restauration n'était pas cohérente avec le geste de suppression.
+
+**Modifications :**
+- plan-editor.html : splitter redimensionnable entre `#chapter-list` et `#nav-trash`, hauteur mémorisée en localStorage (`plan-editor:trash-height`)
+- plan-editor.html : suppression de chapitre sans confirmation modale — direct dans la révision, titre mémorisé dans l'op
+- plan-editor.html : restauration via bouton ↩ visible au survol (même mécanique que ×)
+- What / Vue Navigateur : description mise à jour (zone poubelle toujours visible, splitter, restauration au survol)
+
+---
+
+### Version 1.4 - Rafraîchir et zone poubelle
+**Date:** 2026-06-05
+**Raison:** Le bouton Abandonner était trop destructif et peu accessible. Les chapitres supprimés étaient invisibles dans la révision. Deux améliorations complémentaires.
+
+**Modifications :**
+- plan-editor.html : bouton Abandonner remplacé par Rafraîchir (recharge silencieuse, confirmation si révision en cours)
+- plan-editor.html : zone poubelle en bas du navigateur — chapitres supprimés restorables via ↩
+- What / Cycle de vie : Abandon remplacé par Rafraîchir
+- What / Vues / Vue Navigateur : ajout de la zone poubelle
+
+---
 
 ### Version 1.3 - Tooltips badges et documentation Vue Éléments
 **Date:** 2026-06-05

@@ -35,6 +35,7 @@ todo, backlog, guideIA, tâches, idées, contenu, méthode, outillage
 - [ ] [O11] Générateur d'index à partir des balises {{mot-clé}} | À faire une fois la rédaction du guide commencée
 - [ ] [O12] Générateur du sommaire des sessions dans Journal.md
 - [ ] [O13] Export du guide | Vers PDF, HTML, etc.
+- [ ] [W3] plan-editor — toggle HTML read-only sur les panneaux Plan et Guide | Bouton bascule dans chaque pane-head pour passer de l'éditeur texte brut à un rendu HTML du markdown. Potentiellement réutiliser render_html.js ou une lib légère (ex: marked.js). Évaluer le coût de performance avant d'implémenter. [effort: M]
 
 ## WIP
 
@@ -42,6 +43,7 @@ todo, backlog, guideIA, tâches, idées, contenu, méthode, outillage
 
 ## Done
 
+- [x] [W2] plan-editor — réordonnancement D&D et insertion fluide | Trois choses liées : (1) ligne + au survol entre chapitres pour insérer à la position souhaitée, (2) D&D dans la liste pour réordonner, (3) D&D depuis la poubelle pour restaurer à une position précise. Renumérotation automatique en séquence au Save, répercutée dans Plan.md et GuideIA.md. SortableJS (cdnjs). [effort: L]
 - [x] [D1] Librairie guide-parser.js | Extraire le parsing de Plan.md et GuideIA.md de render_html.js vers tools/lib/guide-parser.js, partagée par render_html.js et plan-editor.html. Session dédiée. [effort: L]
 
 ## Index
@@ -50,6 +52,24 @@ todo, backlog, guideIA, tâches, idées, contenu, méthode, outillage
 |------|-------------|
 
 ## Changelog
+
+### Version 5.0 - W3 ajouté + batch thème/démarrage
+**Date:** 2026-06-05
+**Reason:** Session plan-editor — batch de corrections : thème todo-tool appliqué, sélection automatique ch.1 au démarrage/refresh. W3 toggle HTML read-only ajouté en Low priority.
+
+**Changes:**
+- W3 ajouté en Low priority
+
+---
+
+### Version 4.0 - W2 Done
+**Date:** 2026-06-05
+**Reason:** W2 terminé — déplacé de WIP vers Done.
+
+**Changes:**
+- W2 déplacé en Done avec description mise à jour
+
+---
 
 ### Version 3.0 - Reformatage pour todo-tool
 **Date:** 2026-06-05

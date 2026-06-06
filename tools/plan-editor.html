@@ -4,191 +4,311 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plan Editor — guideIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <style>
-/* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; background: #f9fafb; color: #111827; overflow: hidden; }
+html, body {
+  height: 100%;
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-size: 13px;
+  background: #e8e6e0;
+  color: #111;
+  overflow: hidden;
+}
 
-/* ── Layout racine ── */
 #app { display: flex; flex-direction: column; height: 100vh; }
 
 /* ── Topbar ── */
 #topbar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 7px 14px; background: #ffffff; border-bottom: 1px solid #e5e7eb;
-  flex-shrink: 0; font-size: 13px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 14px; height: 44px;
+  background: #171614;
+  border-bottom: none;
+  flex-shrink: 0;
 }
-#topbar h1 { font-size: 15px; font-weight: 700; color: #7c3aed; margin-right: 4px; }
-.dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; transition: background .3s; }
+#topbar h1 {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: #fff; margin-right: 4px;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; transition: background .3s; }
 .dot-green  { background: #16a34a; }
 .dot-orange { background: #ea580c; }
 .dot-red    { background: #dc2626; }
-#status-text { color: #9ca3af; font-size: 12px; }
+#status-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #666; }
 #badge-revision {
-  padding: 2px 10px; border-radius: 10px; background: #fef9c3;
-  color: #92400e; font-size: 11px; font-weight: 700; border: 1px solid #fde68a;
+  font-family: 'DM Mono', monospace;
+  padding: 2px 8px; border-radius: 10px;
+  background: #78350f; color: #fde68a;
+  font-size: 10px; font-weight: 500;
+  border: 1px solid #92400e;
   display: none;
 }
 .spacer { flex: 1; }
 .btn-top {
-  padding: 4px 13px; border-radius: 5px; border: none; cursor: pointer;
-  font-size: 12px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  padding: 4px 10px; border-radius: 5px; border: none; cursor: pointer;
+  font-size: 11px; font-weight: 600; transition: all .15s;
 }
-#btn-save    { background: #16a34a; color: #ffffff; }
-#btn-discard { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
-#btn-save:disabled, #btn-discard:disabled { opacity: 0.3; cursor: default; }
+#btn-refresh { background: transparent; color: #aaa; border: 1px solid #444; }
+#btn-refresh:hover { color: #fff; border-color: #666; }
+#btn-save   { background: #16a34a; color: #fff; }
+#btn-save:hover { background: #15803d; }
+#btn-save:disabled, #btn-refresh:disabled { opacity: 0.35; cursor: default; }
 
-/* ── Corps principal ── */
+/* ── Corps ── */
 #main { display: flex; flex: 1; overflow: hidden; }
 
 /* ── Navigateur ── */
 #nav {
-  width: 240px; flex-shrink: 0; background: #ffffff;
-  border-right: 1px solid #e5e7eb; display: flex; flex-direction: column;
+  width: 230px; flex-shrink: 0;
+  background: #f5f3ed;
+  border-right: 1px solid #d6d2c8;
+  display: flex; flex-direction: column;
 }
 #nav-head {
-  padding: 9px 12px; font-size: 11px; font-weight: 700; letter-spacing: .08em;
-  color: #9ca3af; text-transform: uppercase; border-bottom: 1px solid #e5e7eb;
+  padding: 8px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  color: #888;
+  border-bottom: 1px solid #d6d2c8;
   display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
 }
 #btn-add-ch {
-  background: #ede9fe; border: none; color: #7c3aed; border-radius: 4px;
-  padding: 2px 8px; cursor: pointer; font-size: 11px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  background: #e2dfd7; border: none; color: #555;
+  border-radius: 4px; padding: 2px 8px;
+  cursor: pointer; font-size: 10px; font-weight: 600;
+  transition: background .15s;
 }
-#btn-add-ch:hover { background: #ddd6fe; }
-#chapter-list { flex: 1; overflow-y: auto; padding: 4px 0; }
+#btn-add-ch:hover { background: #d6d2c8; color: #111; }
 
-.ch-item {
+#nav-body { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+#chapter-list { flex: 1; overflow-y: auto; padding: 4px 0; min-height: 0; }
+
+#nav-splitter {
+  height: 7px; background: #d6d2c8; cursor: ns-resize; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  user-select: none; transition: background .15s;
+}
+#nav-splitter:hover, #nav-splitter.dragging { background: #b0aca4; }
+#nav-splitter::after { content: ''; display: block; width: 28px; height: 3px; background: #b0aca4; border-radius: 2px; }
+#nav-splitter:hover::after { background: #888; }
+
+/* ── Poubelle ── */
+#nav-trash { display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+#nav-trash-head {
+  padding: 4px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  color: #aaa;
+  background: #ede9e0;
+  border-top: 1px solid #d6d2c8;
+  flex-shrink: 0;
+}
+#nav-trash-list { flex: 1; overflow-y: auto; padding: 2px 0; background: #e8e4db; }
+
+.ch-trash-item {
   display: flex; align-items: center; gap: 5px;
-  padding: 6px 10px; cursor: pointer; border-left: 3px solid transparent;
-  transition: background .1s; position: relative;
+  padding: 4px 10px 4px 0;
+  font-size: 11px; color: #aaa;
+  border-left: 3px solid transparent;
+  cursor: grab;
 }
-.ch-item:hover  { background: #f3f4f6; }
-.ch-item.active { background: #f5f3ff; border-left-color: #7c3aed; }
-.ch-num   { font-weight: 700; color: #7c3aed; font-size: 13px; min-width: 20px; }
-.ch-title { flex: 1; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #374151; }
-.ch-badges { display: flex; gap: 2px; }
+.ch-trash-item:hover { background: #dedad1; }
+.ch-trash-num { font-family: 'DM Mono', monospace; font-size: 11px; color: #ccc; min-width: 28px; text-align: right; }
+.ch-trash-title { flex: 1; text-decoration: line-through; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ccc; }
+.ch-trash-restore {
+  background: none; border: none; color: #ccc; cursor: pointer;
+  font-size: 13px; padding: 0 8px 0 2px; opacity: 0; transition: opacity .1s; line-height: 1;
+}
+.ch-trash-item:hover .ch-trash-restore { opacity: 1; color: #2563eb; }
+
+/* ── D&D ── */
+.sortable-ghost { opacity: 0.35; background: #dbeafe !important; border-left-color: #2563eb !important; }
+.sortable-drag  { opacity: 0.9; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
+
+/* ── Séparateurs d'insertion ── */
+.ch-insert { height: 0; overflow: visible; position: relative; display: flex; align-items: center; pointer-events: none; }
+.ch-insert-btn {
+  position: absolute; left: 0; right: 0; height: 20px;
+  display: flex; align-items: center; pointer-events: all;
+  cursor: pointer; z-index: 10; opacity: 0; transition: opacity .15s;
+}
+.ch-insert:hover .ch-insert-btn,
+.ch-item:hover + .ch-insert .ch-insert-btn { opacity: 1; }
+.ch-insert-line { flex: 1; height: 1.5px; background: #2563eb; margin: 0 8px; }
+.ch-insert-plus {
+  width: 15px; height: 15px; background: #2563eb; color: #fff;
+  border-radius: 50%; font-size: 12px; line-height: 15px; text-align: center;
+  font-weight: 700; flex-shrink: 0;
+}
+
+/* ── Items chapitres ── */
+.ch-item {
+  display: flex; align-items: center; gap: 4px;
+  padding: 6px 8px 6px 0;
+  cursor: grab;
+  border-left: 3px solid transparent;
+  transition: background .1s;
+  position: relative;
+}
+.ch-item:hover  { background: #ece9e1; }
+.ch-item.active { background: #fff; border-left-color: #2563eb; }
+
+.ch-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; min-width: 28px; text-align: right;
+  color: #aaa; padding-left: 6px;
+}
+.ch-item.active .ch-num { color: #2563eb; font-weight: 500; }
+
+.ch-title {
+  flex: 1; font-size: 12px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: #444;
+}
+.ch-item.active .ch-title { color: #111; font-weight: 500; }
+
+.ch-badges { display: flex; gap: 2px; align-items: center; }
 .badge {
-  font-size: 9px; padding: 1px 4px; border-radius: 8px; font-weight: 700;
-  white-space: nowrap;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; padding: 1px 5px; border-radius: 8px;
+  font-weight: 700; white-space: nowrap; line-height: 1.5;
 }
-.b-ok   { background: #dcfce7; color: #16a34a; }
-.b-warn { background: #fef9c3; color: #92400e; }
-.b-err  { background: #fee2e2; color: #dc2626; }
-.b-only { background: #dbeafe; color: #2563eb; }
-.b-mod  { background: #ffedd5; color: #ea580c; }
+.b-ok   { background: #dcfce7; color: #166534; }
+.b-warn { background: #fef9c3; color: #854d0e; }
+.b-only { background: #dbeafe; color: #1e40af; }
+.b-mod  { background: #fae8ff; color: #7e22ce; }
+
 .ch-del {
-  background: none; border: none; color: #d1d5db; cursor: pointer;
-  font-size: 15px; line-height: 1; padding: 0; opacity: 0; transition: opacity .1s;
+  background: none; border: none; color: #ccc; cursor: pointer;
+  font-size: 14px; line-height: 1; padding: 0 8px 0 2px;
+  opacity: 0; transition: opacity .1s;
 }
 .ch-item:hover .ch-del { opacity: 1; color: #dc2626; }
 
 #nav-foot {
-  padding: 7px 12px; border-top: 1px solid #e5e7eb;
-  font-size: 11px; color: #9ca3af;
+  padding: 6px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: #aaa;
+  border-top: 1px solid #d6d2c8;
+  flex-shrink: 0;
 }
+
+/* ── Scrollbars ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c8c4bc; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa; }
 
 /* ── Zone chapitre ── */
-#detail {
-  flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #f9fafb;
-}
+#detail { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #e8e6e0; }
 
 #ch-header {
-  padding: 8px 16px; background: #ffffff; border-bottom: 1px solid #e5e7eb;
-  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  padding: 7px 14px;
+  background: #f5f3ed;
+  border-bottom: 1px solid #d6d2c8;
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
 }
-#ch-title { font-size: 15px; font-weight: 700; color: #111827; }
-#ch-sync  { font-size: 11px; color: #9ca3af; }
+#ch-title { font-size: 14px; font-weight: 600; color: #111; }
+#ch-sync  { font-family: 'DM Mono', monospace; font-size: 10px; color: #888; }
 
-/* ── Rangée haute : Plan + Guide côte à côte ── */
-#row-top {
-  flex: 1; display: flex; overflow: hidden; min-height: 0;
-  border-bottom: 2px solid #e5e7eb;
-}
+/* ── Rangée haute ── */
+#row-top { flex: 1; display: flex; overflow: hidden; min-height: 0; border-bottom: 2px solid #d6d2c8; }
 
-.editor-pane {
-  flex: 1; display: flex; flex-direction: column; overflow: hidden;
-  border-right: 1px solid #e5e7eb;
-}
+.editor-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid #d6d2c8; background: #fff; }
 .editor-pane:last-child { border-right: none; }
 
 .pane-head {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 12px; background: #ffffff; border-bottom: 1px solid #e5e7eb;
-  flex-shrink: 0; font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .07em; color: #9ca3af;
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 10px;
+  background: #f5f3ed;
+  border-bottom: 1px solid #d6d2c8;
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em;
+  color: #888;
 }
 .pane-label-plan  { color: #2563eb; }
 .pane-label-guide { color: #16a34a; }
 .pane-modified { color: #ea580c; font-weight: 700; }
-.pane-actions { margin-left: auto; display: flex; gap: 5px; }
+.pane-actions { margin-left: auto; display: flex; gap: 4px; }
 .btn-pane {
-  padding: 3px 10px; border-radius: 4px; border: none; cursor: pointer;
-  font-size: 11px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  padding: 2px 8px; border-radius: 3px; border: none; cursor: pointer;
+  font-size: 10px; font-weight: 600; transition: background .15s;
 }
-.btn-apply  { background: #ede9fe; color: #7c3aed; }
-.btn-apply:hover  { background: #ddd6fe; }
-.btn-cancel { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
-.btn-cancel:hover { background: #e5e7eb; color: #374151; }
+.btn-apply  { background: #dbeafe; color: #1e40af; }
+.btn-apply:hover  { background: #bfdbfe; }
+.btn-cancel { background: #f3f4f6; color: #6b7280; border: 0.5px solid #e5e7eb; }
+.btn-cancel:hover { background: #e5e7eb; }
 
 textarea.editor {
   flex: 1; resize: none; border: none; outline: none;
-  padding: 14px 16px; background: #ffffff; color: #1f2937;
-  font-family: 'Fira Mono', 'Cascadia Code', 'Consolas', monospace;
-  font-size: 12.5px; line-height: 1.7; tab-size: 2;
+  padding: 12px 14px;
+  background: #fff; color: #374151;
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px; line-height: 1.75; tab-size: 2;
 }
 textarea.editor.modified { background: #fffbeb; }
-textarea.editor:focus { background: #fafafa; }
+textarea.editor:focus { background: #fefefe; }
 textarea.editor.modified:focus { background: #fefce8; }
 
 /* ── Rangée basse : Éléments ── */
 #row-bottom {
-  height: 220px; flex-shrink: 0; overflow: hidden;
-  display: flex; flex-direction: column; background: #ffffff;
-  border-top: 1px solid #e5e7eb;
+  height: 180px; flex-shrink: 0; overflow: hidden;
+  display: flex; flex-direction: column;
+  background: #f5f3ed;
+  border-top: 1px solid #d6d2c8;
 }
 #elem-head {
-  padding: 6px 14px; border-bottom: 1px solid #e5e7eb;
-  font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .07em; color: #9ca3af; display: flex; align-items: center; gap: 8px;
+  padding: 5px 12px;
+  border-bottom: 1px solid #d6d2c8;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em;
+  color: #888;
+  display: flex; align-items: center; gap: 6px;
   flex-shrink: 0;
 }
-#elem-head span { color: #7c3aed; }
-#elem-body { flex: 1; overflow-x: auto; overflow-y: auto; display: flex; gap: 0; }
+#elem-head span { color: #2563eb; }
+#elem-body { flex: 1; overflow-x: auto; overflow-y: auto; display: flex; }
 
-.elem-col {
-  flex: 1; min-width: 220px; border-right: 1px solid #e5e7eb;
-  display: flex; flex-direction: column; overflow: hidden;
-}
+.elem-col { flex: 1; min-width: 180px; border-right: 1px solid #d6d2c8; display: flex; flex-direction: column; overflow: hidden; }
 .elem-col:last-child { border-right: none; }
 .elem-col-head {
-  padding: 5px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .07em; color: #9ca3af; background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 5px;
-  flex-shrink: 0;
+  padding: 3px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: .07em;
+  color: #aaa; background: #eceae2;
+  border-bottom: 1px solid #d6d2c8; flex-shrink: 0;
 }
-.elem-col-body { flex: 1; overflow-y: auto; padding: 4px 8px; }
+.elem-col-body { flex: 1; overflow-y: auto; padding: 3px 6px; }
 
-.elem-row {
-  display: flex; align-items: center; gap: 6px;
-  padding: 3px 6px; border-radius: 4px; margin-bottom: 2px;
-  font-size: 11px;
-}
-.elem-row:hover { background: #f5f3ff; }
-.elem-id  { font-family: monospace; color: #7c3aed; font-weight: 700; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.elem-del { background: none; border: none; color: #d1d5db; cursor: pointer; font-size: 13px; padding: 0 2px; opacity: 0; }
+.elem-row { display: flex; align-items: center; gap: 5px; padding: 3px 5px; border-radius: 3px; margin-bottom: 1px; font-size: 11px; }
+.elem-row:hover { background: #ece9e1; }
+.elem-id { font-family: 'DM Mono', monospace; color: #2563eb; font-size: 10px; font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.elem-del { background: none; border: none; color: #d1d5db; cursor: pointer; font-size: 12px; padding: 0 2px; opacity: 0; }
 .elem-row:hover .elem-del { opacity: 1; color: #dc2626; }
 .elem-add {
-  padding: 3px 8px; margin: 4px 8px; border: 1px dashed #d1d5db;
-  border-radius: 4px; background: none; color: #9ca3af; cursor: pointer;
-  font-size: 11px; text-align: left; width: calc(100% - 16px);
+  padding: 3px 8px; margin: 4px 6px;
+  border: 1px dashed #d6d2c8;
+  border-radius: 4px; background: none; color: #aaa; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px; text-align: left; width: calc(100% - 12px);
+  transition: border-color .15s, color .15s;
 }
-.elem-add:hover { border-color: #7c3aed; color: #7c3aed; }
+.elem-add:hover { border-color: #2563eb; color: #2563eb; }
 
 /* ── Empty state ── */
 #empty-state {
   flex: 1; display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 8px; color: #9ca3af;
+  flex-direction: column; gap: 8px; color: #aaa;
 }
 #empty-state p { font-size: 15px; }
 #empty-state small { font-size: 12px; }
@@ -196,88 +316,110 @@ textarea.editor.modified:focus { background: #fefce8; }
 /* ── Modal ── */
 #modal-overlay {
   display: none; position: fixed; inset: 0;
-  background: #00000040; z-index: 100; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.4); z-index: 100; align-items: center; justify-content: center;
 }
 #modal-overlay.open { display: flex; }
 #modal {
-  background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px;
+  background: #f5f3ed;
+  border: 1px solid #d6d2c8;
+  border-radius: 10px;
   padding: 22px; width: 480px; max-width: 95vw; max-height: 80vh;
-  overflow-y: auto; box-shadow: 0 8px 40px #00000020;
+  overflow-y: auto;
+  box-shadow: 0 16px 50px rgba(0,0,0,.2);
 }
-#modal h3 { font-size: 15px; margin-bottom: 14px; color: #111827; }
-#modal label { display: block; font-size: 11px; color: #6b7280; margin: 10px 0 3px; text-transform: uppercase; letter-spacing: .05em; }
+#modal h3 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: #111; }
+#modal label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: #888;
+  margin: 10px 0 4px; text-transform: uppercase; letter-spacing: .06em;
+}
 #modal input, #modal textarea, #modal select {
-  width: 100%; background: #f9fafb; border: 1px solid #e5e7eb;
-  border-radius: 5px; padding: 7px 10px; font-size: 13px; color: #111827; outline: none;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #d6d2c8;
+  border-radius: 5px; padding: 7px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; color: #111; outline: none;
 }
-#modal input:focus, #modal textarea:focus { border-color: #7c3aed; background: #ffffff; }
-#modal textarea { height: 100px; resize: vertical; font-family: monospace; font-size: 12px; }
-#modal p { color: #6b7280; font-size: 13px; line-height: 1.6; }
+#modal input:focus, #modal textarea:focus { border-color: #2563eb; }
+#modal textarea { height: 100px; resize: vertical; font-family: 'DM Mono', monospace; font-size: 11px; }
+#modal p { color: #666; font-size: 13px; line-height: 1.6; }
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
-.btn-primary   { padding: 7px 18px; background: #7c3aed; color: #ffffff; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; }
-.btn-primary:hover { background: #6d28d9; }
-.btn-secondary { padding: 7px 18px; background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; border-radius: 6px; cursor: pointer; font-size: 13px; }
-.btn-secondary:hover { background: #e5e7eb; color: #374151; }
+.btn-primary {
+  font-family: 'DM Sans', sans-serif;
+  padding: 7px 18px; background: #171614; color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+  font-weight: 600; font-size: 13px; transition: background .15s;
+}
+.btn-primary:hover { background: #333; }
+.btn-secondary {
+  font-family: 'DM Sans', sans-serif;
+  padding: 7px 18px; background: transparent; color: #888;
+  border: 1px solid #d6d2c8; border-radius: 6px; cursor: pointer; font-size: 13px;
+  transition: background .15s;
+}
+.btn-secondary:hover { background: #e2dfd7; color: #111; }
 
 /* ── Toast ── */
 #toast {
   position: fixed; bottom: 18px; right: 18px;
-  background: #1f2937; color: #f9fafb; border: 1px solid #374151;
-  padding: 9px 16px; border-radius: 7px; font-size: 12px;
+  background: #171614; color: #f5f3ed;
+  border: 1px solid #333;
+  padding: 8px 14px; border-radius: 6px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
   opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 200;
 }
 #toast.show { opacity: 1; }
-#toast.err  { background: #fee2e2; border-color: #fca5a5; color: #dc2626; }
+#toast.err  { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- Topbar -->
   <div id="topbar">
     <h1>Plan Editor</h1>
     <span class="dot dot-orange" id="conn-dot"></span>
     <span id="status-text">Connexion…</span>
     <span id="badge-revision">● révision en cours</span>
     <span class="spacer"></span>
-    <button class="btn-top" id="btn-discard" disabled>Abandonner</button>
+    <button class="btn-top" id="btn-refresh">↺ Rafraîchir</button>
     <button class="btn-top" id="btn-save" disabled>💾 Enregistrer</button>
   </div>
 
   <div id="main">
 
-    <!-- Navigateur -->
     <div id="nav">
       <div id="nav-head">
         Chapitres
         <button id="btn-add-ch">+ Nouveau</button>
       </div>
-      <div id="chapter-list"></div>
+      <div id="nav-body">
+        <div id="chapter-list"></div>
+        <div id="nav-splitter" title="Redimensionner"></div>
+        <div id="nav-trash">
+          <div id="nav-trash-head">🗑 Supprimés</div>
+          <div id="nav-trash-list"></div>
+        </div>
+      </div>
       <div id="nav-foot"></div>
     </div>
 
-    <!-- Zone chapitre -->
     <div id="detail">
 
-      <!-- Empty state -->
       <div id="empty-state">
         <p>Sélectionnez un chapitre</p>
-        <small>ou ajoutez-en un nouveau →</small>
+        <small>ou ajoutez-en un nouveau</small>
       </div>
 
-      <!-- Vue chapitre (masquée jusqu'à sélection) -->
       <div id="chapter-view" style="display:none; flex-direction:column; height:100%; overflow:hidden;">
 
-        <!-- Header -->
         <div id="ch-header">
           <span id="ch-title"></span>
           <span id="ch-sync"></span>
         </div>
 
-        <!-- Rangée haute : Plan + Guide -->
         <div id="row-top">
-
-          <!-- Pane Plan -->
           <div class="editor-pane" id="pane-plan">
             <div class="pane-head">
               <span class="pane-label-plan">📋 Plan.md</span>
@@ -290,7 +432,6 @@ textarea.editor.modified:focus { background: #fefce8; }
             <textarea class="editor" id="editor-plan" placeholder="Contenu attendu du chapitre dans le plan…"></textarea>
           </div>
 
-          <!-- Pane Guide -->
           <div class="editor-pane" id="pane-guide">
             <div class="pane-head">
               <span class="pane-label-guide">📖 GuideIA.md</span>
@@ -302,47 +443,35 @@ textarea.editor.modified:focus { background: #fefce8; }
             </div>
             <textarea class="editor" id="editor-guide" placeholder="Texte rédigé dans le guide…"></textarea>
           </div>
+        </div>
 
-        </div><!-- /row-top -->
-
-        <!-- Rangée basse : Éléments -->
         <div id="row-bottom">
-          <div id="elem-head">
-            Éléments du chapitre <span id="elem-ch-title"></span>
-          </div>
+          <div id="elem-head">Éléments — <span id="elem-ch-title"></span></div>
           <div id="elem-body">
-
-            <!-- Mots-clés -->
-            <div class="elem-col" id="col-keywords">
-              <div class="elem-col-head">🏷️ Mots-clés</div>
+            <div class="elem-col">
+              <div class="elem-col-head">🏷 Mots-clés</div>
               <div class="elem-col-body" id="list-keywords"></div>
               <button class="elem-add" id="btn-add-keyword">+ Ajouter</button>
             </div>
-
-            <!-- Figures -->
-            <div class="elem-col" id="col-figures">
-              <div class="elem-col-head">🖼️ Figures</div>
+            <div class="elem-col">
+              <div class="elem-col-head">🖼 Figures</div>
               <div class="elem-col-body" id="list-figures"></div>
               <button class="elem-add" id="btn-add-figure">+ Ajouter</button>
             </div>
-
-            <!-- Encadrés -->
-            <div class="elem-col" id="col-encadres">
+            <div class="elem-col">
               <div class="elem-col-head">📦 Encadrés</div>
               <div class="elem-col-body" id="list-encadres"></div>
               <button class="elem-add" id="btn-add-encadre">+ Ajouter</button>
             </div>
-
           </div>
-        </div><!-- /row-bottom -->
+        </div>
 
-      </div><!-- /chapter-view -->
-    </div><!-- /detail -->
+      </div>
+    </div>
 
-  </div><!-- /main -->
-</div><!-- /app -->
+  </div>
+</div>
 
-<!-- Modal -->
 <div id="modal-overlay">
   <div id="modal">
     <h3 id="modal-title"></h3>
@@ -360,9 +489,6 @@ textarea.editor.modified:focus { background: #fefce8; }
 <script>
 'use strict';
 
-// ─────────────────────────────────────────────────────────────
-// Chemins
-// ─────────────────────────────────────────────────────────────
 const BASE = (() => {
   const p = window.location.pathname.replace(/^\//, '').replace(/[^/\\]+$/, '');
   return p.endsWith('/') || p.endsWith('\\') ? p : p + '/';
@@ -374,9 +500,6 @@ const PATH = {
   draft: BASE    + 'plan-editor-draft.json',
 };
 
-// ─────────────────────────────────────────────────────────────
-// État
-// ─────────────────────────────────────────────────────────────
 const S = {
   connected: false,
   planText:  '',
@@ -387,9 +510,6 @@ const S = {
   edits:     {},
 };
 
-// ─────────────────────────────────────────────────────────────
-// API
-// ─────────────────────────────────────────────────────────────
 const api = {
   async get(path) {
     const r = await fetch(`/file?path=${encodeURIComponent(path)}`);
@@ -410,14 +530,8 @@ const api = {
   },
 };
 
-// ─────────────────────────────────────────────────────────────
-// Parsing Plan.md et GuideIA.md — délégué à guide-parser.js
-// ─────────────────────────────────────────────────────────────
 const { parsePlan, parseGuide } = GuideParser;
 
-// ─────────────────────────────────────────────────────────────
-// Construction de l'état
-// ─────────────────────────────────────────────────────────────
 function buildState(planText, guideText, draft) {
   const planChs  = parsePlan(planText);
   const guideChs = parseGuide(guideText);
@@ -459,6 +573,17 @@ function buildState(planText, guideText, draft) {
   });
 
   if (draft && draft.ops) draft.ops.forEach(op => replayOp(op, chapters, edits));
+
+  const reorderOps = draft && draft.ops ? draft.ops.filter(o => o.type === 'reorder-chapters') : [];
+  if (reorderOps.length) {
+    const lastOrder = reorderOps[reorderOps.length - 1].order;
+    chapters.sort((a, b) => {
+      const ia = lastOrder.indexOf(a.num);
+      const ib = lastOrder.indexOf(b.num);
+      return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+    });
+  }
+
   return { chapters, edits };
 }
 
@@ -469,11 +594,20 @@ function replayOp(op, chapters, edits) {
       if (edit) { edit.planContent = op.content; edit.planModified = true; } break;
     case 'edit-guide-content':
       if (edit) { edit.guideContent = op.content; edit.guideModified = true; } break;
+    case 'add-chapter':
+      if (!chapters.find(c => c.num === op.chapter)) {
+        chapters.push({ num: op.chapter, title: op.title, planContent: '', guideContent: '',
+          keywords: [], figures: [], encadres: [], defs: [], refs: [],
+          syncStatus: 'plan-only', missingDefs: [] });
+        edits[op.chapter] = { planContent: '', guideContent: '', keywords: [], figures: [],
+          encadres: [], planModified: true, guideModified: false };
+      }
+      break;
     case 'add-element':
       if (edit) {
-        const arr = op.elType === 'keyword' ? edit.keywords : op.elType === 'figure' ? edit.figures : edit.encadres;
+        const arr = op.elType === 'keywords' ? edit.keywords : op.elType === 'figures' ? edit.figures : edit.encadres;
         if (!arr.find(x => (x.id||x) === op.id))
-          arr.push(op.elType === 'keyword' ? op.id : { id: op.id });
+          arr.push(op.elType === 'keywords' ? op.id : { id: op.id });
       } break;
     case 'remove-element':
       if (edit) {
@@ -484,44 +618,160 @@ function replayOp(op, chapters, edits) {
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// Draft
-// ─────────────────────────────────────────────────────────────
+function applyDisplayNums() {
+  S.chapters.forEach((ch, idx) => { ch.displayNum = String(idx + 1); });
+}
+
 function addOp(op) {
   if (!S.draft) S.draft = { ops: [] };
   if (op.type === 'edit-plan-content' || op.type === 'edit-guide-content')
     S.draft.ops = S.draft.ops.filter(o => !(o.type === op.type && o.chapter === op.chapter));
+  if (op.type === 'reorder-chapters')
+    S.draft.ops = S.draft.ops.filter(o => o.type !== 'reorder-chapters');
   S.draft.ops.push(op);
   api.post(PATH.draft, JSON.stringify(S.draft, null, 2)).catch(console.error);
   updateTopbar();
 }
 
-// ─────────────────────────────────────────────────────────────
-// Rendu Navigateur
-// ─────────────────────────────────────────────────────────────
+// ── Splitter ──
+const LS_TRASH_H = 'plan-editor:trash-height';
+function initSplitter() {
+  const splitter  = document.getElementById('nav-splitter');
+  const trashZone = document.getElementById('nav-trash');
+  let saved = parseInt(localStorage.getItem(LS_TRASH_H), 10);
+  if (isNaN(saved)) saved = 110;
+  trashZone.style.height = saved + 'px';
+
+  let startY, startH;
+  splitter.addEventListener('mousedown', e => {
+    startY = e.clientY; startH = trashZone.offsetHeight;
+    splitter.classList.add('dragging');
+    const onMove = e2 => {
+      const h = Math.min(300, Math.max(36, startH - (e2.clientY - startY)));
+      trashZone.style.height = h + 'px';
+    };
+    const onUp = () => {
+      splitter.classList.remove('dragging');
+      localStorage.setItem(LS_TRASH_H, trashZone.offsetHeight);
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    e.preventDefault();
+  });
+}
+
+// ── Poubelle ──
+function renderTrash() {
+  const deleted = S.draft && S.draft.ops ? S.draft.ops.filter(o => o.type === 'remove-chapter') : [];
+  const list = document.getElementById('nav-trash-list');
+  list.innerHTML = '';
+  deleted.forEach(op => {
+    const item = document.createElement('div');
+    item.className = 'ch-trash-item';
+    item.dataset.trashNum = op.chapter;
+    item.innerHTML = `
+      <span class="ch-trash-num">${op.chapter}</span>
+      <span class="ch-trash-title" title="${op.title||''}">${op.title||'?'}</span>
+      <button class="ch-trash-restore" title="Restaurer">↩</button>`;
+    item.querySelector('.ch-trash-restore').onclick = e => { e.stopPropagation(); restoreCh(op.chapter); };
+    list.appendChild(item);
+  });
+  initTrashSortable();
+}
+
+function restoreCh(num) {
+  if (!S.draft) return;
+  S.draft.ops = S.draft.ops.filter(o => !(o.type === 'remove-chapter' && o.chapter === num));
+  const { chapters, edits } = buildState(S.planText, S.guideText, S.draft);
+  S.chapters = chapters; S.edits = edits;
+  applyDisplayNums();
+  api.post(PATH.draft, JSON.stringify(S.draft, null, 2)).catch(console.error);
+  updateTopbar(); renderNav();
+  toast('Chapitre restauré');
+}
+
+// ── SortableJS ──
+let _sortableList = null, _sortableTrash = null;
+
+function initListSortable() {
+  if (_sortableList) _sortableList.destroy();
+  const el = document.getElementById('chapter-list');
+  _sortableList = Sortable.create(el, {
+    animation: 120,
+    ghostClass: 'sortable-ghost',
+    dragClass:  'sortable-drag',
+    group: { name: 'chapters', put: ['trash'] },
+    filter: '.ch-insert',
+    draggable: '.ch-item',
+    onEnd(evt) {
+      if (evt.from.id === 'nav-trash-list') {
+        const num = evt.item.dataset.trashNum;
+        if (num && S.draft)
+          S.draft.ops = S.draft.ops.filter(o => !(o.type === 'remove-chapter' && o.chapter === num));
+      }
+      const items = [...el.querySelectorAll('.ch-item')];
+      const newOrder = items.map(el => el.dataset.num);
+
+      if (evt.from.id === 'nav-trash-list') {
+        const { chapters: allChs, edits: allEdits } = buildState(S.planText, S.guideText, S.draft);
+        const ordered = newOrder.map(n => allChs.find(c => c.num === n)).filter(Boolean);
+        allChs.forEach(c => { if (!ordered.find(x => x.num === c.num)) ordered.push(c); });
+        S.chapters = ordered; S.edits = allEdits;
+      } else {
+        const reordered = newOrder.map(n => S.chapters.find(c => c.num === n)).filter(Boolean);
+        S.chapters.forEach(c => { if (!reordered.find(x => x.num === c.num)) reordered.push(c); });
+        S.chapters = reordered;
+      }
+
+      addOp({ type: 'reorder-chapters', order: S.chapters.map(c => c.num) });
+      applyDisplayNums(); renderNav();
+      toast('Ordre mis à jour');
+    },
+  });
+}
+
+function initTrashSortable() {
+  if (_sortableTrash) _sortableTrash.destroy();
+  const el = document.getElementById('nav-trash-list');
+  if (!el) return;
+  _sortableTrash = Sortable.create(el, {
+    animation: 120,
+    ghostClass: 'sortable-ghost',
+    group: { name: 'trash', pull: 'clone', put: false },
+    draggable: '.ch-trash-item',
+    sort: false,
+  });
+}
+
+// ── Navigateur ──
 function renderNav() {
   const list = document.getElementById('chapter-list');
   list.innerHTML = '';
-  S.chapters.forEach(ch => {
+  list.appendChild(makeInsertSep(0));
+  S.chapters.forEach((ch, idx) => {
     const edit = S.edits[ch.num] || {};
     const modified = edit.planModified || edit.guideModified;
+    const displayNum = ch.displayNum || ch.num;
+
     const item = document.createElement('div');
     item.className = 'ch-item' + (ch.num === S.selected ? ' active' : '');
     item.dataset.num = ch.num;
 
     const num = document.createElement('span');
-    num.className = 'ch-num'; num.textContent = ch.num;
+    num.className = 'ch-num'; num.textContent = displayNum;
 
     const title = document.createElement('span');
     title.className = 'ch-title'; title.textContent = ch.title;
 
     const badges = document.createElement('span');
     badges.className = 'ch-badges';
-    if      (ch.syncStatus === 'plan-only')  badges.innerHTML = `<span class="badge b-only" title="Chapitre présent uniquement dans Plan.md">plan</span>`;
-    else if (ch.syncStatus === 'guide-only') badges.innerHTML = `<span class="badge b-only" title="Chapitre présent uniquement dans GuideIA.md">guide</span>`;
-    else if (ch.missingDefs.length)          badges.innerHTML = `<span class="badge b-warn" title="${ch.missingDefs.length} élément(s) déclaré(s) dans le plan sans {{def:...}} dans le guide — voir la liste en bas">⚠${ch.missingDefs.length}</span>`;
-    else                                     badges.innerHTML = `<span class="badge b-ok" title="Chapitre synchronisé — tous les éléments sont définis dans le guide">✓</span>`;
-    if (modified) badges.innerHTML += `<span class="badge b-mod" title="Modifications en attente dans la révision en cours">✎</span>`;
+    if      (ch.syncStatus === 'plan-only')  badges.innerHTML = `<span class="badge b-only" title="Uniquement dans Plan.md">plan</span>`;
+    else if (ch.syncStatus === 'guide-only') badges.innerHTML = `<span class="badge b-only" title="Uniquement dans GuideIA.md">guide</span>`;
+    else if (ch.missingDefs.length)          badges.innerHTML = `<span class="badge b-warn" title="${ch.missingDefs.length} élément(s) sans {{def}}">⚠${ch.missingDefs.length}</span>`;
+    else                                     badges.innerHTML = `<span class="badge b-ok" title="Synchronisé">✓</span>`;
+    if (modified) badges.innerHTML += `<span class="badge b-mod" title="Modifications en attente">✎</span>`;
 
     const del = document.createElement('button');
     del.className = 'ch-del'; del.textContent = '×'; del.title = 'Supprimer';
@@ -530,21 +780,33 @@ function renderNav() {
     item.append(num, title, badges, del);
     item.onclick = () => selectCh(ch.num);
     list.appendChild(item);
+    list.appendChild(makeInsertSep(idx + 1));
   });
 
   const total  = S.chapters.length;
   const issues = S.chapters.filter(c => c.missingDefs.length || c.syncStatus !== 'ok').length;
   document.getElementById('nav-foot').textContent =
     `${total} chapitre${total>1?'s':''} · ${issues ? issues+' problème(s)' : 'tout OK'}`;
+
+  renderTrash();
+  initListSortable();
 }
 
-// ─────────────────────────────────────────────────────────────
-// Rendu détail
-// ─────────────────────────────────────────────────────────────
+function makeInsertSep(insertIdx) {
+  const wrap = document.createElement('div');
+  wrap.className = 'ch-insert';
+  const btn = document.createElement('div');
+  btn.className = 'ch-insert-btn';
+  btn.title = 'Insérer un chapitre ici';
+  btn.innerHTML = `<div class="ch-insert-line"></div><div class="ch-insert-plus">+</div><div class="ch-insert-line"></div>`;
+  btn.onclick = e => { e.stopPropagation(); promptAddCh(insertIdx); };
+  wrap.appendChild(btn);
+  return wrap;
+}
+
+// ── Détail ──
 function selectCh(num) {
-  S.selected = num;
-  renderNav();
-  renderDetail();
+  S.selected = num; renderNav(); renderDetail();
 }
 
 function renderDetail() {
@@ -554,16 +816,15 @@ function renderDetail() {
   if (!ch) return;
 
   const edit = S.edits[ch.num] || {};
+  const displayNum = ch.displayNum || ch.num;
 
-  // Header
-  document.getElementById('ch-title').textContent = `${ch.num}. ${ch.title}`;
+  document.getElementById('ch-title').textContent = `${displayNum}. ${ch.title}`;
   const syncEl = document.getElementById('ch-sync');
   if      (ch.syncStatus === 'plan-only')  syncEl.textContent = '⚠ plan seulement';
   else if (ch.syncStatus === 'guide-only') syncEl.textContent = '⚠ guide seulement';
-  else if (ch.missingDefs.length)          syncEl.textContent = `⚠ ${ch.missingDefs.length} balise(s) sans {{def}} dans le guide`;
+  else if (ch.missingDefs.length)          syncEl.textContent = `⚠ ${ch.missingDefs.length} balise(s) sans {{def}}`;
   else                                     syncEl.textContent = '✓ synchronisé';
 
-  // Éditeurs
   const ePlan  = document.getElementById('editor-plan');
   const eGuide = document.getElementById('editor-guide');
   ePlan.value  = edit.planContent  || '';
@@ -573,8 +834,7 @@ function renderDetail() {
   document.getElementById('plan-mod').style.display  = edit.planModified  ? 'inline' : 'none';
   document.getElementById('guide-mod').style.display = edit.guideModified ? 'inline' : 'none';
 
-  // Éléments
-  document.getElementById('elem-ch-title').textContent = `— ch. ${ch.num}`;
+  document.getElementById('elem-ch-title').textContent = `ch. ${displayNum} — ${ch.title}`;
   renderElemList('keywords', edit.keywords || [], ch.defs);
   renderElemList('figures',  edit.figures  || [], ch.defs);
   renderElemList('encadres', edit.encadres || [], ch.defs);
@@ -597,16 +857,14 @@ function renderElemList(type, items, definedIds) {
   });
 }
 
-// ─────────────────────────────────────────────────────────────
-// Actions éditeurs
-// ─────────────────────────────────────────────────────────────
+// ── Éditeurs ──
 function applyPlan() {
   const num = S.selected; if (!num) return;
   const content = document.getElementById('editor-plan').value;
   addOp({ type: 'edit-plan-content', chapter: num, content });
   if (S.edits[num]) { S.edits[num].planContent = content; S.edits[num].planModified = true; }
   renderNav(); renderDetail();
-  toast('Plan — modification enregistrée dans la révision');
+  toast('Plan — enregistré dans la révision');
 }
 function cancelPlan() {
   const ch = S.chapters.find(c => c.num === S.selected);
@@ -618,16 +876,14 @@ function applyGuide() {
   addOp({ type: 'edit-guide-content', chapter: num, content });
   if (S.edits[num]) { S.edits[num].guideContent = content; S.edits[num].guideModified = true; }
   renderNav(); renderDetail();
-  toast('Guide — modification enregistrée dans la révision');
+  toast('Guide — enregistré dans la révision');
 }
 function cancelGuide() {
   const ch = S.chapters.find(c => c.num === S.selected);
   if (ch) document.getElementById('editor-guide').value = ch.guideContent;
 }
 
-// ─────────────────────────────────────────────────────────────
-// Actions éléments
-// ─────────────────────────────────────────────────────────────
+// ── Éléments ──
 function deleteElem(type, id) {
   const num = S.selected; if (!num) return;
   addOp({ type: 'remove-element', chapter: num, elType: type, id });
@@ -638,7 +894,7 @@ function deleteElem(type, id) {
     if (type === 'encadres') edit.encadres = edit.encadres.filter(e => e.id !== id);
   }
   renderDetail(); renderNav();
-  toast('Élément supprimé (révision)');
+  toast('Élément supprimé');
 }
 
 function promptAddElem(type) {
@@ -663,76 +919,106 @@ function promptAddElem(type) {
   });
 }
 
-// ─────────────────────────────────────────────────────────────
-// Actions chapitres
-// ─────────────────────────────────────────────────────────────
-function promptAddCh() {
+// ── Chapitres ──
+function promptAddCh(insertIdx) {
+  if (insertIdx === undefined) insertIdx = S.chapters.length;
   showModal('Ajouter un chapitre', `
-    <label>Numéro</label>
-    <input id="m-num" type="number" min="1" placeholder="ex: 9" autocomplete="off" />
     <label>Titre</label>
     <input id="m-title" placeholder="ex: Conclusion" autocomplete="off" />
   `, () => {
-    const num   = document.getElementById('m-num').value.trim();
     const title = document.getElementById('m-title').value.trim();
-    if (!num || !title) { toast('Numéro et titre requis', true); return false; }
-    if (S.chapters.find(c => c.num === num)) { toast('Ce numéro existe déjà', true); return false; }
-    addOp({ type: 'add-chapter', chapter: num, title });
-    S.chapters.push({ num, title, planContent: '', guideContent: '', keywords: [], figures: [], encadres: [], defs: [], refs: [], syncStatus: 'plan-only', missingDefs: [] });
-    S.chapters.sort((a,b) => +a.num - +b.num);
-    S.edits[num] = { planContent: '', guideContent: '', keywords: [], figures: [], encadres: [], planModified: true, guideModified: false };
-    renderNav(); selectCh(num);
+    if (!title) { toast('Titre requis', true); return false; }
+    const maxNum = S.chapters.reduce((m, c) => Math.max(m, +c.num||0), 0);
+    const tmpNum = String(maxNum + 1);
+    addOp({ type: 'add-chapter', chapter: tmpNum, title });
+    const newCh = { num: tmpNum, title, planContent: '', guideContent: '',
+      keywords: [], figures: [], encadres: [], defs: [], refs: [],
+      syncStatus: 'plan-only', missingDefs: [] };
+    S.chapters.splice(insertIdx, 0, newCh);
+    S.edits[tmpNum] = { planContent: '', guideContent: '', keywords: [], figures: [],
+      encadres: [], planModified: true, guideModified: false };
+    addOp({ type: 'reorder-chapters', order: S.chapters.map(c => c.num) });
+    applyDisplayNums(); renderNav(); selectCh(tmpNum);
     toast('Chapitre ajouté');
     return true;
   });
 }
 
 function confirmDeleteCh(num, title) {
-  showModal(`Supprimer le chapitre ${num}`, `
-    <p>Supprimer <strong style="color:#111827">${title}</strong> du plan et du guide ?<br>
-    Cette opération sera enregistrée dans la révision.</p>
-  `, () => {
-    addOp({ type: 'remove-chapter', chapter: num });
-    S.chapters = S.chapters.filter(c => c.num !== num);
-    if (S.selected === num) S.selected = null;
-    renderNav(); renderDetail();
-    toast('Chapitre supprimé (révision)');
-    return true;
-  });
+  addOp({ type: 'remove-chapter', chapter: num, title });
+  S.chapters = S.chapters.filter(c => c.num !== num);
+  if (S.selected === num) S.selected = null;
+  applyDisplayNums(); renderNav(); renderDetail();
+  toast('Chapitre déplacé dans la poubelle');
 }
 
-// ─────────────────────────────────────────────────────────────
-// Save
-// ─────────────────────────────────────────────────────────────
+// ── Renumérotation au Save ──
+function computeRenumber() {
+  const mapping = {};
+  S.chapters.forEach((ch, idx) => { mapping[ch.num] = String(idx + 1); });
+  return mapping;
+}
+function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+function renumberPlanText(text, mapping) {
+  let r = text;
+  Object.entries(mapping).sort((a,b)=>+b[0]-+a[0]).forEach(([o,n]) => {
+    if (o !== n) r = r.replace(new RegExp(`^(### +)${escRe(o)}([.\\-\\s])`, 'gm'), `$1${n}$2`);
+  });
+  return r;
+}
+function renumberGuideText(text, mapping) {
+  let r = text;
+  Object.entries(mapping).sort((a,b)=>+b[0]-+a[0]).forEach(([o,n]) => {
+    if (o !== n) r = r.replace(new RegExp(`^(### +)${escRe(o)}([.\\-\\s])`, 'gm'), `$1${n}$2`);
+  });
+  return r;
+}
+function renumberPlanChapterList(text, mapping) {
+  return text.replace(/(## Chapitres[\s\S]*?)(?=\n## |\n<!-- )/, s =>
+    s.replace(/^(\d+)\. /gm, (_, n) => `${mapping[n]||n}. `)
+  );
+}
+
+// ── Save ──
 async function save() {
   if (!S.draft || !S.draft.ops.length) { toast('Aucune modification à enregistrer'); return; }
-  const today   = new Date().toISOString().slice(0,10);
-  const summary = S.draft.ops.map(op => {
+  const today = new Date().toISOString().slice(0,10);
+  const summary = [...new Set(S.draft.ops.map(op => {
     if (op.type === 'edit-plan-content')  return `Contenu plan ch.${op.chapter} modifié`;
     if (op.type === 'edit-guide-content') return `Contenu guide ch.${op.chapter} modifié`;
-    if (op.type === 'add-chapter')        return `Chapitre ${op.chapter} "${op.title}" ajouté`;
-    if (op.type === 'remove-chapter')     return `Chapitre ${op.chapter} supprimé`;
+    if (op.type === 'add-chapter')        return `Chapitre "${op.title}" ajouté`;
+    if (op.type === 'remove-chapter')     return `Chapitre "${op.title}" supprimé`;
+    if (op.type === 'reorder-chapters')   return `Chapitres réordonnés et renumérotés`;
     if (op.type === 'add-element')        return `Élément "${op.id}" ajouté (ch.${op.chapter})`;
     if (op.type === 'remove-element')     return `Élément "${op.id}" supprimé (ch.${op.chapter})`;
     return op.type;
-  }).join('\n- ');
-  const entry = `\n### Révision ${today}\n- ${summary}`;
+  }))].join('\n- ');
 
   showModal('Confirmer l\'enregistrement', `
-    <p style="margin-bottom:10px">Les modifications seront appliquées à <strong style="color:#111827">Plan.md</strong> et <strong style="color:#111827">GuideIA.md</strong>.</p>
-    <label>Entrée Changelog (modifiable)</label>
-    <textarea id="m-cl">${entry}</textarea>
+    <p style="margin-bottom:10px">Modifications appliquées à <strong>Plan.md</strong> et <strong>GuideIA.md</strong>. Les chapitres seront renumérotés en séquence.</p>
+    <label>Entrée Changelog</label>
+    <textarea id="m-cl">\n### Révision ${today}\n- ${summary}</textarea>
   `, async () => {
     try {
       const cl = document.getElementById('m-cl').value;
       let planText  = S.planText;
       let guideText = S.guideText;
+
       for (const op of S.draft.ops) {
-        if (op.type === 'edit-plan-content')
-          planText  = replacePlanContent(planText,  op.chapter, op.content);
-        if (op.type === 'edit-guide-content')
-          guideText = replaceGuideContent(guideText, op.chapter, op.content);
+        if (op.type === 'edit-plan-content')  planText  = replacePlanContent(planText,  op.chapter, op.content);
+        if (op.type === 'edit-guide-content') guideText = replaceGuideContent(guideText, op.chapter, op.content);
       }
+      const removed = S.draft.ops.filter(o => o.type === 'remove-chapter').map(o => o.chapter);
+      for (const num of removed) {
+        planText  = removePlanChapter(planText,  num);
+        guideText = removeGuideChapter(guideText, num);
+      }
+      const mapping = computeRenumber();
+      planText  = renumberPlanText(planText, mapping);
+      guideText = renumberGuideText(guideText, mapping);
+      planText  = renumberPlanChapterList(planText, mapping);
+
       if (cl.trim()) { planText += '\n' + cl; guideText += '\n' + cl; }
       await api.post(PATH.plan,  planText);
       await api.post(PATH.guide, guideText);
@@ -746,40 +1032,51 @@ async function save() {
 }
 
 function replacePlanContent(text, num, content) {
-  const delimMatch = text.match(/<!--[^\n]*CONTENU[^\n]*-->/i);
-  if (!delimMatch) return text;
-  const idx    = text.indexOf(delimMatch[0]) + delimMatch[0].length;
+  const m = text.match(/<!--[^\n]*CONTENU[^\n]*-->/i);
+  if (!m) return text;
+  const idx = text.indexOf(m[0]) + m[0].length;
   const before = text.slice(0, idx);
-  let   after  = text.slice(idx);
+  let after = text.slice(idx);
   after = after.replace(
-    new RegExp(`(^### +${num}[.\\-\\s][^\\n]+\\n[\\s\\S]*?)(^#### Contenu\\s*\\n)([\\s\\S]*?)(?=^####|^###|$)`, 'm'),
+    new RegExp(`(^### +${escRe(num)}[.\\-\\s][^\\n]+\\n[\\s\\S]*?)(^#### Contenu\\s*\\n)([\\s\\S]*?)(?=^####|^###|$)`, 'm'),
     (_, h, c) => h + c + content + '\n'
   );
   return before + after;
 }
 function replaceGuideContent(text, num, content) {
   return text.replace(
-    new RegExp(`(^### +${num}[.\\-\\s][^\\n]+\\n)([\\s\\S]*?)(?=^###|$)`, 'm'),
+    new RegExp(`(^### +${escRe(num)}[.\\-\\s][^\\n]+\\n)([\\s\\S]*?)(?=^###|$)`, 'm'),
     (_, h) => h + content + '\n\n'
   );
 }
-
-async function discard() {
-  showModal('Abandonner la révision', `
-    <p>Toutes les modifications en cours seront perdues.<br>
-    Les fichiers sources ne seront pas modifiés.</p>
-  `, async () => {
-    S.draft = null;
-    await api.del(PATH.draft);
-    await load();
-    toast('Révision abandonnée');
-    return true;
-  });
+function removePlanChapter(text, num) {
+  const m = text.match(/<!--[^\n]*CONTENU[^\n]*-->/i);
+  if (!m) return text;
+  const idx = text.indexOf(m[0]) + m[0].length;
+  const before = text.slice(0, idx);
+  let after = text.slice(idx);
+  after = after.replace(new RegExp(`^### +${escRe(num)}[.\\-\\s][^\\n]+\\n[\\s\\S]*?(?=^### |$)`, 'm'), '');
+  return before + after;
+}
+function removeGuideChapter(text, num) {
+  return text.replace(new RegExp(`^### +${escRe(num)}[.\\-\\s][^\\n]+\\n[\\s\\S]*?(?=^### |$)`, 'm'), '');
 }
 
-// ─────────────────────────────────────────────────────────────
-// Chargement
-// ─────────────────────────────────────────────────────────────
+async function refresh() {
+  const hasOps = S.draft && S.draft.ops && S.draft.ops.length > 0;
+  if (hasOps) {
+    showModal('Rafraîchir', `
+      <p>Une révision est en cours. Rafraîchir abandonnera toutes les modifications non enregistrées.<br><br>Les fichiers sources ne seront pas modifiés.</p>
+    `, async () => {
+      S.draft = null; await api.del(PATH.draft); await load();
+      toast('Fichiers rechargés'); return true;
+    });
+  } else {
+    await load(); toast('Fichiers rechargés');
+  }
+}
+
+// ── Chargement ──
 async function load() {
   try {
     S.planText  = await api.get(PATH.plan);
@@ -793,9 +1090,14 @@ async function load() {
   const { chapters, edits } = buildState(S.planText, S.guideText, draft);
   S.chapters = chapters;
   S.edits    = edits;
+  applyDisplayNums();
+
+  // Sélectionner le chapitre 1 (ou le premier disponible) au démarrage/refresh
+  const firstCh = S.chapters[0];
+  S.selected = firstCh ? firstCh.num : null;
 
   renderNav();
-  if (S.selected) renderDetail();
+  renderDetail();
   updateTopbar();
 }
 
@@ -809,13 +1111,10 @@ function setConn(ok, msg) {
 function updateTopbar() {
   const hasOps = S.draft && S.draft.ops && S.draft.ops.length > 0;
   document.getElementById('badge-revision').style.display = hasOps ? 'inline' : 'none';
-  document.getElementById('btn-save').disabled    = !S.connected || !hasOps;
-  document.getElementById('btn-discard').disabled = !S.connected || !hasOps;
+  document.getElementById('btn-save').disabled = !S.connected || !hasOps;
 }
 
-// ─────────────────────────────────────────────────────────────
-// Modal
-// ─────────────────────────────────────────────────────────────
+// ── Modal ──
 let _cb = null;
 function showModal(title, body, cb) {
   document.getElementById('modal-title').textContent = title;
@@ -826,28 +1125,22 @@ function showModal(title, body, cb) {
 }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); _cb = null; }
 
-// ─────────────────────────────────────────────────────────────
-// Toast
-// ─────────────────────────────────────────────────────────────
+// ── Toast ──
 let _tt;
 function toast(msg, err) {
   const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'show' + (err ? ' err' : '');
-  clearTimeout(_tt);
-  _tt = setTimeout(() => el.className = '', 2500);
+  el.textContent = msg; el.className = 'show' + (err ? ' err' : '');
+  clearTimeout(_tt); _tt = setTimeout(() => el.className = '', 2500);
 }
 
-// ─────────────────────────────────────────────────────────────
-// Listeners
-// ─────────────────────────────────────────────────────────────
+// ── Listeners ──
 document.getElementById('btn-apply-plan').onclick   = applyPlan;
 document.getElementById('btn-cancel-plan').onclick  = cancelPlan;
 document.getElementById('btn-apply-guide').onclick  = applyGuide;
 document.getElementById('btn-cancel-guide').onclick = cancelGuide;
-document.getElementById('btn-add-ch').onclick       = promptAddCh;
+document.getElementById('btn-add-ch').onclick       = () => promptAddCh(S.chapters.length);
 document.getElementById('btn-save').onclick         = save;
-document.getElementById('btn-discard').onclick      = discard;
+document.getElementById('btn-refresh').onclick      = refresh;
 document.getElementById('btn-add-keyword').onclick  = () => promptAddElem('keywords');
 document.getElementById('btn-add-figure').onclick   = () => promptAddElem('figures');
 document.getElementById('btn-add-encadre').onclick  = () => promptAddElem('encadres');
@@ -855,10 +1148,8 @@ document.getElementById('modal-confirm').onclick    = async () => { if(_cb){ con
 document.getElementById('modal-cancel').onclick     = closeModal;
 document.getElementById('modal-overlay').onclick    = e => { if(e.target===document.getElementById('modal-overlay')) closeModal(); };
 
-// ─────────────────────────────────────────────────────────────
-// Init
-// ─────────────────────────────────────────────────────────────
 (async () => {
+  initSplitter();
   const ok = await api.ping();
   setConn(ok);
   if (ok) await load();

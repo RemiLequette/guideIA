@@ -108,6 +108,8 @@ Figures : `immo-regression`, `immo-outliers`, `immo-deux-segments`, `immo-underf
 - intention
 - collaborateur
 - hallucination
+- LLM
+- prompt
 
 #### Figures
 
@@ -125,11 +127,17 @@ Pourquoi c'est particulièrement important avec une IA : on lui parle, elle rép
 cohérente, elle semble comprendre. C'est le premier outil de l'histoire avec qui on converse.
 Le risque est de lui prêter des intentions qu'elle n'a pas.
 
+*Note : l'anthropomorphisme comme stratégie cognitive utile — pas juste un biais à corriger —
+sera développé en ouverture du ch. 2, qui s'enchaîne naturellement ici.*
+
 **Ce qu'on attend malgré tout**
 On travaille avec elle comme avec un collaborateur : on lui pose des questions,
 on lui délègue des tâches. Elle est bien équipée pour cela — connaissances encyclopédiques,
 maîtrise de nombreuses disciplines, capacité de rédaction, analyse, code, langues, etc.
 Mais elle a des limites fondamentales que le guide va explorer.
+
+*Note : introduire ici explicitement le terme LLM (grand modèle de langage) et ses
+équivalents grand public — ChatGPT, Gemini, etc.*
 
 **La métaphore du CV**
 Pour apprivoiser l'anthropomorphisme : imaginer recruter un assistant avec un CV hors norme —
@@ -137,6 +145,10 @@ section compétences immense, mais sections motivation et expérience vides.
 Ce que ça signifie concrètement. En plus : il est distrait, il a tendance à vouloir
 faire plaisir coûte que coûte, et il lui arrive d'inventer des choses — parfois manifestement
 fausses, parfois de façon moins détectable.
+
+*Note : glisser le mot "prompt" en passant, avec un exemple minimal montrant la différence
+entre un prompt flou et un prompt clair. Pas de développement ici — la définition formelle
+arrive au ch. 3.*
 
 ---
 
@@ -153,6 +165,9 @@ fausses, parfois de façon moins détectable.
 #### Encadrés
 
 #### Contenu
+
+*Note : ouvrir le chapitre sur l'anthropomorphisme comme stratégie cognitive — c'est naturel,
+c'est pratique, il suffit de garder les limites en tête. Transition naturelle depuis le ch. 1.*
 
 **Comment gérer ce profil**
 Pas de secret : exploiter ses qualités en limitant ses défauts.
@@ -323,17 +338,15 @@ volontairement très simple.
 Je voudrais estimer la valeur d'un appartement. Je dispose d'une liste de transactions
 immobilières avec les surfaces et les prix.
 
-Une approche que nous connaissons toutes et tous : calculer le prix moyen au m², puis
-multiplier par la surface de mon appartement.
+Approche classique : calculer le prix moyen au m², puis multiplier par la surface.
 
 Utiliser la figure immo-regression ici.
 
-Et bien, comme Monsieur Jourdain, j'ai fait un modèle ! Un modèle c'est :
+Sans le savoir, je viens de construire un modèle. Un modèle c'est :
 - une procédure pour calculer une sortie à partir d'une entrée : multiplier par le prix au m²
 - des paramètres qui changent le calcul : ici un seul, le prix au m²
-- une méthode d'apprentissage pour trouver les paramètres qui reflètent le mieux un jeu
-  de données connues (entrée, sortie) dits données d'entraînement — ici les transactions
-  immobilières, et la méthode le calcul de la moyenne
+- une méthode d'apprentissage pour trouver les paramètres qui reflètent le mieux les données
+  d'entraînement — ici les transactions immobilières, et la méthode le calcul de la moyenne
 
 Même si la surface de mon bien ne figure pas dans les transactions historiques, ou qu'il
 y en a plusieurs avec la même surface et des prix différents, je trouve une valeur qui est
@@ -358,7 +371,7 @@ On voit tout de suite que notre modèle immobilier peut halluciner et donner des
 et la puissance du modèle.
 
 *La qualité des données*
-Comme on dit : garbage in, garbage out. Un exemple typique est la présence d'outliers
+Garbage in, garbage out. Un exemple typique est la présence d'outliers
 (valeurs aberrantes) — un bien bradé, un vendu très au-dessus du marché — qui vont
 dérailler le calcul des paramètres.
 
@@ -374,29 +387,19 @@ joue. Les petites surfaces sont souvent plus chères au m² — notre modèle ne
 
 Utiliser la figure immo-deux-segments ici.
 
-On peut l'enrichir : une surface de coupure, un prix au m² pour les petites surfaces, un
-autre pour les grandes. On capture grossièrement notre connaissance du marché.
-
-Quand un modèle n'est pas assez puissant pour donner des prévisions satisfaisantes, on dit
-qu'il underfit. Il n'est pas assez intelligent pour répondre à la question — vous aurez beau
-l'entraîner, il ne fera pas de progrès.
+Quand un modèle n'est pas assez puissant, on dit qu'il underfit — il ne peut pas progresser
+même avec plus d'entraînement.
 
 Utiliser la figure immo-underfitting ici.
 
-Plus un modèle est complexe, plus il a de paramètres — des milliards dans un LLM. Donc plus
-il faut de données, plus elles doivent être bonnes, plus la procédure d'apprentissage doit
-être efficace.
-
-Mais si on n'a pas assez de données, ou qu'elles ne sont pas bien réparties, plusieurs jeux
-de paramètres différents peuvent coller aux données et donner des résultats très différents
-en dehors. L'apprentissage est incapable de choisir le bon. Le modèle n'est pas robuste —
-on dit qu'il overfit.
+À l'inverse, un modèle très complexe avec trop peu de données peut "apprendre par cœur"
+sans généraliser — il overfit. Sa courbe colle aux données connues mais part dans des
+directions improbables ailleurs.
 
 Utiliser la figure immo-overfitting ici.
 
-Et voilà d'autres hallucinations. Techniquement on parle d'interpolation quand les questions
-sont "entre" les données d'entraînement, d'extrapolation en dehors. C'est la même idée,
-mais on voit bien qu'extrapoler nous amène encore plus dans le monde de la science-fiction.
+Techniquement on parle d'interpolation quand les questions sont "entre" les données
+d'entraînement, d'extrapolation en dehors. Extrapoler amplifie encore plus les erreurs.
 
 Utiliser la figure immo-interpolation-extrapolation ici.
 
@@ -423,8 +426,9 @@ Utiliser la figure immo-interpolation-extrapolation ici.
 
 > 📦 **encadré** `tokens`
 > Définition des tokens : unité de mesure des LLM, roughly un mot ou un fragment de mot.
-> Ordre de grandeur, coût, lien avec la fenêtre de contexte.
-> À décider : développé ici ou dans un encadré référencé depuis plusieurs chapitres.
+> Ordre de grandeur, coût (calcul GPU, donc énergie) — sans jugement de valeur, juste
+> les faits qui permettent de comprendre ce que les gens entendent.
+> Lien avec la fenêtre de contexte.
 
 #### Contenu
 
@@ -439,11 +443,11 @@ Difficile de soutenir une conversation quand on oublie tout à chaque étape.
 Solution : l'orchestrateur renvoie tout l'historique dans le texte à compléter.
 Utiliser la figure prompt-etendu-historique ici.
 
-**Comment nommer ce message ?**
-Malheureusement on dira soit "prompt" soit "contexte" — parce qu'il contient
-en fait le prompt original et des éléments de contexte (prompt système, historique...)
-pour mieux répondre. Ce n'est pas très clair, mais on comprend en fonction du contexte.
-(humour subtil assumé)
+Ce message complet s'appelle tantôt "prompt", tantôt "contexte" — parce qu'il contient
+à la fois la question et les éléments de contexte nécessaires pour y répondre. Glisser
+l'humour : ce paragraphe vient d'utiliser le mot "contexte" en lui donnant deux sens
+légèrement différents — exactement le genre d'ambiguïté que les chapitres suivants
+vont explorer.
 
 **L'importance de maîtriser la longueur**
 Le message envoyé au modèle a une taille limite — la fenêtre de contexte —
@@ -453,11 +457,11 @@ Quand on approche de la limite, l'orchestrateur peut compresser l'historique
 
 Tout ce texte a un coût : c'est ce qu'on appelle les tokens — voir encadré tokens.
 
-Intuitivement, un contexte très long peut créer de la confusion et de la distraction
-pour le modèle — on expliquera pourquoi plus tard.
+Un contexte très long peut aussi créer de la confusion pour le modèle — on verra
+pourquoi dans le chapitre sur l'attention.
 
 **Conclusion pratique**
-Des conversations courtes et centrées sur un sujet.
+Des conversations courtes et centrées sur un sujet. Nouvelle session si le sujet change.
 (Si toutes les réunions étaient comme ça !)
 
 ---
@@ -486,8 +490,7 @@ Des conversations courtes et centrées sur un sujet.
 #### Encadrés
 
 > 📦 **encadré** `tokens-speciaux`
-> Explication technique de la génération token par token et des tokens spéciaux
-> qui structurent le prompt étendu : balises de rôle, de mémoire, de résultat d'outil, etc.
+> → Déplacé vers l'annexe technique.
 
 #### Contenu
 
@@ -507,16 +510,7 @@ des LLM. On y reviendra dans le chapitre suivant.
 **La limite fondamentale : tout ça reste du texte plat**
 Le LLM ne se regarde pas travailler. Au final, il reçoit un grand texte à compléter
 — et c'est tout. Il ne peut pas hiérarchiser mécaniquement les éléments du contexte :
-on lui dit, et on espère qu'il comprend.
-
-Point crucial : le contexte est toujours **déclaratif, jamais impératif**. Quand vous
-écrivez "je veux que tu répondes en trois points", comprenez : "il y a une probabilité
-plus forte que la réponse contienne trois points". Ce n'est pas un ordre exécuté,
-c'est une intention formulée. On reviendra sur ce point — il y a des façons de formuler
-plus efficacement que d'autres.
-
-> **TODO** : trouver une mise en valeur adaptée pour ce concept (encadré, analogie...).
-
+on lui dit ce qui est important, et on espère qu'il comprend.
 **Enrichir le contexte : ce que l'orchestrateur vous offre**
 L'orchestrateur propose des outils pour enrichir le contexte de façon statique.
 Vous pouvez enregistrer des instructions personnelles qui seront systématiquement
@@ -556,33 +550,22 @@ dont il a besoin. Concrètement, au lieu d'un seul tour de génération par prom
 utilisateur, on en fait plusieurs. Une génération peut inclure dans sa réponse des
 requêtes de contexte supplémentaire, qui seront injectées dans le prompt suivant.
 
-Exemple concret : "Fait-il beau à Nice ?"
+Exemple narratif : "Fait-il beau à Nice ?"
 La date d'entraînement du modèle est passée — la météo du jour n'y figure pas.
-Avec de la chance, le modèle répond honnêtement qu'il ne sait pas. Mais le biais
-de positivité peut l'amener à inventer une réponse vraisemblable : le prompt système
-lui a demandé d'être serviable, et une génération qui donne une réponse est
-statistiquement plus probable qu'une qui n'en donne pas.
+Avec de la chance, le modèle répond honnêtement qu'il ne sait pas. Mais il peut
+aussi inventer une réponse vraisemblable — c'est le biais de positivité : le prompt
+système lui demande d'être serviable, et une génération qui donne une réponse est
+statistiquement plus probable qu'une qui n'en donne pas. Ce biais vient aussi de
+l'entraînement lui-même : y a-t-il beaucoup de textes humains qui décrivent ce
+qu'on ne sait pas ?
 
-Parenthèse sur ce biais : ce n'est pas seulement le prompt système qui y pousse.
-C'est aussi l'entraînement lui-même — posez-vous la question : y a-t-il beaucoup
-de documents dans la littérature humaine qui décrivent ce qu'on ne sait pas ?
+Pourtant le modèle sait des choses utiles : que la question relève de la météo,
+que la météo s'applique à un lieu, que Nice est une ville, et que le plus pratique
+est de faire une recherche web. Sa réponse va donc contenir une demande : effectuer
+cette recherche et lui communiquer le résultat. L'orchestrateur exécute, reconstruit
+le prompt avec le résultat, et relance la génération.
 
-Pourtant, le modèle sait déjà beaucoup de choses utiles sur cette question :
-que "fait-il beau" relève de la météo, que la météo s'applique à des lieux,
-que Nice est une ville, et que pour connaître la météo en temps réel, le plus
-pratique est... de faire une recherche web. Il sait probablement quel service
-appeler et comment formuler la requête.
-
-Sa réponse va donc contenir une demande : effectuer cette recherche et lui
-communiquer le résultat. L'orchestrateur exécute, récupère la page, reconstruit
-le prompt avec le résultat injecté, et relance la génération. Le LLM produit
-alors la réponse utile — ou demande une autre recherche si le résultat n'était
-pas exploitable.
-
-> *Note : tout l'anthropomorphisme de cet exemple est assumé pour la lisibilité —
-> il n'y a bien sûr ni intention ni mémoire de la demande précédente.*
-
-Voir encadré tokens-speciaux pour la mécanique sous-jacente.
+Voir encadré tokens-speciaux (annexe technique) pour la mécanique sous-jacente.
 
 **Skills et MCP : le contexte dynamique généralisé**
 La recherche web n'est qu'un exemple. Le contexte dynamique repose sur un concept
@@ -677,7 +660,13 @@ Dans un contexte très long, les informations placées au milieu sont statistiqu
 bien traitées que celles en début ou en fin. Implication pratique : si vous avez une
 information critique, ne la noyez pas au milieu d'un long document.
 
-**Conclusion pratique**
+**Self-attention et polysémie — dans les deux sens**
+Le mécanisme d'attention résout la polysémie. Mais il le fait dans les deux sens : un
+contexte mal structuré, traitant plusieurs sujets à la fois, peut introduire de nouvelles
+ambiguïtés. Le modèle peut mélanger des fils pourtant distincts. Raison supplémentaire
+pour la règle d'or : une session, un sujet.
+
+**Conclusion pratique** (intégrée à la section dilution dans le guide)
 - Des prompts courts et ciblés
 - Les informations importantes en tête ou en queue de contexte
 - Ne pas injecter de documents entiers si seules quelques sections sont pertinentes

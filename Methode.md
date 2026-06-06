@@ -188,7 +188,7 @@ Les outils de check vérifient la cohérence entre `Plan.md` et `GuideIA.md`. Il
 
 1. **Unicité des identifiants dans le plan** — un identifiant de balise apparaît dans les sous-sections d'un seul chapitre. Un identifiant présent dans deux chapitres est une erreur.
 
-2. **Définition unique dans le guide** — chaque identifiant déclaré dans le plan a exactement une balise `{{def:...}}` dans le guide. Zéro définition (balise manquante) ou plus d'une (doublon) sont des erreurs.
+2. **Au moins une définition dans le guide** — chaque identifiant déclaré dans le plan a au moins une balise `{{def:...}}` dans le guide. Zéro définition (balise manquante) est une erreur. Plusieurs définitions sont autorisées — chacune génère une entrée distincte dans l'index des mots-clés.
 
 3. **Définition dans le bon chapitre** — la balise `{{def:...}}` d'un identifiant se trouve dans le chapitre du guide correspondant au chapitre du plan où il est déclaré.
 
@@ -290,3 +290,7 @@ Ces notes alimenteront directement l'appendice du guide.
 
 
 ---
+
+## Idées futures
+
+- **Versions multilingues** : si le guide rencontre un succès suffisant, envisager des traductions (anglais en priorité). La méthode de collaboration humain-IA pourrait s'appliquer directement à la traduction.
