@@ -4,8 +4,48 @@
 Définir le contenu attendu du guide guideIA : chapitres et ce qu'on veut y dire.
 
 ## Sommaire
+- [Méta — hors guide](#méta--hors-guide)
 - [Guide de style figures](#guide-de-style-figures)
 - [Chapitres](#chapitres)
+
+## Méta — hors guide
+
+*Cette section ne fait pas partie du guide. Elle définit les conventions éditoriales propres à GuideIA : ton, public, style. Elle est lue par l'assistant IA en début de session de rédaction.*
+
+### Public visé
+
+Professionnels utilisant un assistant IA au quotidien, sans formation technique. Le guide suppose une curiosité intellectuelle, pas de connaissances en informatique ou en machine learning.
+
+### Ton
+
+- **Pédagogique et accessible** — jamais technique pour le plaisir d'être technique
+- **Paragraphes courts et aérés**
+- **Analogies et exemples concrets** — privilégier les situations du quotidien pour illustrer les concepts
+- **Humour bienvenu, avec mesure** — uniquement au service de la compréhension, jamais gratuit
+- **Concepts importants mis en valeur** — reformulation, exemple dédié, ou encadré
+- **À éviter** : jargon technique, formulations trop formelles, condescendance
+
+### Progression et dosage
+
+Ces règles gouvernent la façon dont les concepts et les idées sont introduits au fil du texte :
+
+- **Ne pas anticiper** — un concept qui sera expliqué plus tard ne s'introduit pas en passant. Même une mention fugace crée du bruit pour le lecteur qui ne dispose pas encore des clés.
+- **Ne pas soulever une question que le lecteur ne se pose pas** — si la réponse est "non" ou "ça ne s'applique pas ici", ne pas poser la question. Le silence est plus propre.
+- **Doser les mises en garde** — une mise en garde utile se glisse discrètement dans le texte, sans en faire un point de débat. L'objectif est qu'elle s'installe chez le lecteur, pas qu'elle déclenche une polémique.
+- **Introduire sans insister** — un concept peut être évoqué brièvement à son premier passage, avec la promesse implicite que son rôle s'étoffera. Pas besoin de tout dire d'un coup.
+
+### Conventions
+
+- **Langue** : français — y compris les labels des figures
+- **Fichier source** : `GuideIA.md` — fichier unique, lisible en markdown par un humain
+- **Structure** : définie par les chapitres ci-dessous
+- **Balises** : système `{{def:...}}` / `{{ref:...}}` décrit dans `Methode.md`
+
+### Note de collaboration
+
+Ce projet est lui-même un exemple de collaboration humain-IA. La façon dont il se déroule — les échanges, les ajustements, les erreurs, les découvertes — constitue la matière première de l'appendice final du guide. Il faut donc documenter la collaboration au fil de l'eau, pas après coup.
+
+---
 
 ## Guide de style figures
 

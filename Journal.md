@@ -1,6 +1,7 @@
 # Journal
 
 ## Sessions
+- [Session 2026-06-06 — Consolidation notes tmp/ dans Plan.md et Todo.md](#session-2026-06-06--consolidation-notes-tmp-dans-planmd-et-todomd)
 - [Session 2026-06-02 — Mise en place du projet et rédaction du plan](#session-2026-06-02--mise-en-place-du-projet-et-rédaction-du-plan)
 - [Session 2026-06-02b — Appendice et mise à jour de la méthode](#session-2026-06-02b--appendice-et-mise-à-jour-de-la-méthode)
 - [Session 2026-06-02c — Todo et snapshots](#session-2026-06-02c--todo-et-snapshots)
@@ -9,6 +10,30 @@
 - [Session 2026-06-02f — Balises : mots-clés, figures, encadrés](#session-2026-06-02f--balises--mots-clés-figures-encadrés)
 - [Session 2026-06-02g — Outillage : script de rendu HTML](#session-2026-06-02g--outillage--script-de-rendu-html)
 - [Session 2026-06-05 — plan-editor : bugs, thème, poubelle](#session-2026-06-05--plan-editor--bugs-thème-poubelle)
+
+---
+
+## Session 2026-06-06 — Consolidation notes tmp/ dans Plan.md et Todo.md
+
+### Décisions
+- Lecture et traitement des deux fichiers `tmp/` : `notes-alignement-plan-guide.md` et `notes-retours-regis.md`
+- `Plan.md` mis à jour : notes d'écart et retours Régis intégrés chapitre par chapitre (ch. 2 à 7) ; trois nouveaux chapitres créés (ch. 8 Annexe technique, ch. 9 "Alors docteur", ch. 10 Cas pratiques) ; conclusion renumérotée en ch. 11 et enrichie
+- `Todo.md` mis à jour : 13 nouveaux items (O13 à O23) couvrant les corrections guide et les décisions en suspens
+- Fichiers `tmp/` supprimés — contenu entièrement consolidé
+
+### Collaboration
+
+**Moment clé — La question du WIP qui n'existait pas**
+
+En début de session, j'ai mentionné spontanément "charger un fichier WIP". Interpellé là-dessus, j'ai dû admettre qu'aucune étape du bootstrap ne demandait ça — c'était une reformulation inexacte du bootstrap, pas une instruction réelle. Bon rappel : l'assistant peut paraphraser ses propres instructions de façon inexacte, comme il peut paraphraser n'importe quel texte.
+
+**Moment clé — Les notes ne vont pas dans le TODO**
+
+Avant d'écrire quoi que ce soit, l'utilisateur a posé la bonne question : est-ce que le texte dense des notes ne va pas se perdre dans le TODO ? La réponse a orienté toute la session : les notes vont dans `Plan.md` (où est leur place naturelle), le TODO ne reçoit que des items courts pointant vers des tâches actionnables. Distinction simple, mais qui aurait été ignorée sans la question.
+
+**Moment clé — L'ordre des chapitres tranché en une réplique**
+
+Deux fichiers de notes donnaient des ordres contradictoires pour les nouveaux chapitres. Question posée, réponse en trois mots : "a ton avis". Réponse correcte — "Alors docteur" avant les cas pratiques, on pose les outils avant de les illustrer. Décision prise, on avance.
 
 ---
 

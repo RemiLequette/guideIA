@@ -3,9 +3,8 @@
 ## Objectif
 Décrire la méthode de travail du projet guideIA : organisation des sessions, gestion des documents, et collaboration entre l'utilisateur et l'assistant IA.
 
-**Objectif secondaire, mais prioritaire dans l'attention quotidienne :** ce projet est lui-même un exemple de collaboration humain-IA. La façon dont il se déroule — les échanges, les ajustements, les erreurs, les découvertes — constitue la matière première de l'appendice final du guide. Il faut donc documenter la collaboration au fil de l'eau, pas après coup.
-
 ## Sommaire
+- [Pourquoi cette méthode](#pourquoi-cette-méthode)
 - [Fichiers du projet](#fichiers-du-projet)
 - [Organisation des sessions](#organisation-des-sessions)
 - [Workflow de collaboration](#workflow-de-collaboration)
@@ -18,6 +17,16 @@ Décrire la méthode de travail du projet guideIA : organisation des sessions, g
 - [Rendu final du document](#rendu-final-du-document)
 - [Outillage](#outillage)
 - [Journal](#journal)
+
+## Pourquoi cette méthode
+
+Cette méthode et l'outillage associé sont conçus pour produire de la **littérature technique** : des documents destinés à être lus, maintenus, et enrichis dans la durée, en collaboration avec un assistant IA.
+
+Par littérature technique on entend : guides pratiques, documentation de référence, manuels, tutoriels, ou tout document qui combine une structure formelle, un contenu rédactionnel soigné, et un système de balisage exploitable par des outils.
+
+La méthode est **indépendante du sujet traité**. Elle définit l'organisation des sessions, le workflow de collaboration, le système de balises, et l'outillage — pas le ton ni le style éditorial, qui sont propres à chaque document et définis dans la section méta de son plan.
+
+---
 
 ## Fichiers du projet
 
@@ -99,21 +108,9 @@ L'utilisateur peut demander à tout moment un snapshot de la session en cours, d
 
 ## Guide de style
 
-- **Ton** : pédagogique et accessible, pas technique
-- **Paragraphes** : courts, aérés
-- **Analogies et exemples** : privilégier les situations concrètes pour illustrer les concepts
-- **Humour** : bienvenu, avec mesure, uniquement au service de la compréhension
-- **Concepts importants** : mis en valeur explicitement (reformulation, exemple dédié, ou encadré)
-- **À éviter** : jargon technique, formulations trop formelles
+Le ton, le style, les règles de progression et les conventions éditoriales de GuideIA sont définis dans la section **`## Méta — hors guide`** de `Plan.md`.
 
-### Progression et dosage
-
-Ces règles gouvernent la façon dont les concepts et les idées sont introduits au fil du texte :
-
-- **Ne pas anticiper** — un concept qui sera expliqué plus tard ne s'introduit pas en passant. Même une mention fugace crée du bruit pour le lecteur qui ne dispose pas encore des clés.
-- **Ne pas soulever une question que le lecteur ne se pose pas** — si la réponse est "non" ou "ça ne s'applique pas ici", ne pas poser la question. Le silence est plus propre.
-- **Doser les mises en garde** — une mise en garde utile se glisse discrètement dans le texte, sans en faire un point de débat. L'objectif est qu'elle s'installe chez le lecteur, pas qu'elle déclenche une polémique.
-- **Introduire sans insister** — un concept peut être évoqué brièvement à son premier passage, avec la promesse implicite que son rôle s'étoffera. Pas besoin de tout dire d'un coup.
+Cette séparation est intentionnelle : `Methode.md` décrit une méthode réutilisable pour tout document de littérature technique. Les choix éditoriaux sont propres à chaque document et vivent dans son plan.
 
 ## Balises
 
