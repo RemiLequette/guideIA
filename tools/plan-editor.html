@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
@@ -48,6 +47,14 @@ html, body {
   border: 1px solid #92400e;
   display: none;
 }
+#badge-renumber {
+  font-family: 'DM Mono', monospace;
+  padding: 2px 8px; border-radius: 10px;
+  background: #1e3a5f; color: #bfdbfe;
+  font-size: 10px; font-weight: 500;
+  border: 1px solid #1e40af;
+  display: none;
+}
 .spacer { flex: 1; }
 .btn-top {
   font-family: 'DM Sans', sans-serif;
@@ -79,81 +86,14 @@ html, body {
   display: flex; align-items: center; justify-content: space-between;
   flex-shrink: 0;
 }
-#btn-add-ch {
-  font-family: 'DM Sans', sans-serif;
-  background: #e2dfd7; border: none; color: #555;
-  border-radius: 4px; padding: 2px 8px;
-  cursor: pointer; font-size: 10px; font-weight: 600;
-  transition: background .15s;
-}
-#btn-add-ch:hover { background: #d6d2c8; color: #111; }
 
-#nav-body { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
-#chapter-list { flex: 1; overflow-y: auto; padding: 4px 0; min-height: 0; }
-
-#nav-splitter {
-  height: 7px; background: #d6d2c8; cursor: ns-resize; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  user-select: none; transition: background .15s;
-}
-#nav-splitter:hover, #nav-splitter.dragging { background: #b0aca4; }
-#nav-splitter::after { content: ''; display: block; width: 28px; height: 3px; background: #b0aca4; border-radius: 2px; }
-#nav-splitter:hover::after { background: #888; }
-
-/* ── Poubelle ── */
-#nav-trash { display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
-#nav-trash-head {
-  padding: 4px 10px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
-  color: #aaa;
-  background: #ede9e0;
-  border-top: 1px solid #d6d2c8;
-  flex-shrink: 0;
-}
-#nav-trash-list { flex: 1; overflow-y: auto; padding: 2px 0; background: #e8e4db; }
-
-.ch-trash-item {
-  display: flex; align-items: center; gap: 5px;
-  padding: 4px 10px 4px 0;
-  font-size: 11px; color: #aaa;
-  border-left: 3px solid transparent;
-  cursor: grab;
-}
-.ch-trash-item:hover { background: #dedad1; }
-.ch-trash-num { font-family: 'DM Mono', monospace; font-size: 11px; color: #ccc; min-width: 28px; text-align: right; }
-.ch-trash-title { flex: 1; text-decoration: line-through; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ccc; }
-.ch-trash-restore {
-  background: none; border: none; color: #ccc; cursor: pointer;
-  font-size: 13px; padding: 0 8px 0 2px; opacity: 0; transition: opacity .1s; line-height: 1;
-}
-.ch-trash-item:hover .ch-trash-restore { opacity: 1; color: #2563eb; }
-
-/* ── D&D ── */
-.sortable-ghost { opacity: 0.35; background: #dbeafe !important; border-left-color: #2563eb !important; }
-.sortable-drag  { opacity: 0.9; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
-
-/* ── Séparateurs d'insertion ── */
-.ch-insert { height: 0; overflow: visible; position: relative; display: flex; align-items: center; pointer-events: none; }
-.ch-insert-btn {
-  position: absolute; left: 0; right: 0; height: 20px;
-  display: flex; align-items: center; pointer-events: all;
-  cursor: pointer; z-index: 10; opacity: 0; transition: opacity .15s;
-}
-.ch-insert:hover .ch-insert-btn,
-.ch-item:hover + .ch-insert .ch-insert-btn { opacity: 1; }
-.ch-insert-line { flex: 1; height: 1.5px; background: #2563eb; margin: 0 8px; }
-.ch-insert-plus {
-  width: 15px; height: 15px; background: #2563eb; color: #fff;
-  border-radius: 50%; font-size: 12px; line-height: 15px; text-align: center;
-  font-weight: 700; flex-shrink: 0;
-}
+#chapter-list { flex: 1; overflow-y: auto; padding: 4px 0; }
 
 /* ── Items chapitres ── */
 .ch-item {
   display: flex; align-items: center; gap: 4px;
   padding: 6px 8px 6px 0;
-  cursor: grab;
+  cursor: pointer;
   border-left: 3px solid transparent;
   transition: background .1s;
   position: relative;
@@ -185,13 +125,6 @@ html, body {
 .b-warn { background: #fef9c3; color: #854d0e; }
 .b-only { background: #dbeafe; color: #1e40af; }
 .b-mod  { background: #fae8ff; color: #7e22ce; }
-
-.ch-del {
-  background: none; border: none; color: #ccc; cursor: pointer;
-  font-size: 14px; line-height: 1; padding: 0 8px 0 2px;
-  opacity: 0; transition: opacity .1s;
-}
-.ch-item:hover .ch-del { opacity: 1; color: #dc2626; }
 
 #nav-foot {
   padding: 6px 10px;
@@ -382,6 +315,7 @@ textarea.editor.modified:focus { background: #fefce8; }
     <span class="dot dot-orange" id="conn-dot"></span>
     <span id="status-text">Connexion…</span>
     <span id="badge-revision">● révision en cours</span>
+    <span id="badge-renumber">↺ renuméroté</span>
     <span class="spacer"></span>
     <button class="btn-top" id="btn-refresh">↺ Rafraîchir</button>
     <button class="btn-top" id="btn-save" disabled>💾 Enregistrer</button>
@@ -390,18 +324,8 @@ textarea.editor.modified:focus { background: #fefce8; }
   <div id="main">
 
     <div id="nav">
-      <div id="nav-head">
-        Chapitres
-        <button id="btn-add-ch">+ Nouveau</button>
-      </div>
-      <div id="nav-body">
-        <div id="chapter-list"></div>
-        <div id="nav-splitter" title="Redimensionner"></div>
-        <div id="nav-trash">
-          <div id="nav-trash-head">🗑 Supprimés</div>
-          <div id="nav-trash-list"></div>
-        </div>
-      </div>
+      <div id="nav-head">Chapitres</div>
+      <div id="chapter-list"></div>
       <div id="nav-foot"></div>
     </div>
 
@@ -409,7 +333,7 @@ textarea.editor.modified:focus { background: #fefce8; }
 
       <div id="empty-state">
         <p>Sélectionnez un chapitre</p>
-        <small>ou ajoutez-en un nouveau</small>
+        <small>Chargement en cours…</small>
       </div>
 
       <div id="chapter-view" style="display:none; flex-direction:column; height:100%; overflow:hidden;">
@@ -572,16 +496,8 @@ function buildState(planText, guideText, draft) {
     };
   });
 
-  if (draft && draft.ops) draft.ops.forEach(op => replayOp(op, chapters, edits));
-
-  const reorderOps = draft && draft.ops ? draft.ops.filter(o => o.type === 'reorder-chapters') : [];
-  if (reorderOps.length) {
-    const lastOrder = reorderOps[reorderOps.length - 1].order;
-    chapters.sort((a, b) => {
-      const ia = lastOrder.indexOf(a.num);
-      const ib = lastOrder.indexOf(b.num);
-      return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
-    });
+  if (draft && draft.ops) {
+    draft.ops.forEach(op => replayOp(op, chapters, edits));
   }
 
   return { chapters, edits };
@@ -594,15 +510,6 @@ function replayOp(op, chapters, edits) {
       if (edit) { edit.planContent = op.content; edit.planModified = true; } break;
     case 'edit-guide-content':
       if (edit) { edit.guideContent = op.content; edit.guideModified = true; } break;
-    case 'add-chapter':
-      if (!chapters.find(c => c.num === op.chapter)) {
-        chapters.push({ num: op.chapter, title: op.title, planContent: '', guideContent: '',
-          keywords: [], figures: [], encadres: [], defs: [], refs: [],
-          syncStatus: 'plan-only', missingDefs: [] });
-        edits[op.chapter] = { planContent: '', guideContent: '', keywords: [], figures: [],
-          encadres: [], planModified: true, guideModified: false };
-      }
-      break;
     case 'add-element':
       if (edit) {
         const arr = op.elType === 'keywords' ? edit.keywords : op.elType === 'figures' ? edit.figures : edit.encadres;
@@ -626,131 +533,66 @@ function addOp(op) {
   if (!S.draft) S.draft = { ops: [] };
   if (op.type === 'edit-plan-content' || op.type === 'edit-guide-content')
     S.draft.ops = S.draft.ops.filter(o => !(o.type === op.type && o.chapter === op.chapter));
-  if (op.type === 'reorder-chapters')
-    S.draft.ops = S.draft.ops.filter(o => o.type !== 'reorder-chapters');
   S.draft.ops.push(op);
   api.post(PATH.draft, JSON.stringify(S.draft, null, 2)).catch(console.error);
   updateTopbar();
 }
 
-// ── Splitter ──
-const LS_TRASH_H = 'plan-editor:trash-height';
-function initSplitter() {
-  const splitter  = document.getElementById('nav-splitter');
-  const trashZone = document.getElementById('nav-trash');
-  let saved = parseInt(localStorage.getItem(LS_TRASH_H), 10);
-  if (isNaN(saved)) saved = 110;
-  trashZone.style.height = saved + 'px';
+// ── Renumérotation automatique au chargement ──
+function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
-  let startY, startH;
-  splitter.addEventListener('mousedown', e => {
-    startY = e.clientY; startH = trashZone.offsetHeight;
-    splitter.classList.add('dragging');
-    const onMove = e2 => {
-      const h = Math.min(300, Math.max(36, startH - (e2.clientY - startY)));
-      trashZone.style.height = h + 'px';
-    };
-    const onUp = () => {
-      splitter.classList.remove('dragging');
-      localStorage.setItem(LS_TRASH_H, trashZone.offsetHeight);
-      document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('mouseup', onUp);
-    };
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onUp);
-    e.preventDefault();
-  });
+function computeRenumber() {
+  const mapping = {};
+  S.chapters.forEach((ch, idx) => { mapping[ch.num] = String(idx + 1); });
+  return mapping;
 }
 
-// ── Poubelle ──
-function renderTrash() {
-  const deleted = S.draft && S.draft.ops ? S.draft.ops.filter(o => o.type === 'remove-chapter') : [];
-  const list = document.getElementById('nav-trash-list');
-  list.innerHTML = '';
-  deleted.forEach(op => {
-    const item = document.createElement('div');
-    item.className = 'ch-trash-item';
-    item.dataset.trashNum = op.chapter;
-    item.innerHTML = `
-      <span class="ch-trash-num">${op.chapter}</span>
-      <span class="ch-trash-title" title="${op.title||''}">${op.title||'?'}</span>
-      <button class="ch-trash-restore" title="Restaurer">↩</button>`;
-    item.querySelector('.ch-trash-restore').onclick = e => { e.stopPropagation(); restoreCh(op.chapter); };
-    list.appendChild(item);
+function renumberPlanText(text, mapping) {
+  let r = text;
+  Object.entries(mapping).sort((a,b)=>+b[0]-+a[0]).forEach(([o,n]) => {
+    if (o !== n) r = r.replace(new RegExp(`^(### +)${escRe(o)}([.\\-\\s])`, 'gm'), `$1${n}$2`);
   });
-  initTrashSortable();
+  return r;
 }
 
-function restoreCh(num) {
-  if (!S.draft) return;
-  S.draft.ops = S.draft.ops.filter(o => !(o.type === 'remove-chapter' && o.chapter === num));
-  const { chapters, edits } = buildState(S.planText, S.guideText, S.draft);
-  S.chapters = chapters; S.edits = edits;
-  applyDisplayNums();
-  api.post(PATH.draft, JSON.stringify(S.draft, null, 2)).catch(console.error);
-  updateTopbar(); renderNav();
-  toast('Chapitre restauré');
+function renumberGuideText(text, mapping) {
+  let r = text;
+  Object.entries(mapping).sort((a,b)=>+b[0]-+a[0]).forEach(([o,n]) => {
+    if (o !== n) r = r.replace(new RegExp(`^(### +)${escRe(o)}([.\\-\\s])`, 'gm'), `$1${n}$2`);
+  });
+  return r;
 }
 
-// ── SortableJS ──
-let _sortableList = null, _sortableTrash = null;
-
-function initListSortable() {
-  if (_sortableList) _sortableList.destroy();
-  const el = document.getElementById('chapter-list');
-  _sortableList = Sortable.create(el, {
-    animation: 120,
-    ghostClass: 'sortable-ghost',
-    dragClass:  'sortable-drag',
-    group: { name: 'chapters', put: ['trash'] },
-    filter: '.ch-insert',
-    draggable: '.ch-item',
-    onEnd(evt) {
-      if (evt.from.id === 'nav-trash-list') {
-        const num = evt.item.dataset.trashNum;
-        if (num && S.draft)
-          S.draft.ops = S.draft.ops.filter(o => !(o.type === 'remove-chapter' && o.chapter === num));
-      }
-      const items = [...el.querySelectorAll('.ch-item')];
-      const newOrder = items.map(el => el.dataset.num);
-
-      if (evt.from.id === 'nav-trash-list') {
-        const { chapters: allChs, edits: allEdits } = buildState(S.planText, S.guideText, S.draft);
-        const ordered = newOrder.map(n => allChs.find(c => c.num === n)).filter(Boolean);
-        allChs.forEach(c => { if (!ordered.find(x => x.num === c.num)) ordered.push(c); });
-        S.chapters = ordered; S.edits = allEdits;
-      } else {
-        const reordered = newOrder.map(n => S.chapters.find(c => c.num === n)).filter(Boolean);
-        S.chapters.forEach(c => { if (!reordered.find(x => x.num === c.num)) reordered.push(c); });
-        S.chapters = reordered;
-      }
-
-      addOp({ type: 'reorder-chapters', order: S.chapters.map(c => c.num) });
-      applyDisplayNums(); renderNav();
-      toast('Ordre mis à jour');
-    },
-  });
+function renumberPlanChapterList(text, mapping) {
+  return text.replace(/(## Chapitres[\s\S]*?)(?=\n## |\n<!-- )/, s =>
+    s.replace(/^(\d+)\. /gm, (_, n) => `${mapping[n]||n}. `)
+  );
 }
 
-function initTrashSortable() {
-  if (_sortableTrash) _sortableTrash.destroy();
-  const el = document.getElementById('nav-trash-list');
-  if (!el) return;
-  _sortableTrash = Sortable.create(el, {
-    animation: 120,
-    ghostClass: 'sortable-ghost',
-    group: { name: 'trash', pull: 'clone', put: false },
-    draggable: '.ch-trash-item',
-    sort: false,
-  });
+async function autoRenumber(planText, guideText) {
+  const mapping = computeRenumber();
+  const needsRenumber = Object.entries(mapping).some(([o, n]) => o !== n);
+  if (!needsRenumber) return { planText, guideText, changed: false };
+
+  let newPlan  = renumberPlanText(planText, mapping);
+  newPlan      = renumberPlanChapterList(newPlan, mapping);
+  const newGuide = renumberGuideText(guideText, mapping);
+
+  try {
+    await api.post(PATH.plan,  newPlan);
+    await api.post(PATH.guide, newGuide);
+    return { planText: newPlan, guideText: newGuide, changed: true };
+  } catch(e) {
+    toast('Erreur renumérotation : ' + e.message, true);
+    return { planText, guideText, changed: false };
+  }
 }
 
 // ── Navigateur ──
 function renderNav() {
   const list = document.getElementById('chapter-list');
   list.innerHTML = '';
-  list.appendChild(makeInsertSep(0));
-  S.chapters.forEach((ch, idx) => {
+  S.chapters.forEach((ch) => {
     const edit = S.edits[ch.num] || {};
     const modified = edit.planModified || edit.guideModified;
     const displayNum = ch.displayNum || ch.num;
@@ -773,35 +615,15 @@ function renderNav() {
     else                                     badges.innerHTML = `<span class="badge b-ok" title="Synchronisé">✓</span>`;
     if (modified) badges.innerHTML += `<span class="badge b-mod" title="Modifications en attente">✎</span>`;
 
-    const del = document.createElement('button');
-    del.className = 'ch-del'; del.textContent = '×'; del.title = 'Supprimer';
-    del.onclick = e => { e.stopPropagation(); confirmDeleteCh(ch.num, ch.title); };
-
-    item.append(num, title, badges, del);
+    item.append(num, title, badges);
     item.onclick = () => selectCh(ch.num);
     list.appendChild(item);
-    list.appendChild(makeInsertSep(idx + 1));
   });
 
   const total  = S.chapters.length;
   const issues = S.chapters.filter(c => c.missingDefs.length || c.syncStatus !== 'ok').length;
   document.getElementById('nav-foot').textContent =
     `${total} chapitre${total>1?'s':''} · ${issues ? issues+' problème(s)' : 'tout OK'}`;
-
-  renderTrash();
-  initListSortable();
-}
-
-function makeInsertSep(insertIdx) {
-  const wrap = document.createElement('div');
-  wrap.className = 'ch-insert';
-  const btn = document.createElement('div');
-  btn.className = 'ch-insert-btn';
-  btn.title = 'Insérer un chapitre ici';
-  btn.innerHTML = `<div class="ch-insert-line"></div><div class="ch-insert-plus">+</div><div class="ch-insert-line"></div>`;
-  btn.onclick = e => { e.stopPropagation(); promptAddCh(insertIdx); };
-  wrap.appendChild(btn);
-  return wrap;
 }
 
 // ── Détail ──
@@ -919,67 +741,6 @@ function promptAddElem(type) {
   });
 }
 
-// ── Chapitres ──
-function promptAddCh(insertIdx) {
-  if (insertIdx === undefined) insertIdx = S.chapters.length;
-  showModal('Ajouter un chapitre', `
-    <label>Titre</label>
-    <input id="m-title" placeholder="ex: Conclusion" autocomplete="off" />
-  `, () => {
-    const title = document.getElementById('m-title').value.trim();
-    if (!title) { toast('Titre requis', true); return false; }
-    const maxNum = S.chapters.reduce((m, c) => Math.max(m, +c.num||0), 0);
-    const tmpNum = String(maxNum + 1);
-    addOp({ type: 'add-chapter', chapter: tmpNum, title });
-    const newCh = { num: tmpNum, title, planContent: '', guideContent: '',
-      keywords: [], figures: [], encadres: [], defs: [], refs: [],
-      syncStatus: 'plan-only', missingDefs: [] };
-    S.chapters.splice(insertIdx, 0, newCh);
-    S.edits[tmpNum] = { planContent: '', guideContent: '', keywords: [], figures: [],
-      encadres: [], planModified: true, guideModified: false };
-    addOp({ type: 'reorder-chapters', order: S.chapters.map(c => c.num) });
-    applyDisplayNums(); renderNav(); selectCh(tmpNum);
-    toast('Chapitre ajouté');
-    return true;
-  });
-}
-
-function confirmDeleteCh(num, title) {
-  addOp({ type: 'remove-chapter', chapter: num, title });
-  S.chapters = S.chapters.filter(c => c.num !== num);
-  if (S.selected === num) S.selected = null;
-  applyDisplayNums(); renderNav(); renderDetail();
-  toast('Chapitre déplacé dans la poubelle');
-}
-
-// ── Renumérotation au Save ──
-function computeRenumber() {
-  const mapping = {};
-  S.chapters.forEach((ch, idx) => { mapping[ch.num] = String(idx + 1); });
-  return mapping;
-}
-function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-
-function renumberPlanText(text, mapping) {
-  let r = text;
-  Object.entries(mapping).sort((a,b)=>+b[0]-+a[0]).forEach(([o,n]) => {
-    if (o !== n) r = r.replace(new RegExp(`^(### +)${escRe(o)}([.\\-\\s])`, 'gm'), `$1${n}$2`);
-  });
-  return r;
-}
-function renumberGuideText(text, mapping) {
-  let r = text;
-  Object.entries(mapping).sort((a,b)=>+b[0]-+a[0]).forEach(([o,n]) => {
-    if (o !== n) r = r.replace(new RegExp(`^(### +)${escRe(o)}([.\\-\\s])`, 'gm'), `$1${n}$2`);
-  });
-  return r;
-}
-function renumberPlanChapterList(text, mapping) {
-  return text.replace(/(## Chapitres[\s\S]*?)(?=\n## |\n<!-- )/, s =>
-    s.replace(/^(\d+)\. /gm, (_, n) => `${mapping[n]||n}. `)
-  );
-}
-
 // ── Save ──
 async function save() {
   if (!S.draft || !S.draft.ops.length) { toast('Aucune modification à enregistrer'); return; }
@@ -987,16 +748,13 @@ async function save() {
   const summary = [...new Set(S.draft.ops.map(op => {
     if (op.type === 'edit-plan-content')  return `Contenu plan ch.${op.chapter} modifié`;
     if (op.type === 'edit-guide-content') return `Contenu guide ch.${op.chapter} modifié`;
-    if (op.type === 'add-chapter')        return `Chapitre "${op.title}" ajouté`;
-    if (op.type === 'remove-chapter')     return `Chapitre "${op.title}" supprimé`;
-    if (op.type === 'reorder-chapters')   return `Chapitres réordonnés et renumérotés`;
     if (op.type === 'add-element')        return `Élément "${op.id}" ajouté (ch.${op.chapter})`;
     if (op.type === 'remove-element')     return `Élément "${op.id}" supprimé (ch.${op.chapter})`;
     return op.type;
   }))].join('\n- ');
 
   showModal('Confirmer l\'enregistrement', `
-    <p style="margin-bottom:10px">Modifications appliquées à <strong>Plan.md</strong> et <strong>GuideIA.md</strong>. Les chapitres seront renumérotés en séquence.</p>
+    <p style="margin-bottom:10px">Modifications appliquées à <strong>Plan.md</strong> et <strong>GuideIA.md</strong>.</p>
     <label>Entrée Changelog</label>
     <textarea id="m-cl">\n### Révision ${today}\n- ${summary}</textarea>
   `, async () => {
@@ -1009,15 +767,6 @@ async function save() {
         if (op.type === 'edit-plan-content')  planText  = replacePlanContent(planText,  op.chapter, op.content);
         if (op.type === 'edit-guide-content') guideText = replaceGuideContent(guideText, op.chapter, op.content);
       }
-      const removed = S.draft.ops.filter(o => o.type === 'remove-chapter').map(o => o.chapter);
-      for (const num of removed) {
-        planText  = removePlanChapter(planText,  num);
-        guideText = removeGuideChapter(guideText, num);
-      }
-      const mapping = computeRenumber();
-      planText  = renumberPlanText(planText, mapping);
-      guideText = renumberGuideText(guideText, mapping);
-      planText  = renumberPlanChapterList(planText, mapping);
 
       if (cl.trim()) { planText += '\n' + cl; guideText += '\n' + cl; }
       await api.post(PATH.plan,  planText);
@@ -1043,23 +792,12 @@ function replacePlanContent(text, num, content) {
   );
   return before + after;
 }
+
 function replaceGuideContent(text, num, content) {
   return text.replace(
     new RegExp(`(^### +${escRe(num)}[.\\-\\s][^\\n]+\\n)([\\s\\S]*?)(?=^###|$)`, 'm'),
     (_, h) => h + content + '\n\n'
   );
-}
-function removePlanChapter(text, num) {
-  const m = text.match(/<!--[^\n]*CONTENU[^\n]*-->/i);
-  if (!m) return text;
-  const idx = text.indexOf(m[0]) + m[0].length;
-  const before = text.slice(0, idx);
-  let after = text.slice(idx);
-  after = after.replace(new RegExp(`^### +${escRe(num)}[.\\-\\s][^\\n]+\\n[\\s\\S]*?(?=^### |$)`, 'm'), '');
-  return before + after;
-}
-function removeGuideChapter(text, num) {
-  return text.replace(new RegExp(`^### +${escRe(num)}[.\\-\\s][^\\n]+\\n[\\s\\S]*?(?=^### |$)`, 'm'), '');
 }
 
 async function refresh() {
@@ -1092,13 +830,32 @@ async function load() {
   S.edits    = edits;
   applyDisplayNums();
 
-  // Sélectionner le chapitre 1 (ou le premier disponible) au démarrage/refresh
+  // Renumérotation automatique si nécessaire
+  const { planText, guideText, changed } = await autoRenumber(S.planText, S.guideText);
+  if (changed) {
+    S.planText  = planText;
+    S.guideText = guideText;
+    // Reconstruire l'état avec les textes renumérotés
+    const rebuilt = buildState(S.planText, S.guideText, S.draft);
+    S.chapters = rebuilt.chapters;
+    S.edits    = rebuilt.edits;
+    applyDisplayNums();
+    showRenumberBadge();
+  }
+
+  // Sélectionner le premier chapitre au démarrage/refresh
   const firstCh = S.chapters[0];
   S.selected = firstCh ? firstCh.num : null;
 
   renderNav();
   renderDetail();
   updateTopbar();
+}
+
+function showRenumberBadge() {
+  const el = document.getElementById('badge-renumber');
+  el.style.display = 'inline';
+  setTimeout(() => { el.style.display = 'none'; }, 4000);
 }
 
 function setConn(ok, msg) {
@@ -1138,7 +895,6 @@ document.getElementById('btn-apply-plan').onclick   = applyPlan;
 document.getElementById('btn-cancel-plan').onclick  = cancelPlan;
 document.getElementById('btn-apply-guide').onclick  = applyGuide;
 document.getElementById('btn-cancel-guide').onclick = cancelGuide;
-document.getElementById('btn-add-ch').onclick       = () => promptAddCh(S.chapters.length);
 document.getElementById('btn-save').onclick         = save;
 document.getElementById('btn-refresh').onclick      = refresh;
 document.getElementById('btn-add-keyword').onclick  = () => promptAddElem('keywords');
@@ -1149,7 +905,6 @@ document.getElementById('modal-cancel').onclick     = closeModal;
 document.getElementById('modal-overlay').onclick    = e => { if(e.target===document.getElementById('modal-overlay')) closeModal(); };
 
 (async () => {
-  initSplitter();
   const ok = await api.ping();
   setConn(ok);
   if (ok) await load();
