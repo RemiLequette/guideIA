@@ -11,6 +11,10 @@
  * Références :
  *   - tools/guide-parser.md  — spec du format Plan.md et GuideIA.md, et de l'API
  *   - Methode.md             — convention des niveaux de titres (source de vérité)
+ *
+ * Niveaux de titres :
+ *   Plan.md    : chapitres en ### N. (trois dièses)
+ *   GuideIA.md : chapitres en ## N.  (deux dièses)
  */
 
 (function (root, factory) {
@@ -38,10 +42,8 @@
   // ---------------------------------------------------------------------------
 
   function parseFigBlocks(text) {
-    const out = [];
-    const re = />\s*🖼️\s*\*\*figure\*\*\s*`([^`]+)`([^]*?)(?=>[\s\S]*?🖼️|>[\s\S]*?📦|$)/g;
-    // Approche ligne par ligne — plus robuste
     const lines = text.split('\n');
+    const out = [];
     let current = null;
     for (const line of lines) {
       const mHead = line.match(/>\s*🖼️\s*\*\*figure\*\*\s*`([^`]+)`/);
@@ -64,7 +66,7 @@
 
     return out.map(b => ({
       id:      b.id,
-      caption: b.captionLines.join(' '),
+      caption: b.captionLines.join('\n'),
     }));
   }
 
@@ -98,6 +100,7 @@
     return out.map(b => ({
       id:    b.id,
       title: b.descLines[0] || '',
+      desc:  b.descLines.join('\n'),
     }));
   }
 
@@ -143,6 +146,7 @@
 
   // ---------------------------------------------------------------------------
   // PUBLIC — parsePlan(text)
+  // Chapitres en ### N. (trois dièses) dans Plan.md
   // ---------------------------------------------------------------------------
 
   function parsePlan(text) {
@@ -164,6 +168,7 @@
 
   // ---------------------------------------------------------------------------
   // PUBLIC — parseGuide(text)
+  // Chapitres en ## N. (deux dièses) dans GuideIA.md
   // ---------------------------------------------------------------------------
 
   function parseGuide(text) {

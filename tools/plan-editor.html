@@ -17,16 +17,13 @@ html, body {
   color: #111;
   overflow: hidden;
 }
-
 #app { display: flex; flex-direction: column; height: 100vh; }
 
 /* ── Topbar ── */
 #topbar {
   display: flex; align-items: center; gap: 8px;
   padding: 0 14px; height: 44px;
-  background: #171614;
-  border-bottom: none;
-  flex-shrink: 0;
+  background: #171614; flex-shrink: 0;
 }
 #topbar h1 {
   font-family: 'DM Mono', monospace;
@@ -40,20 +37,14 @@ html, body {
 .dot-red    { background: #dc2626; }
 #status-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #666; }
 #badge-revision {
-  font-family: 'DM Mono', monospace;
-  padding: 2px 8px; border-radius: 10px;
-  background: #78350f; color: #fde68a;
-  font-size: 10px; font-weight: 500;
-  border: 1px solid #92400e;
-  display: none;
+  font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 10px;
+  background: #78350f; color: #fde68a; font-size: 10px; font-weight: 500;
+  border: 1px solid #92400e; display: none;
 }
 #badge-renumber {
-  font-family: 'DM Mono', monospace;
-  padding: 2px 8px; border-radius: 10px;
-  background: #1e3a5f; color: #bfdbfe;
-  font-size: 10px; font-weight: 500;
-  border: 1px solid #1e40af;
-  display: none;
+  font-family: 'DM Mono', monospace; padding: 2px 8px; border-radius: 10px;
+  background: #1e3a5f; color: #bfdbfe; font-size: 10px; font-weight: 500;
+  border: 1px solid #1e40af; display: none;
 }
 .spacer { flex: 1; }
 .btn-top {
@@ -63,7 +54,7 @@ html, body {
 }
 #btn-refresh { background: transparent; color: #aaa; border: 1px solid #444; }
 #btn-refresh:hover { color: #fff; border-color: #666; }
-#btn-save   { background: #16a34a; color: #fff; }
+#btn-save { background: #16a34a; color: #fff; }
 #btn-save:hover { background: #15803d; }
 #btn-save:disabled, #btn-refresh:disabled { opacity: 0.35; cursor: default; }
 
@@ -81,95 +72,85 @@ html, body {
   padding: 8px 10px;
   font-family: 'DM Mono', monospace;
   font-size: 10px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
-  color: #888;
-  border-bottom: 1px solid #d6d2c8;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-shrink: 0;
+  color: #888; border-bottom: 1px solid #d6d2c8;
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
 }
-
 #chapter-list { flex: 1; overflow-y: auto; padding: 4px 0; }
 
-/* ── Items chapitres ── */
 .ch-item {
   display: flex; align-items: center; gap: 4px;
-  padding: 6px 8px 6px 0;
-  cursor: pointer;
-  border-left: 3px solid transparent;
-  transition: background .1s;
-  position: relative;
+  padding: 6px 8px 6px 0; cursor: pointer;
+  border-left: 3px solid transparent; transition: background .1s;
 }
 .ch-item:hover  { background: #ece9e1; }
 .ch-item.active { background: #fff; border-left-color: #2563eb; }
+.ch-item.meta-item { border-left-color: transparent; }
+.ch-item.meta-item.active { border-left-color: #7c3aed; }
 
 .ch-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; min-width: 28px; text-align: right;
-  color: #aaa; padding-left: 6px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  min-width: 28px; text-align: right; color: #aaa; padding-left: 6px;
 }
 .ch-item.active .ch-num { color: #2563eb; font-weight: 500; }
+.ch-item.meta-item.active .ch-num { color: #7c3aed; }
 
 .ch-title {
   flex: 1; font-size: 12px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  color: #444;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #444;
 }
 .ch-item.active .ch-title { color: #111; font-weight: 500; }
 
 .ch-badges { display: flex; gap: 2px; align-items: center; }
 .badge {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; padding: 1px 5px; border-radius: 8px;
-  font-weight: 700; white-space: nowrap; line-height: 1.5;
+  font-family: 'DM Mono', monospace; font-size: 9px; padding: 1px 5px;
+  border-radius: 8px; font-weight: 700; white-space: nowrap; line-height: 1.5;
 }
 .b-ok   { background: #dcfce7; color: #166534; }
 .b-warn { background: #fef9c3; color: #854d0e; }
 .b-only { background: #dbeafe; color: #1e40af; }
 .b-mod  { background: #fae8ff; color: #7e22ce; }
+.b-meta { background: #ede9fe; color: #6d28d9; }
+
+.nav-sep { height: 1px; background: #d6d2c8; margin: 4px 0; }
 
 #nav-foot {
-  padding: 6px 10px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; color: #aaa;
-  border-top: 1px solid #d6d2c8;
-  flex-shrink: 0;
+  padding: 6px 10px; font-family: 'DM Mono', monospace;
+  font-size: 10px; color: #aaa; border-top: 1px solid #d6d2c8; flex-shrink: 0;
 }
 
-/* ── Scrollbars ── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #c8c4bc; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #aaa; }
 
-/* ── Zone chapitre ── */
+/* ── Zone détail ── */
 #detail { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #e8e6e0; }
 
 #ch-header {
-  padding: 7px 14px;
-  background: #f5f3ed;
+  padding: 7px 14px; background: #f5f3ed;
   border-bottom: 1px solid #d6d2c8;
   display: flex; align-items: center; gap: 8px; flex-shrink: 0;
 }
 #ch-title { font-size: 14px; font-weight: 600; color: #111; }
 #ch-sync  { font-family: 'DM Mono', monospace; font-size: 10px; color: #888; }
 
-/* ── Rangée haute ── */
 #row-top { flex: 1; display: flex; overflow: hidden; min-height: 0; border-bottom: 2px solid #d6d2c8; }
 
-.editor-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid #d6d2c8; background: #fff; }
+.editor-pane {
+  flex: 1; display: flex; flex-direction: column; overflow: hidden;
+  border-right: 1px solid #d6d2c8; background: #fff;
+}
 .editor-pane:last-child { border-right: none; }
 
 .pane-head {
-  display: flex; align-items: center; gap: 6px;
-  padding: 5px 10px;
-  background: #f5f3ed;
-  border-bottom: 1px solid #d6d2c8;
-  flex-shrink: 0;
+  display: flex; align-items: center; gap: 6px; padding: 5px 10px;
+  background: #f5f3ed; border-bottom: 1px solid #d6d2c8; flex-shrink: 0;
   font-family: 'DM Mono', monospace;
-  font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em;
-  color: #888;
+  font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888;
 }
 .pane-label-plan  { color: #2563eb; }
 .pane-label-guide { color: #16a34a; }
+.pane-label-meta  { color: #7c3aed; }
 .pane-modified { color: #ea580c; font-weight: 700; }
 .pane-actions { margin-left: auto; display: flex; gap: 4px; }
 .btn-pane {
@@ -183,58 +164,59 @@ html, body {
 .btn-cancel:hover { background: #e5e7eb; }
 
 textarea.editor {
-  flex: 1; resize: none; border: none; outline: none;
-  padding: 12px 14px;
+  flex: 1; resize: none; border: none; outline: none; padding: 12px 14px;
   background: #fff; color: #374151;
-  font-family: 'DM Mono', monospace;
-  font-size: 11.5px; line-height: 1.75; tab-size: 2;
+  font-family: 'DM Mono', monospace; font-size: 11.5px; line-height: 1.75; tab-size: 2;
 }
 textarea.editor.modified { background: #fffbeb; }
 textarea.editor:focus { background: #fefefe; }
 textarea.editor.modified:focus { background: #fefce8; }
+textarea.editor:disabled { background: #f5f3ed; color: #aaa; cursor: default; }
 
 /* ── Rangée basse : Éléments ── */
 #row-bottom {
   height: 180px; flex-shrink: 0; overflow: hidden;
   display: flex; flex-direction: column;
-  background: #f5f3ed;
-  border-top: 1px solid #d6d2c8;
+  background: #f5f3ed; border-top: 1px solid #d6d2c8;
 }
 #elem-head {
-  padding: 5px 12px;
-  border-bottom: 1px solid #d6d2c8;
+  padding: 5px 12px; border-bottom: 1px solid #d6d2c8;
   font-family: 'DM Mono', monospace;
-  font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em;
-  color: #888;
-  display: flex; align-items: center; gap: 6px;
-  flex-shrink: 0;
+  font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: #888;
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
 }
 #elem-head span { color: #2563eb; }
 #elem-body { flex: 1; overflow-x: auto; overflow-y: auto; display: flex; }
 
-.elem-col { flex: 1; min-width: 180px; border-right: 1px solid #d6d2c8; display: flex; flex-direction: column; overflow: hidden; }
+.elem-col {
+  flex: 1; min-width: 180px; border-right: 1px solid #d6d2c8;
+  display: flex; flex-direction: column; overflow: hidden;
+}
 .elem-col:last-child { border-right: none; }
 .elem-col-head {
-  padding: 3px 10px;
-  font-family: 'DM Mono', monospace;
+  padding: 3px 10px; font-family: 'DM Mono', monospace;
   font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: .07em;
-  color: #aaa; background: #eceae2;
-  border-bottom: 1px solid #d6d2c8; flex-shrink: 0;
+  color: #aaa; background: #eceae2; border-bottom: 1px solid #d6d2c8; flex-shrink: 0;
 }
 .elem-col-body { flex: 1; overflow-y: auto; padding: 3px 6px; }
 
-.elem-row { display: flex; align-items: center; gap: 5px; padding: 3px 5px; border-radius: 3px; margin-bottom: 1px; font-size: 11px; }
+.elem-row {
+  display: flex; align-items: center; gap: 5px;
+  padding: 3px 5px; border-radius: 3px; margin-bottom: 1px; font-size: 11px;
+}
 .elem-row:hover { background: #ece9e1; }
-.elem-id { font-family: 'DM Mono', monospace; color: #2563eb; font-size: 10px; font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.elem-row.clickable { cursor: pointer; }
+.elem-id {
+  font-family: 'DM Mono', monospace; color: #2563eb; font-size: 10px;
+  font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 .elem-del { background: none; border: none; color: #d1d5db; cursor: pointer; font-size: 12px; padding: 0 2px; opacity: 0; }
 .elem-row:hover .elem-del { opacity: 1; color: #dc2626; }
 .elem-add {
-  padding: 3px 8px; margin: 4px 6px;
-  border: 1px dashed #d6d2c8;
+  padding: 3px 8px; margin: 4px 6px; border: 1px dashed #d6d2c8;
   border-radius: 4px; background: none; color: #aaa; cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px; text-align: left; width: calc(100% - 12px);
-  transition: border-color .15s, color .15s;
+  font-family: 'DM Sans', sans-serif; font-size: 10px; text-align: left;
+  width: calc(100% - 12px); transition: border-color .15s, color .15s;
 }
 .elem-add:hover { border-color: #2563eb; color: #2563eb; }
 
@@ -253,52 +235,47 @@ textarea.editor.modified:focus { background: #fefce8; }
 }
 #modal-overlay.open { display: flex; }
 #modal {
-  background: #f5f3ed;
-  border: 1px solid #d6d2c8;
-  border-radius: 10px;
-  padding: 22px; width: 480px; max-width: 95vw; max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 16px 50px rgba(0,0,0,.2);
+  background: #f5f3ed; border: 1px solid #d6d2c8; border-radius: 10px;
+  padding: 22px; width: 520px; max-width: 95vw; max-height: 80vh;
+  overflow-y: auto; box-shadow: 0 16px 50px rgba(0,0,0,.2);
 }
 #modal h3 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: #111; }
 #modal label {
-  display: block;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; color: #888;
-  margin: 10px 0 4px; text-transform: uppercase; letter-spacing: .06em;
+  display: block; font-family: 'DM Mono', monospace;
+  font-size: 10px; color: #888; margin: 10px 0 4px;
+  text-transform: uppercase; letter-spacing: .06em;
 }
 #modal input, #modal textarea, #modal select {
-  width: 100%;
-  background: #fff;
-  border: 1px solid #d6d2c8;
+  width: 100%; background: #fff; border: 1px solid #d6d2c8;
   border-radius: 5px; padding: 7px 10px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px; color: #111; outline: none;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; color: #111; outline: none;
 }
 #modal input:focus, #modal textarea:focus { border-color: #2563eb; }
-#modal textarea { height: 100px; resize: vertical; font-family: 'DM Mono', monospace; font-size: 11px; }
+#modal textarea { height: 140px; resize: vertical; font-family: 'DM Mono', monospace; font-size: 11px; line-height: 1.6; }
 #modal p { color: #666; font-size: 13px; line-height: 1.6; }
+.modal-check {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-top: 10px; padding: 8px 10px;
+  background: #fefce8; border: 1px solid #fde68a; border-radius: 6px;
+  font-size: 12px; color: #854d0e; line-height: 1.5; cursor: pointer;
+}
+.modal-check input[type=checkbox] { margin-top: 2px; flex-shrink: 0; cursor: pointer; }
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
 .btn-primary {
-  font-family: 'DM Sans', sans-serif;
-  padding: 7px 18px; background: #171614; color: #fff;
-  border: none; border-radius: 6px; cursor: pointer;
-  font-weight: 600; font-size: 13px; transition: background .15s;
+  font-family: 'DM Sans', sans-serif; padding: 7px 18px; background: #171614; color: #fff;
+  border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; transition: background .15s;
 }
 .btn-primary:hover { background: #333; }
 .btn-secondary {
-  font-family: 'DM Sans', sans-serif;
-  padding: 7px 18px; background: transparent; color: #888;
-  border: 1px solid #d6d2c8; border-radius: 6px; cursor: pointer; font-size: 13px;
-  transition: background .15s;
+  font-family: 'DM Sans', sans-serif; padding: 7px 18px; background: transparent; color: #888;
+  border: 1px solid #d6d2c8; border-radius: 6px; cursor: pointer; font-size: 13px; transition: background .15s;
 }
 .btn-secondary:hover { background: #e2dfd7; color: #111; }
 
 /* ── Toast ── */
 #toast {
   position: fixed; bottom: 18px; right: 18px;
-  background: #171614; color: #f5f3ed;
-  border: 1px solid #333;
+  background: #171614; color: #f5f3ed; border: 1px solid #333;
   padding: 8px 14px; border-radius: 6px;
   font-family: 'DM Mono', monospace; font-size: 11px;
   opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 200;
@@ -309,7 +286,6 @@ textarea.editor.modified:focus { background: #fefce8; }
 </head>
 <body>
 <div id="app">
-
   <div id="topbar">
     <h1>Plan Editor</h1>
     <span class="dot dot-orange" id="conn-dot"></span>
@@ -322,7 +298,6 @@ textarea.editor.modified:focus { background: #fefce8; }
   </div>
 
   <div id="main">
-
     <div id="nav">
       <div id="nav-head">Chapitres</div>
       <div id="chapter-list"></div>
@@ -330,14 +305,12 @@ textarea.editor.modified:focus { background: #fefce8; }
     </div>
 
     <div id="detail">
-
       <div id="empty-state">
         <p>Sélectionnez un chapitre</p>
         <small>Chargement en cours…</small>
       </div>
 
       <div id="chapter-view" style="display:none; flex-direction:column; height:100%; overflow:hidden;">
-
         <div id="ch-header">
           <span id="ch-title"></span>
           <span id="ch-sync"></span>
@@ -346,7 +319,7 @@ textarea.editor.modified:focus { background: #fefce8; }
         <div id="row-top">
           <div class="editor-pane" id="pane-plan">
             <div class="pane-head">
-              <span class="pane-label-plan">📋 Plan.md</span>
+              <span id="pane-plan-label" class="pane-label-plan">📋 Plan.md</span>
               <span id="plan-mod" class="pane-modified" style="display:none">● modifié</span>
               <div class="pane-actions">
                 <button class="btn-pane btn-cancel" id="btn-cancel-plan">Annuler</button>
@@ -389,10 +362,8 @@ textarea.editor.modified:focus { background: #fefce8; }
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>
 
@@ -413,6 +384,8 @@ textarea.editor.modified:focus { background: #fefce8; }
 <script>
 'use strict';
 
+const META_KEY = '__meta__';
+
 const BASE = (() => {
   const p = window.location.pathname.replace(/^\//, '').replace(/[^/\\]+$/, '');
   return p.endsWith('/') || p.endsWith('\\') ? p : p + '/';
@@ -425,13 +398,15 @@ const PATH = {
 };
 
 const S = {
-  connected: false,
-  planText:  '',
-  guideText: '',
-  chapters:  [],
-  draft:     null,
-  selected:  null,
-  edits:     {},
+  connected:    false,
+  planText:     '',
+  guideText:    '',
+  chapters:     [],
+  metaContent:  '',
+  metaModified: false,
+  draft:        null,
+  selected:     null,
+  edits:        {},
 };
 
 const api = {
@@ -455,6 +430,19 @@ const api = {
 };
 
 const { parsePlan, parseGuide } = GuideParser;
+
+function extractMeta(planText) {
+  const lines = planText.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    if (/^\s*<!--/.test(lines[i])) {
+      for (let j = i; j < Math.min(i + 15, lines.length); j++) {
+        if (/CONTENU/i.test(lines[j])) return lines.slice(0, i).join('\n').trimEnd();
+        if (/-->/.test(lines[j])) break;
+      }
+    }
+  }
+  return '';
+}
 
 function buildState(planText, guideText, draft) {
   const planChs  = parsePlan(planText);
@@ -504,12 +492,27 @@ function buildState(planText, guideText, draft) {
 }
 
 function replayOp(op, chapters, edits) {
+  if (op.type === 'edit-meta-content') {
+    S.metaContent  = op.content;
+    S.metaModified = true;
+    return;
+  }
   const edit = edits[op.chapter];
   switch (op.type) {
     case 'edit-plan-content':
       if (edit) { edit.planContent = op.content; edit.planModified = true; } break;
     case 'edit-guide-content':
       if (edit) { edit.guideContent = op.content; edit.guideModified = true; } break;
+    case 'edit-element-content': {
+      if (!edit) break;
+      const arr = op.elType === 'figures' ? edit.figures : edit.encadres;
+      const el = arr.find(x => x.id === op.id);
+      if (el) {
+        if (op.elType === 'figures')  el.caption = op.content;
+        if (op.elType === 'encadres') el.desc    = op.content;
+      }
+      break;
+    }
     case 'add-element':
       if (edit) {
         const arr = op.elType === 'keywords' ? edit.keywords : op.elType === 'figures' ? edit.figures : edit.encadres;
@@ -531,14 +534,17 @@ function applyDisplayNums() {
 
 function addOp(op) {
   if (!S.draft) S.draft = { ops: [] };
+  if (op.type === 'edit-meta-content')
+    S.draft.ops = S.draft.ops.filter(o => o.type !== 'edit-meta-content');
   if (op.type === 'edit-plan-content' || op.type === 'edit-guide-content')
     S.draft.ops = S.draft.ops.filter(o => !(o.type === op.type && o.chapter === op.chapter));
+  if (op.type === 'edit-element-content')
+    S.draft.ops = S.draft.ops.filter(o => !(o.type === op.type && o.chapter === op.chapter && o.elType === op.elType && o.id === op.id));
   S.draft.ops.push(op);
   api.post(PATH.draft, JSON.stringify(S.draft, null, 2)).catch(console.error);
   updateTopbar();
 }
 
-// ── Renumérotation automatique au chargement ──
 function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
 function computeRenumber() {
@@ -558,7 +564,7 @@ function renumberPlanText(text, mapping) {
 function renumberGuideText(text, mapping) {
   let r = text;
   Object.entries(mapping).sort((a,b)=>+b[0]-+a[0]).forEach(([o,n]) => {
-    if (o !== n) r = r.replace(new RegExp(`^(### +)${escRe(o)}([.\\-\\s])`, 'gm'), `$1${n}$2`);
+    if (o !== n) r = r.replace(new RegExp(`^(## +)${escRe(o)}([.\\-\\s])`, 'gm'), `$1${n}$2`);
   });
   return r;
 }
@@ -588,27 +594,35 @@ async function autoRenumber(planText, guideText) {
   }
 }
 
-// ── Navigateur ──
 function renderNav() {
   const list = document.getElementById('chapter-list');
   list.innerHTML = '';
-  S.chapters.forEach((ch) => {
+
+  const metaItem = document.createElement('div');
+  metaItem.className = 'ch-item meta-item' + (S.selected === META_KEY ? ' active' : '');
+  metaItem.innerHTML = `
+    <span class="ch-num" style="color:#7c3aed;font-size:10px">✦</span>
+    <span class="ch-title">Méta-données</span>
+    <span class="ch-badges">${S.metaModified ? '<span class="badge b-mod" title="Modifications en attente">✎</span>' : '<span class="badge b-meta">méta</span>'}</span>`;
+  metaItem.onclick = () => selectCh(META_KEY);
+  list.appendChild(metaItem);
+
+  const sep = document.createElement('div');
+  sep.className = 'nav-sep';
+  list.appendChild(sep);
+
+  S.chapters.forEach(ch => {
     const edit = S.edits[ch.num] || {};
     const modified = edit.planModified || edit.guideModified;
     const displayNum = ch.displayNum || ch.num;
 
     const item = document.createElement('div');
     item.className = 'ch-item' + (ch.num === S.selected ? ' active' : '');
-    item.dataset.num = ch.num;
 
-    const num = document.createElement('span');
-    num.className = 'ch-num'; num.textContent = displayNum;
+    const num    = document.createElement('span'); num.className = 'ch-num'; num.textContent = displayNum;
+    const title  = document.createElement('span'); title.className = 'ch-title'; title.textContent = ch.title;
+    const badges = document.createElement('span'); badges.className = 'ch-badges';
 
-    const title = document.createElement('span');
-    title.className = 'ch-title'; title.textContent = ch.title;
-
-    const badges = document.createElement('span');
-    badges.className = 'ch-badges';
     if      (ch.syncStatus === 'plan-only')  badges.innerHTML = `<span class="badge b-only" title="Uniquement dans Plan.md">plan</span>`;
     else if (ch.syncStatus === 'guide-only') badges.innerHTML = `<span class="badge b-only" title="Uniquement dans GuideIA.md">guide</span>`;
     else if (ch.missingDefs.length)          badges.innerHTML = `<span class="badge b-warn" title="${ch.missingDefs.length} élément(s) sans {{def}}">⚠${ch.missingDefs.length}</span>`;
@@ -626,16 +640,20 @@ function renderNav() {
     `${total} chapitre${total>1?'s':''} · ${issues ? issues+' problème(s)' : 'tout OK'}`;
 }
 
-// ── Détail ──
 function selectCh(num) {
   S.selected = num; renderNav(); renderDetail();
 }
 
 function renderDetail() {
-  const ch = S.chapters.find(c => c.num === S.selected);
-  document.getElementById('empty-state').style.display    = ch ? 'none' : 'flex';
-  document.getElementById('chapter-view').style.display   = ch ? 'flex' : 'none';
-  if (!ch) return;
+  const isMeta = (S.selected === META_KEY);
+  const ch = isMeta ? null : S.chapters.find(c => c.num === S.selected);
+  const hasSelection = isMeta || !!ch;
+
+  document.getElementById('empty-state').style.display  = hasSelection ? 'none' : 'flex';
+  document.getElementById('chapter-view').style.display = hasSelection ? 'flex' : 'none';
+  if (!hasSelection) return;
+
+  if (isMeta) { renderMetaDetail(); return; }
 
   const edit = S.edits[ch.num] || {};
   const displayNum = ch.displayNum || ch.num;
@@ -647,10 +665,18 @@ function renderDetail() {
   else if (ch.missingDefs.length)          syncEl.textContent = `⚠ ${ch.missingDefs.length} balise(s) sans {{def}}`;
   else                                     syncEl.textContent = '✓ synchronisé';
 
+  document.getElementById('pane-plan-label').textContent = '📋 Plan.md';
+  document.getElementById('pane-plan-label').className   = 'pane-label-plan';
+  document.getElementById('row-bottom').style.display = 'flex';
+
   const ePlan  = document.getElementById('editor-plan');
   const eGuide = document.getElementById('editor-guide');
+  ePlan.disabled  = false;
+  eGuide.disabled = false;
   ePlan.value  = edit.planContent  || '';
   eGuide.value = edit.guideContent || '';
+  ePlan.placeholder  = 'Contenu attendu du chapitre dans le plan…';
+  eGuide.placeholder = 'Texte rédigé dans le guide…';
   ePlan.classList.toggle('modified',  edit.planModified  || false);
   eGuide.classList.toggle('modified', edit.guideModified || false);
   document.getElementById('plan-mod').style.display  = edit.planModified  ? 'inline' : 'none';
@@ -662,25 +688,89 @@ function renderDetail() {
   renderElemList('encadres', edit.encadres || [], ch.defs);
 }
 
+function renderMetaDetail() {
+  document.getElementById('ch-title').textContent = 'Méta-données';
+  document.getElementById('ch-sync').textContent  = 'Plan.md — section avant le délimiteur CONTENU';
+  document.getElementById('pane-plan-label').textContent = '✦ Méta-données Plan.md';
+  document.getElementById('pane-plan-label').className   = 'pane-label-meta';
+  document.getElementById('row-bottom').style.display = 'none';
+
+  const ePlan  = document.getElementById('editor-plan');
+  const eGuide = document.getElementById('editor-guide');
+  ePlan.disabled  = false;
+  eGuide.disabled = true;
+  ePlan.value  = S.metaContent;
+  eGuide.value = '';
+  ePlan.placeholder  = 'Méta-données du plan…';
+  eGuide.placeholder = 'Les méta-données n\'ont pas d\'équivalent dans le guide.';
+  ePlan.classList.toggle('modified', S.metaModified);
+  eGuide.classList.remove('modified');
+  document.getElementById('plan-mod').style.display  = S.metaModified ? 'inline' : 'none';
+  document.getElementById('guide-mod').style.display = 'none';
+}
+
 function renderElemList(type, items, definedIds) {
   const container = document.getElementById('list-' + type);
   container.innerHTML = '';
-  const ids = items.map(x => typeof x === 'string' ? x : x.id);
-  ids.forEach(id => {
+  const isRich = (type === 'figures' || type === 'encadres');
+  items.forEach(item => {
+    const id = typeof item === 'string' ? item : item.id;
     const row = document.createElement('div');
-    row.className = 'elem-row';
+    row.className = 'elem-row' + (isRich ? ' clickable' : '');
     const isDef = definedIds.includes(id);
     row.innerHTML = `
-      <span class="badge ${isDef ? 'b-ok' : 'b-warn'}">${isDef ? '✓' : '○'}</span>
+      <span class="badge ${isDef ? 'b-ok' : 'b-warn'}" title="${isDef ? 'Défini dans le guide' : 'Non défini'}">${isDef ? '✓' : '○'}</span>
       <span class="elem-id">${id}</span>
       <button class="elem-del" title="Supprimer">×</button>`;
-    row.querySelector('.elem-del').onclick = () => deleteElem(type, id);
+    if (isRich) {
+      row.addEventListener('click', e => {
+        if (e.target.classList.contains('elem-del')) return;
+        editElementContent(type, item);
+      });
+    }
+    row.querySelector('.elem-del').onclick = e => { e.stopPropagation(); deleteElem(type, id); };
     container.appendChild(row);
   });
 }
 
-// ── Éditeurs ──
+function editElementContent(type, item) {
+  const num = S.selected; if (!num || num === META_KEY) return;
+  const id = item.id;
+  const isFig = (type === 'figures');
+  const label = isFig ? 'figure' : 'encadré';
+  const currentContent = isFig ? (item.caption || '') : (item.desc || '');
+  const fieldLabel = isFig ? 'Légende / description' : 'Description';
+
+  showModal(`Éditer ${label} — ${id}`, `
+    <label>Identifiant</label>
+    <input value="${id}" disabled style="opacity:0.5; cursor:default;" />
+    <label>${fieldLabel}</label>
+    <textarea id="m-elem-content" style="height:160px">${currentContent}</textarea>
+  `, () => {
+    const content = document.getElementById('m-elem-content').value;
+    addOp({ type: 'edit-element-content', chapter: num, elType: type, id, content });
+    const edit = S.edits[num];
+    if (edit) {
+      const arr = type === 'figures' ? edit.figures : edit.encadres;
+      const el = arr.find(x => x.id === id);
+      if (el) { if (isFig) el.caption = content; else el.desc = content; }
+    }
+    if (isFig) item.caption = content; else item.desc = content;
+    toast(`${label} mis à jour`);
+    return true;
+  });
+}
+
 function applyPlan() {
+  if (S.selected === META_KEY) {
+    const content = document.getElementById('editor-plan').value;
+    addOp({ type: 'edit-meta-content', content });
+    S.metaContent  = content;
+    S.metaModified = true;
+    renderNav(); renderMetaDetail();
+    toast('Méta — enregistré dans la révision');
+    return;
+  }
   const num = S.selected; if (!num) return;
   const content = document.getElementById('editor-plan').value;
   addOp({ type: 'edit-plan-content', chapter: num, content });
@@ -688,26 +778,58 @@ function applyPlan() {
   renderNav(); renderDetail();
   toast('Plan — enregistré dans la révision');
 }
+
 function cancelPlan() {
+  if (S.selected === META_KEY) {
+    document.getElementById('editor-plan').value = S.metaContent;
+    document.getElementById('editor-plan').classList.toggle('modified', S.metaModified);
+    return;
+  }
   const ch = S.chapters.find(c => c.num === S.selected);
-  if (ch) document.getElementById('editor-plan').value = ch.planContent;
+  if (ch) {
+    document.getElementById('editor-plan').value = ch.planContent;
+    document.getElementById('editor-plan').classList.remove('modified');
+    document.getElementById('plan-mod').style.display = 'none';
+  }
 }
+
 function applyGuide() {
-  const num = S.selected; if (!num) return;
+  const num = S.selected; if (!num || num === META_KEY) return;
   const content = document.getElementById('editor-guide').value;
   addOp({ type: 'edit-guide-content', chapter: num, content });
   if (S.edits[num]) { S.edits[num].guideContent = content; S.edits[num].guideModified = true; }
   renderNav(); renderDetail();
   toast('Guide — enregistré dans la révision');
 }
+
 function cancelGuide() {
   const ch = S.chapters.find(c => c.num === S.selected);
-  if (ch) document.getElementById('editor-guide').value = ch.guideContent;
+  if (ch) {
+    document.getElementById('editor-guide').value = ch.guideContent;
+    document.getElementById('editor-guide').classList.remove('modified');
+    document.getElementById('guide-mod').style.display = 'none';
+  }
 }
 
-// ── Éléments ──
+function getPendingTextareas() {
+  const pending = [];
+  if (S.selected === META_KEY) {
+    if (document.getElementById('editor-plan').value !== S.metaContent)
+      pending.push({ pane: 'Méta', num: META_KEY, side: 'meta' });
+    return pending;
+  }
+  const ch = S.chapters.find(c => c.num === S.selected);
+  if (!ch) return pending;
+  const edit = S.edits[ch.num] || {};
+  const ePlan  = document.getElementById('editor-plan');
+  const eGuide = document.getElementById('editor-guide');
+  if (ePlan.value  !== (edit.planContent  || '')) pending.push({ pane: 'Plan',  num: ch.num, side: 'plan' });
+  if (eGuide.value !== (edit.guideContent || '')) pending.push({ pane: 'Guide', num: ch.num, side: 'guide' });
+  return pending;
+}
+
 function deleteElem(type, id) {
-  const num = S.selected; if (!num) return;
+  const num = S.selected; if (!num || num === META_KEY) return;
   addOp({ type: 'remove-element', chapter: num, elType: type, id });
   const edit = S.edits[num];
   if (edit) {
@@ -720,7 +842,7 @@ function deleteElem(type, id) {
 }
 
 function promptAddElem(type) {
-  const num = S.selected; if (!num) return;
+  const num = S.selected; if (!num || num === META_KEY) return;
   const labels = { keywords: 'mot-clé', figures: 'figure', encadres: 'encadré' };
   showModal(`Ajouter un ${labels[type]}`, `
     <label>Identifiant</label>
@@ -732,8 +854,8 @@ function promptAddElem(type) {
     const edit = S.edits[num];
     if (edit) {
       if (type === 'keywords') edit.keywords.push(id);
-      if (type === 'figures')  edit.figures.push({ id });
-      if (type === 'encadres') edit.encadres.push({ id });
+      if (type === 'figures')  edit.figures.push({ id, caption: '' });
+      if (type === 'encadres') edit.encadres.push({ id, desc: '' });
     }
     renderDetail(); renderNav();
     toast(`${labels[type]} ajouté`);
@@ -741,31 +863,65 @@ function promptAddElem(type) {
   });
 }
 
-// ── Save ──
 async function save() {
   if (!S.draft || !S.draft.ops.length) { toast('Aucune modification à enregistrer'); return; }
+
   const today = new Date().toISOString().slice(0,10);
   const summary = [...new Set(S.draft.ops.map(op => {
-    if (op.type === 'edit-plan-content')  return `Contenu plan ch.${op.chapter} modifié`;
-    if (op.type === 'edit-guide-content') return `Contenu guide ch.${op.chapter} modifié`;
-    if (op.type === 'add-element')        return `Élément "${op.id}" ajouté (ch.${op.chapter})`;
-    if (op.type === 'remove-element')     return `Élément "${op.id}" supprimé (ch.${op.chapter})`;
+    if (op.type === 'edit-meta-content')    return 'Méta-données modifiées';
+    if (op.type === 'edit-plan-content')    return `Contenu plan ch.${op.chapter} modifié`;
+    if (op.type === 'edit-guide-content')   return `Contenu guide ch.${op.chapter} modifié`;
+    if (op.type === 'edit-element-content') return `${op.elType === 'figures' ? 'Figure' : 'Encadré'} "${op.id}" modifié (ch.${op.chapter})`;
+    if (op.type === 'add-element')          return `Élément "${op.id}" ajouté (ch.${op.chapter})`;
+    if (op.type === 'remove-element')       return `Élément "${op.id}" supprimé (ch.${op.chapter})`;
     return op.type;
   }))].join('\n- ');
+
+  const pending = getPendingTextareas();
+  const pendingHtml = pending.length > 0 ? `
+    <label style="margin-top:14px">Modifications non appliquées</label>
+    <label class="modal-check">
+      <input type="checkbox" id="chk-pending" checked />
+      Inclure les modifications non appliquées :
+      ${pending.map(p => `<strong>${p.pane}${p.num !== META_KEY ? ' ch.'+p.num : ''}</strong>`).join(', ')}
+    </label>` : '';
 
   showModal('Confirmer l\'enregistrement', `
     <p style="margin-bottom:10px">Modifications appliquées à <strong>Plan.md</strong> et <strong>GuideIA.md</strong>.</p>
     <label>Entrée Changelog</label>
     <textarea id="m-cl">\n### Révision ${today}\n- ${summary}</textarea>
+    ${pendingHtml}
   `, async () => {
     try {
       const cl = document.getElementById('m-cl').value;
+      const chkEl = document.getElementById('chk-pending');
+      const includePending = pending.length > 0 && chkEl && chkEl.checked;
+
+      if (includePending) {
+        for (const p of pending) {
+          if (p.side === 'meta') {
+            const content = document.getElementById('editor-plan').value;
+            addOp({ type: 'edit-meta-content', content });
+            S.metaContent = content; S.metaModified = true;
+          } else {
+            const content = document.getElementById(p.side === 'plan' ? 'editor-plan' : 'editor-guide').value;
+            addOp({ type: p.side === 'plan' ? 'edit-plan-content' : 'edit-guide-content', chapter: p.num, content });
+            if (S.edits[p.num]) {
+              if (p.side === 'plan')  { S.edits[p.num].planContent  = content; S.edits[p.num].planModified  = true; }
+              if (p.side === 'guide') { S.edits[p.num].guideContent = content; S.edits[p.num].guideModified = true; }
+            }
+          }
+        }
+      }
+
       let planText  = S.planText;
       let guideText = S.guideText;
 
       for (const op of S.draft.ops) {
-        if (op.type === 'edit-plan-content')  planText  = replacePlanContent(planText,  op.chapter, op.content);
-        if (op.type === 'edit-guide-content') guideText = replaceGuideContent(guideText, op.chapter, op.content);
+        if (op.type === 'edit-meta-content')    planText  = replaceMetaContent(planText, op.content);
+        if (op.type === 'edit-plan-content')    planText  = replacePlanContent(planText,  op.chapter, op.content);
+        if (op.type === 'edit-guide-content')   guideText = replaceGuideContent(guideText, op.chapter, op.content);
+        if (op.type === 'edit-element-content') planText  = replaceElementContent(planText, op.chapter, op.elType, op.id, op.content);
       }
 
       if (cl.trim()) { planText += '\n' + cl; guideText += '\n' + cl; }
@@ -780,24 +936,125 @@ async function save() {
   });
 }
 
-function replacePlanContent(text, num, content) {
-  const m = text.match(/<!--[^\n]*CONTENU[^\n]*-->/i);
-  if (!m) return text;
-  const idx = text.indexOf(m[0]) + m[0].length;
-  const before = text.slice(0, idx);
-  let after = text.slice(idx);
-  after = after.replace(
-    new RegExp(`(^### +${escRe(num)}[.\\-\\s][^\\n]+\\n[\\s\\S]*?)(^#### Contenu\\s*\\n)([\\s\\S]*?)(?=^####|^###|$)`, 'm'),
-    (_, h, c) => h + c + content + '\n'
-  );
-  return before + after;
+// ── Fonctions de remplacement ──
+
+/**
+ * Localise la ligne d'ouverture <!-- du bloc délimiteur CONTENU.
+ */
+function findDelimiterLine(lines) {
+  for (let i = 0; i < lines.length; i++) {
+    if (/^\s*<!--/.test(lines[i])) {
+      for (let j = i; j < Math.min(i + 15, lines.length); j++) {
+        if (/CONTENU/i.test(lines[j])) return i;
+        if (/-->/.test(lines[j])) break;
+      }
+    }
+  }
+  return -1;
 }
 
+function replaceMetaContent(text, content) {
+  const lines = text.split('\n');
+  const delimIdx = findDelimiterLine(lines);
+  if (delimIdx === -1) return text;
+  return [...content.split('\n'), '', ...lines.slice(delimIdx)].join('\n');
+}
+
+/**
+ * Plan.md — remplace la section #### Contenu du chapitre num.
+ * Chapitres en ### N. (trois dièses), sous-sections en #### (quatre dièses).
+ * Correction clé : /^###[^#]/ pour ne pas confondre ### et ####.
+ */
+function replacePlanContent(text, num, content) {
+  const lines = text.split('\n');
+  const delimIdx = findDelimiterLine(lines);
+  if (delimIdx === -1) return text;
+
+  // Trouver le titre ### N. après le délimiteur
+  const chapterRe = new RegExp('^### +' + escRe(num) + '[.\\-\\s]');
+  let chapterIdx = -1;
+  for (let i = delimIdx + 1; i < lines.length; i++) {
+    if (chapterRe.test(lines[i])) { chapterIdx = i; break; }
+  }
+  if (chapterIdx === -1) return text;
+
+  // Trouver #### Contenu — stopper sur ### (pas ####)
+  let contenuIdx = -1;
+  for (let i = chapterIdx + 1; i < lines.length; i++) {
+    if (/^###[^#]/.test(lines[i])) break;          // prochain chapitre ### — arrêt
+    if (/^#### Contenu\s*$/.test(lines[i])) { contenuIdx = i; break; }
+  }
+  if (contenuIdx === -1) return text;
+
+  // Trouver la fin de #### Contenu — stopper sur #### ou ###
+  let endIdx = lines.length;
+  for (let i = contenuIdx + 1; i < lines.length; i++) {
+    if (/^####/.test(lines[i]) || /^###[^#]/.test(lines[i])) { endIdx = i; break; }
+  }
+
+  return [
+    ...lines.slice(0, contenuIdx + 1),
+    ...content.split('\n'),
+    ...lines.slice(endIdx),
+  ].join('\n');
+}
+
+/**
+ * GuideIA.md — remplace le corps du chapitre num (chapitres en ## N.).
+ */
 function replaceGuideContent(text, num, content) {
-  return text.replace(
-    new RegExp(`(^### +${escRe(num)}[.\\-\\s][^\\n]+\\n)([\\s\\S]*?)(?=^###|$)`, 'm'),
-    (_, h) => h + content + '\n\n'
-  );
+  const lines = text.split('\n');
+  const chapterRe = new RegExp('^## +' + escRe(num) + '[.\\-\\s]');
+
+  let chapterIdx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (chapterRe.test(lines[i])) { chapterIdx = i; break; }
+  }
+  if (chapterIdx === -1) return text;
+
+  let endIdx = lines.length;
+  for (let i = chapterIdx + 1; i < lines.length; i++) {
+    if (/^##[^#]/.test(lines[i]) || /^#[^#]/.test(lines[i])) { endIdx = i; break; }
+  }
+
+  return [
+    lines[chapterIdx],
+    ...content.split('\n'),
+    '',
+    ...lines.slice(endIdx),
+  ].join('\n');
+}
+
+/**
+ * Plan.md — remplace le contenu d'un bloc figure ou encadré.
+ */
+function replaceElementContent(text, num, elType, id, content) {
+  const lines = text.split('\n');
+  const escapedId = escRe(id);
+  const headRe = elType === 'figures'
+    ? new RegExp('>\\s*🖼️\\s*\\*\\*figure\\*\\*\\s*`' + escapedId + '`')
+    : new RegExp('>\\s*📦\\s*\\*\\*encadré\\*\\*\\s*`' + escapedId + '`');
+
+  let headIdx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (headRe.test(lines[i])) { headIdx = i; break; }
+  }
+  if (headIdx === -1) return text;
+
+  let endIdx = headIdx + 1;
+  while (endIdx < lines.length) {
+    const l = lines[endIdx];
+    if (!/^>/.test(l) && l.trim() !== '') break;
+    if (/^>/.test(l) && (/>.*🖼️.*\*\*figure\*\*/.test(l) || />.*📦.*\*\*encadré\*\*/.test(l))) break;
+    endIdx++;
+  }
+
+  const contentLines = content.split('\n').map(l => l ? '> ' + l : '>');
+  return [
+    ...lines.slice(0, headIdx + 1),
+    ...contentLines,
+    ...lines.slice(endIdx),
+  ].join('\n');
 }
 
 async function refresh() {
@@ -814,7 +1071,6 @@ async function refresh() {
   }
 }
 
-// ── Chargement ──
 async function load() {
   try {
     S.planText  = await api.get(PATH.plan);
@@ -825,17 +1081,18 @@ async function load() {
   try { draft = JSON.parse(await api.get(PATH.draft)); } catch {}
   S.draft = draft;
 
+  S.metaContent  = extractMeta(S.planText);
+  S.metaModified = false;
+
   const { chapters, edits } = buildState(S.planText, S.guideText, draft);
   S.chapters = chapters;
   S.edits    = edits;
   applyDisplayNums();
 
-  // Renumérotation automatique si nécessaire
   const { planText, guideText, changed } = await autoRenumber(S.planText, S.guideText);
   if (changed) {
     S.planText  = planText;
     S.guideText = guideText;
-    // Reconstruire l'état avec les textes renumérotés
     const rebuilt = buildState(S.planText, S.guideText, S.draft);
     S.chapters = rebuilt.chapters;
     S.edits    = rebuilt.edits;
@@ -843,10 +1100,7 @@ async function load() {
     showRenumberBadge();
   }
 
-  // Sélectionner le premier chapitre au démarrage/refresh
-  const firstCh = S.chapters[0];
-  S.selected = firstCh ? firstCh.num : null;
-
+  S.selected = S.chapters[0] ? S.chapters[0].num : null;
   renderNav();
   renderDetail();
   updateTopbar();
@@ -871,18 +1125,16 @@ function updateTopbar() {
   document.getElementById('btn-save').disabled = !S.connected || !hasOps;
 }
 
-// ── Modal ──
 let _cb = null;
 function showModal(title, body, cb) {
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-body').innerHTML = body;
   _cb = cb;
   document.getElementById('modal-overlay').classList.add('open');
-  setTimeout(() => { const f = document.querySelector('#modal-body input,#modal-body textarea'); if(f) f.focus(); }, 40);
+  setTimeout(() => { const f = document.querySelector('#modal-body input:not([disabled]),#modal-body textarea'); if(f) f.focus(); }, 40);
 }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); _cb = null; }
 
-// ── Toast ──
 let _tt;
 function toast(msg, err) {
   const el = document.getElementById('toast');
@@ -890,7 +1142,6 @@ function toast(msg, err) {
   clearTimeout(_tt); _tt = setTimeout(() => el.className = '', 2500);
 }
 
-// ── Listeners ──
 document.getElementById('btn-apply-plan').onclick   = applyPlan;
 document.getElementById('btn-cancel-plan').onclick  = cancelPlan;
 document.getElementById('btn-apply-guide').onclick  = applyGuide;

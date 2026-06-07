@@ -316,3 +316,18 @@ Quelques points à garder en tête.
 **C'est un outil qui évolue vite.** Les modèles s'améliorent, les orchestrateurs s'enrichissent, les usages se diversifient. Ce qui est vrai aujourd'hui sur les fenêtres de contexte ou les hallucinations le sera peut-être moins demain. Mais les principes de base — comprendre ce qu'on utilise, adapter sa façon de travailler, garder un œil critique — restent valables quelle que soit la génération technologique.
 
 Bonne collaboration.
+
+### Révision 2026-06-07
+- Élément "Humains, Animaux & IA" ajouté (ch.2)
+### Révision 2026-06-07
+- Contenu plan ch.2 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié

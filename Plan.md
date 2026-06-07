@@ -182,12 +182,13 @@ Figures : `immo-regression`, `immo-outliers`, `immo-deux-segments`, `immo-underf
 #### Encadrés
 
 #### Contenu
-
 **Anthropomorphisme**
 Définir l'anthropomorphisme : la tendance naturelle à prêter des caractéristiques humaines
 à ce qui n'en a pas. Pourquoi on le fait (c'est câblé dans notre cerveau, on le fait avec
 les animaux, les voitures, la météo). Ses limites : principalement l'absence d'intention —
 une IA ne veut rien, ne ressent rien, n'a pas d'objectif propre.
+
+XXXXX
 
 Pourquoi c'est particulièrement important avec une IA : on lui parle, elle répond de façon
 cohérente, elle semble comprendre. C'est le premier outil de l'histoire avec qui on converse.
@@ -221,7 +222,6 @@ Comment annoncer l'arc narratif au lecteur (ancrage → mécanique → pratique)
 dans le catalogue plat "le chapitre 3 fait ceci, le chapitre 4 fait cela".*
 
 ---
-
 ### 2. Travailler avec une IA
 
 #### Mots-clés
@@ -898,3 +898,18 @@ a discuté, y compris les IA.
 **Note données privées / RGPD** : hors périmètre du guide. Ajouter une phrase dans
 l'introduction qui délimite proprement : ce guide traite du fonctionnement et de
 l'utilisation, pas des aspects légaux, contractuels ou de confidentialité.
+
+### Révision 2026-06-07
+- Élément "Humains, Animaux & IA" ajouté (ch.2)
+### Révision 2026-06-07
+- Contenu plan ch.2 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
