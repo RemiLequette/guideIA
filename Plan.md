@@ -188,8 +188,6 @@ Définir l'anthropomorphisme : la tendance naturelle à prêter des caractérist
 les animaux, les voitures, la météo). Ses limites : principalement l'absence d'intention —
 une IA ne veut rien, ne ressent rien, n'a pas d'objectif propre.
 
-XXXXX
-
 Pourquoi c'est particulièrement important avec une IA : on lui parle, elle répond de façon
 cohérente, elle semble comprendre. C'est le premier outil de l'histoire avec qui on converse.
 Le risque est de lui prêter des intentions qu'elle n'a pas.
@@ -221,6 +219,13 @@ arrive au ch. 3.*
 Comment annoncer l'arc narratif au lecteur (ancrage → mécanique → pratique) sans tomber
 dans le catalogue plat "le chapitre 3 fait ceci, le chapitre 4 fait cela".*
 
+plan par pb ? avec titre accrocheur / plutot familles de recettes
+- hallucination
+- pollution de contexte
+- attention
+- memoire
+- discussion
+
 ---
 ### 2. Travailler avec une IA
 
@@ -232,18 +237,44 @@ dans le catalogue plat "le chapitre 3 fait ceci, le chapitre 4 fait cela".*
 
 #### Figures
 
+>🖼️ **figure** `Humains, Animaux, IAs`
+> Trois cercles en triangle, type diagramme de Venn : Les Humains en haut, les animaux à gauche, les IAs à droite.
+> Commun aux trois : Système 1 : réponse rapide
+> Animaux et Humains : Intentions, émotions
+> IAs et Humains : Connaissance, information, langage
+> Humains seuls : Raisonnement, conscience
 #### Encadrés
 
 #### Contenu
-
-*Note : ouvrir le chapitre sur l'anthropomorphisme comme stratégie cognitive — c'est naturel,
-c'est pratique, il suffit de garder les limites en tête. Transition naturelle depuis le ch. 1.*
-
 *Note : étoffer la section "Valider" — trop courte. Ajouter des exemples concrets : vérifier les sources citées, croiser avec le bon sens, tester les affirmations factuelles.*
 
 *Note : la section "Documenter en même temps" est intégrée dans le guide sous "Trois bonnes nouvelles", pas comme section séparée. Le plan est aligné sur cette structure.*
 
+**Anthropomorphisme**
+
+L'entropomorphisme est bien sympathique ou defoulant quand on parle a ses plantes ou insulte son ordinateur mais ça a ses limites quand on dit que la voiture ne démarre pas c'est pas parce qu'elle boude c'est parce qu'elle est en panne.
+
+Mais chez les animaux et chez les IA, le paradigme peut avoir son efficacité si on
+en connaît bien les limites.
+Ça marche si on partage quelque chose.
+Qu'est-ce que nous avons commun avec les animaux ? Les intentions, les émotions.
+Qu'est-ce que nous avons commun avec les IA ? Le langage ou plus généralement la
+capacité à extraire de l'information de differentes sources (texte, video, audio) et de la rapprocher d'informations memorisees au prealable de facon flexible, on dira conceptuelle faute de mieux.
+
+Qu'est-ce qui reste, ce qui est spécifique aux humains ? C'est entre autre le raisonnement et la
+conscience.
+
+Qu'est-ce que nous partageons tous les trois ? C'est ce que Daniel Kahneman appelle le
+système 1, la reconnaissance immédiate de formes, de patterns pour pouvoir agir immédiatement.
+On verra que c'est ce socle-là qui est la principale source des limitations de l'IA, parce qu'il
+ne le contrôle pas bien. Daniel Kahneman dirait qu'il n'a pas le système 2.
+
+figure 
+
+Donc n'hésitons pas à les traiter comme des assistants, mais comprenons bien dans quel cadre.
+
 **Comment gérer ce profil**
+
 Pas de secret : exploiter ses qualités en limitant ses défauts.
 - Être clair dans les questions et les directives
 - Contrôler et valider les réponses et les résultats de tâches
@@ -269,7 +300,6 @@ Toujours travailler sur la méthodologie et la documenter en même temps que le 
 le pli, c'est fluide.
 
 ---
-
 ### 3. Le modèle et l'orchestrateur
 
 #### Mots-clés
@@ -798,7 +828,6 @@ pour la règle d'or : une session, un sujet.
 #### Encadrés
 
 #### Contenu
-
 Annexe optionnelle — le livre est complet sans elle. Pour les lecteurs qui veulent comprendre
 vraiment comment ça marche sous le capot. Ton plus dense que les chapitres principaux.
 
@@ -808,6 +837,7 @@ Contenu :
 - Génération token par token
 - Tokens spéciaux (encadré `tokens-speciaux` déplacé depuis ch. 6)
 - Apprentissage et coût de calcul
+Apprentissage par renforcement
 - RLHF
 - KV cache (pourquoi ça compte)
 - Espace latent et distance sémantique
@@ -816,7 +846,6 @@ Contenu :
 remplacer la référence par un renvoi vers cette annexe.*
 
 ---
-
 ### 9. Alors docteur, on fait quoi ?
 
 #### Mots-clés
@@ -832,7 +861,6 @@ remplacer la référence par un renvoi vers cette annexe.*
 #### Encadrés
 
 #### Contenu
-
 Chapitre pratique — boîte à outils face aux limites identifiées dans le guide.
 
 **Pattern Pourquoi / Comment / Quoi** (retour Régis) : allers-retours fréquents entre
@@ -842,7 +870,31 @@ niveaux d'abstraction dans le travail avec une IA. Comment naviguer entre ces ni
 - Hallucinations : comment les détecter, comment limiter le risque
 - Biais de positivité : pourquoi l'IA dit rarement "je ne sais pas", comment le forcer
 - Attention/dilution : prompts courts, information critique en tête ou en queue
+- Amnesie
 
+Ce sont des problèmes assez humains finalement. Ils sont identifiés depuis longtemps. Nous avons développé des techniques. Les psychologues et les philosophes. Systeme 1...
+Parce que ce n'est que des troubles cognitif, cs nous affecte tous, tout les jours. 
+
+Deux bonnes nouvelles:
+- on peut s'en inspirer
+- c'est dans les données d'entraînement
+
+Il y a l'humour, une récompense quand on cadre le système 1.
+Malheureusement ca marche pas.
+
+Ces problemes sont structurels, on ne peut que les pallier (au vrai sens du mot, regarder le dictinnaire, bon nombre de ll et pallier à, les 3 fautes)
+
+
+Effet Steisand
+Interdire et Contraindre
+Laissez lui les blancs
+On documente tout
+RTFM
+
+definir son vocabulaire
+
+
+Interdire ou contraindre ?
 **L'outillage comme réponse concrète aux limites** : présenter les outils non pas en
 annexe mais comme une réponse directe aux problèmes structurels. L'outillage change ce
 que l'IA peut faire, pas seulement comment on lui parle.
@@ -850,7 +902,6 @@ que l'IA peut faire, pas seulement comment on lui parle.
 *(à compléter au fil des chapitres)*
 
 ---
-
 ### 10. Cas pratiques
 
 #### Mots-clés
@@ -911,5 +962,24 @@ l'utilisation, pas des aspects légaux, contractuels ou de confidentialité.
 - Contenu plan ch.1 modifié
 ### Révision 2026-06-07
 - Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+- Contenu plan ch.2 modifié
+### Révision 2026-06-07
+- Élément "Humains, Animaux & IA" ajouté (ch.2)
+- Figure "Humains, Animaux & IA" modifié (ch.2)
+### Révision 2026-06-07
+- Figure "Humains, Animaux, IAs" modifié (ch.2)
+- Contenu plan ch.9 modifié
+### Révision 2026-06-07
+- Contenu plan ch.9 modifié
+### Révision 2026-06-07
+- Contenu plan ch.8 modifié
+### Révision 2026-06-07
+- Élément "L'orchestrateur sous-estimé" ajouté (ch.3)
+### Révision 2026-06-07
+- Contenu plan ch.9 modifié
 ### Révision 2026-06-07
 - Contenu plan ch.1 modifié

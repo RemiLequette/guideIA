@@ -331,3 +331,22 @@ Bonne collaboration.
 - Contenu plan ch.1 modifié
 ### Révision 2026-06-07
 - Contenu plan ch.1 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
+- Contenu plan ch.2 modifié
+### Révision 2026-06-07
+- Élément "Humains, Animaux & IA" ajouté (ch.2)
+- Figure "Humains, Animaux & IA" modifié (ch.2)
+### Révision 2026-06-07
+- Figure "Humains, Animaux, IAs" modifié (ch.2)
+- Contenu plan ch.9 modifié
+### Révision 2026-06-07
+- Contenu plan ch.9 modifié
+### Révision 2026-06-07
+- Contenu plan ch.8 modifié
+### Révision 2026-06-07
+- Élément "L'orchestrateur sous-estimé" ajouté (ch.3)
+### Révision 2026-06-07
+- Contenu plan ch.9 modifié
+### Révision 2026-06-07
+- Contenu plan ch.1 modifié
