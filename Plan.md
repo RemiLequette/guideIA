@@ -151,6 +151,7 @@ Figures : `immo-regression`, `immo-outliers`, `immo-deux-segments`, `immo-underf
 
 **Partie 3 — Pour aller plus loin**
 13. [Apprentissage et transformeurs](#13-apprentissage-et-transformeurs)
+14. tooling
 
 **Conclusion** *(hors partie)*
 
@@ -182,49 +183,52 @@ Figures : `immo-regression`, `immo-outliers`, `immo-deux-segments`, `immo-underf
 #### Encadrés
 
 #### Contenu
-**Anthropomorphisme**
-Définir l'anthropomorphisme : la tendance naturelle à prêter des caractéristiques humaines
-à ce qui n'en a pas. Pourquoi on le fait (c'est câblé dans notre cerveau, on le fait avec
-les animaux, les voitures, la météo). Ses limites : principalement l'absence d'intention —
-une IA ne veut rien, ne ressent rien, n'a pas d'objectif propre.
+L'Intelligence Artificielle ce n'est pas vraiment nouveau, c'est une discipline qui remonte aux années soixante, qui a connu de célèbres "hivers" et qui a progressé par sauts et changement de points de vues comme beaucoup de sciences et technologies.
 
-Pourquoi c'est particulièrement important avec une IA : on lui parle, elle répond de façon
-cohérente, elle semble comprendre. C'est le premier outil de l'histoire avec qui on converse.
-Le risque est de lui prêter des intentions qu'elle n'a pas.
+J'y ai été toujours été confronté, par mes choix académiques en particulier l'optimisation et la recherche opérationelle et dans ma carrière professionelle spécialement chez ILOG. Je ne me suis jamais considéré comme un expert directement impliqué, mais les besoins de mon travail et mes interêts m'on poussé à rester solidement informé sur le sujet.
 
-*Note : l'anthropomorphisme comme stratégie cognitive utile — pas juste un biais à corriger —
-sera développé en ouverture du ch. 2, qui s'enchaîne naturellement ici.*
+J'ai toujours eu beaucoup de respect et d'admiration pour les travaux menés dans ce vaste domaine, mais par contre un petit doute sur l'ambition, voir un soupcon d'imposture pour le nom lui même.
 
-**Ce qu'on attend malgré tout**
-On travaille avec elle comme avec un collaborateur : on lui pose des questions,
-on lui délègue des tâches. Elle est bien équipée pour cela — connaissances encyclopédiques,
-maîtrise de nombreuses disciplines, capacité de rédaction, analyse, code, langues, etc.
-Mais elle a des limites fondamentales que le guide va explorer.
+C'est un projet scientifique tout à fait louable, mais n'est il pas un peu naif et l'objectif difficile à définir ? A chaque avancée nous étions impressionés, puis nous reprenions nos esprits et décidions de mieux préciser ce qu'être intelligent voulait dire plutôt que de faire une concession à la machine. Quand Deep Blue a battu Gary Kasparov nous avons été choqués, puis le consensus s'est établi que bien jouer aux échecs n'était finalement pas un vrai critère de l'intelligence. Ca rappelle un peu le célèbre sophisme du vrai écossais. 
 
-*Note : introduire ici explicitement le terme LLM (grand modèle de langage) et ses
-équivalents grand public — ChatGPT, Gemini, etc.*
+- "Un vrai écossais ne met pas de glaçons dans son whisky"
+- "Ah bon, mon ami Douglas MacDonald, d'Edimburgh, il met des glaçons dans son whisky"
+- "Alors ce n'est pas un vrai écossais car un vrai écossais ne met pas de glaçons dans son whisky"
 
-**La métaphore du CV**
-Pour apprivoiser l'anthropomorphisme : imaginer recruter un assistant avec un CV hors norme —
-section compétences immense, mais sections motivation et expérience vides.
-Ce que ça signifie concrètement. En plus : il est distrait, il a tendance à vouloir
-faire plaisir coûte que coûte, et il lui arrive d'inventer des choses — parfois manifestement
-fausses, parfois de façon moins détectable.
+Il y a aussi un souci avec l'oxymoron "Intellidence Artificielle" lui même, un peut trop accrocheur, voire raccoleur. C'est utile pour récolter des fonds mais ca attire aussi tous les pseudo-experts et manipulateurs d'opinion que les réseaux sociaux ont démultipliés. Certains se rappellent peut-être le fameux projet "cinquième génération d'ordinateurs" du gouvernement japonais à la fin du siècle dernier, je ne me rappelle même pas si je savais à l'époque quelles étaient les quatre autres. Il a fini par 
+se réveler être surtout une maneuvre de propagande politique abondamment reprise par les lobbies de l'autre coté de l'océan Pacifique. C'était la courte période où, la Russie devenant un peu moins crédible et la Chine ne l'étant pas encore suffisamment, le Japon a endossé avec grande fierté le rôle très prestigieux de menace existentielle pour les Etats-Unis.
 
-*Note : glisser le mot "prompt" en passant, avec un exemple minimal montrant la différence
-entre un prompt flou et un prompt clair. Pas de développement ici — la définition formelle
-arrive au ch. 3.*
+Puis il y a au le "moment ChatGPT" et l'emballement qui a suivi avec ces grands modèles de language (LLM) : OpenAI, Anthropic, Gemini, Mistral, DeepSeek, ...
+Les chatbots "intelligents" ce sont répandus dans le grand public, les entreprises expérimentent, une immense vague de buzz, de craintes, d'espoirs et de bruit submerge la planète.
 
-*Note : présenter la structure du guide en fin d'introduction — à définir en session dédiée.
-Comment annoncer l'arc narratif au lecteur (ancrage → mécanique → pratique) sans tomber
-dans le catalogue plat "le chapitre 3 fait ceci, le chapitre 4 fait cela".*
+On peut vraiment dire, et j'en suis intimement convaincu, que là, ils ont "craqué" quelque chose. Quoi ? C'est encore dur à définir, j'espère que ce guide vous aidera à vous faire une opinion, même si ce n'est pas son sujet principal. En tous les cas on peut dire que le fameux "test de Turing", qui était un des derniers remparts qui avait le mérite d'être un peu formalisé, est clairement en train de rompre. Il est du au brillant mathématicien anglais qui a craqué les codes secrets Nazis pendant la deuxième guerre mondiale et qui est un des grands théoriciens de l'informatique, et il peut se résumer simplement: "vous ne feriez pas la différence au téléphone".
 
-plan par pb ? avec titre accrocheur / plutot familles de recettes
-- hallucination
-- pollution de contexte
-- attention
-- memoire
-- discussion
+Donc je suivais l'actualité, je jouais avec la bête et avec enthousiasme, et je me tenais informé sur la technologie. Je connaissais déjà bien celle de l'apprentissage profond qui est sous-jacente. J'y avais été confronté, je travaille beaucoup dans le domaine de la planification de la chaîne d'approvisionnement (Supply Chain) où la prévision de la demande joue un rôle crucial comme il n'est pas trop dificille de s'imaginer.
+
+Puis je me suis retrouvé, toujours enthousiaste, dans l'opportunité de réaliser un projet dans un cadre professionnel. C'etait au momement ou on commencait à applique ces modèles à l'écriture du logiciel, ce qui ne se réduit pas à aligner du code. J'ai toujours été passionné par la programmation et l'ingénierie logicielle qui combine des bases théroriques forte (programmation, algorithme), de la techonologie, de l'ingénierie (conception, architecture, ergonomie, conduite de projet, ..) avec la complication de produire pour un besoin final dans des domaines tres variés dont il faut comprendre les besoins spécifiques. Passé par la R&D et le conseil j'étais soit impliqués directement, soit en forte coopération avec les équipes concernées.
+
+Donc je me lance, et j'essaie aussi de mieux comprendre comment ca fonctionne en pratique. Je fait partie de ceux qui ne veulent pas d'une baguette magique, qui aiment comprendre comment fonctionne l'outil pour tenir compte des forces et faiblesses. Ce que j'entend par comprendre, c'est par exemple qu'il n'est pas nécessaire de connaitre la "mécanique" au sens oú elle est enseignée à l'école Polytechnique pour comprendre en pratique comment fonctionne une automobile. C'est très utile aux ingénieurs qui la concoivent, mais ca n'apporte pas grand chose pour bien l'utiliser et ne pas se faire trop arnaquer par un garagiste. Et, paradoxalement ou pas, ca peut être très dificille d'expliquer clairement, sans jargon ni concepts compliqués. Comme a dit Blaise Pascal: "j'ai fait long car je n'ai pas eu le temps de faire court".
+
+Je vais prendre un exemple, je suis très agacé, peut-etre injustement, par ceux que j'appelle les "docteurs du prompt" qui vous fournissent de belles formules alambiquées "Tu es un professeur de claquettes borgne, pratiquant la peinture à l'huile de façon modérée ..." Je ne nie pas que certaines de ces formules marchent, quelque fois. Mais ca ressemble à quoi? Des incantations, de la magie, faut-il aussi attendre une nuit de pleine lune? Même si ca marche, je veux savoir pourquoi, quels sont les leviers, je ne veux pas travailler comme ca! Ou est le plaisir? 
+
+Et après cet effort de compréhension, progressif, double surprise, ma productivité augmente constamment à des niveaux et d'une manière que je n'aurais même pas révé, et surtout il y a un réel plaisir à travailler de cette manière. Et c'est celà que je veux partager.
+
+Peut-être ais-je un profil idéal, car, je le confesse, je suis un fénéant. J'ai des idées et particulèrement sur les bonnes pratiques de travail, je vois souvent comment les améliorer, mais je n'arrive pas à être rigoureux parce que celà implique de la bureaucratie et surtout ca interrompt le "flot" concept dificille à définir, certain disent la "zone", la où le travail est fluide et créatif, et dans le flot on a souvent des idées parallèles au projet en court, soit pour d'autres projets, soit surtout pour améliorer les méthodes de travail et rendre le flot encore plus efficace. Mais là, il faudrait s'arrêter, noter, documenter, ca casse le flot... Vous connaissez surement cette situation où l'on se dit, tient ca serait mieux de faire comme cà, là on a pas le temps, il faut livrer, mais des qu'on a un peu de temps on change cà pour la prochaine fois. Et on le fait très rarement car on oublie où on a pas le temps, c'est dificille à justifier auprès du management, ou tout simplement on à la flemme. Quoique je me considère comme faisant partie des fénéants créatifs, pas ceux qui cherchent à ne rien faire, mais qui cherchent minimiser l'effort pour arriver au résultat, on a quand même l'amour du travail bien fait! 
+
+L'idée c est de tout intégrer au flot ! 
+
+Ce guide à trois parties: 
+
+La première se suffit à elle même, elle commence par poser le cadre du travail avec une IA, quelle est sa force mais surtout les principales limitations que l'on va rencontrer et qui risquent de dérailler le processus. Puis on va soulever le capot pour voir comment ca marche, sans détails excessif mais suffisamment pour comprendre d'où viennent ces limitations et ces forces. Enfin on fera la revue des techniques et bonnes pratiques pour exploiter ces forces et apprivoiser ces limitations.
+
+La deuxième partie est en ensemble d'exemple concrets basés sur mon experience personelle. On abordera la création de documents techniques, un peu de développement de logiciel, mais pas trop, et un exemple dans la gouvernance car je suis impliqué dans une association professionelle. Je vous avoue que j'avais toujours révé d'écrire un document de plus de dix pages qui ne soit pas commercial ou technique, mais j'étais trop paresseux. Le dernier exemple est donc: comment j'ai écrit ce guide avec l'aide d'une IA en étant toujours dans le flot.
+
+La dernière partie contient des annexes techniques pour ceux qui une fois le capot ouvert on envie de démonter le moteur. On y verra expliqué le fonctionnement interne d'un LLM (spoiler: ce n'est pas indispensable pour comprendre)
+
+Bonne lecture, dans le flot!
+
+
+
 
 ---
 ### 2. Travailler avec une IA
@@ -252,6 +256,13 @@ plan par pb ? avec titre accrocheur / plutot familles de recettes
 
 **Anthropomorphisme**
 
+ommençons par un aveu : nous sommes tous câblés pour prêter des intentions humaines à ce qui nous entoure. Un nuage qui "menace", une voiture qui "refuse de démarrer", un chat qui "boude". C'est {{def:mk:anthropomorphisme}} — la tendance naturelle à projeter des caractéristiques humaines sur ce qui n'en a pas. Ce n'est pas un défaut de raisonnement : c'est une stratégie cognitive ancienne, efficace pour naviguer dans un monde social complexe.
+
+Avec une IA, ce réflexe est particulièrement tenace. Elle vous répond en phrases construites, elle semble comprendre vos questions, elle s'adapte à votre ton. C'est le premier outil de l'histoire avec qui on *converse*. Difficile de ne pas lui prêter une forme d'{{def:mk:intention}}.
+
+Pourtant, une IA ne veut rien. Elle ne ressent rien. Elle n'a pas d'objectif propre, pas de bonne ou mauvaise journée, pas d'opinion sur vous. Ce point n'est pas une mise en garde morale — c'est une information utile pour travailler efficacement avec elle.
+
+
 L'entropomorphisme est bien sympathique ou defoulant quand on parle a ses plantes ou insulte son ordinateur mais ça a ses limites quand on dit que la voiture ne démarre pas c'est pas parce qu'elle boude c'est parce qu'elle est en panne.
 
 Mais chez les animaux et chez les IA, le paradigme peut avoir son efficacité si on
@@ -270,9 +281,27 @@ On verra que c'est ce socle-là qui est la principale source des limitations de 
 ne le contrôle pas bien. Daniel Kahneman dirait qu'il n'a pas le système 2.
 
 figure 
+### Ce que notre cerveau fait tout seul
 
-Donc n'hésitons pas à les traiter comme des assistants, mais comprenons bien dans quel cadre.
 
+**Un collaborateur au CV hors norme**
+
+Pour apprivoiser cette réalité, voici une image. Imaginez recruter un {{def:mk:collaborateur}} avec un CV hors norme : la section *compétences* est immense — encyclopédie vivante, maîtrise de dizaines de langues, rédaction, analyse, code, droit, médecine, cuisine, poésie. Mais les sections *motivation* et *expérience professionnelle* sont vides. Il n't a pas de parcours, pas de raisons personnelles d'être là.
+
+Et quelques particularités supplémentaires à bien noter pour la suite : il est distrait, il a une tendance marquée à vouloir faire plaisir coûte que coûte — parfois au détriment de l'exactitude — et il lui arrive d'inventer des choses. C'est ce qu'on appelle une {{def:mk:hallucination}} : une réponse construite avec confiance, mais déconnectée de la réalité. Parfois flagrant, parfois beaucoup moins détectable.
+
+Ce profil existe bel et bien. La bonne nouvelle : il est très gérable, si on sait comment l'aborder. C'est l'objet de ce guide.
+
+
+
+
+plan par pb ? avec titre accrocheur / plutot familles de recettes
+- hallucination
+- pollution de contexte
+- attention
+- memoire
+- discussion
+- 
 **Comment gérer ce profil**
 
 Pas de secret : exploiter ses qualités en limitant ses défauts.

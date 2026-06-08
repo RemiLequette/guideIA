@@ -2,23 +2,7 @@
 
 ## 1. Introduction
 
-Vous avez sans doute déjà utilisé un assistant IA — pour rédiger un email, poser une question, ou simplement tester ce dont il est capable. Vous avez peut-être été impressionné. Peut-être aussi déçu, ou surpris par une réponse à côté. Ce guide n'est pas un tutoriel. C'est une explication : comment ça marche vraiment, et comment en tirer le meilleur parti.
 
-### Ce que notre cerveau fait tout seul
-
-Commençons par un aveu : nous sommes tous câblés pour prêter des intentions humaines à ce qui nous entoure. Un nuage qui "menace", une voiture qui "refuse de démarrer", un chat qui "boude". C'est {{def:mk:anthropomorphisme}} — la tendance naturelle à projeter des caractéristiques humaines sur ce qui n'en a pas. Ce n'est pas un défaut de raisonnement : c'est une stratégie cognitive ancienne, efficace pour naviguer dans un monde social complexe.
-
-Avec une IA, ce réflexe est particulièrement tenace. Elle vous répond en phrases construites, elle semble comprendre vos questions, elle s'adapte à votre ton. C'est le premier outil de l'histoire avec qui on *converse*. Difficile de ne pas lui prêter une forme d'{{def:mk:intention}}.
-
-Pourtant, une IA ne veut rien. Elle ne ressent rien. Elle n'a pas d'objectif propre, pas de bonne ou mauvaise journée, pas d'opinion sur vous. Ce point n'est pas une mise en garde morale — c'est une information utile pour travailler efficacement avec elle.
-
-### Un collaborateur au CV hors norme
-
-Pour apprivoiser cette réalité, voici une image. Imaginez recruter un {{def:mk:collaborateur}} avec un CV hors norme : la section *compétences* est immense — encyclopédie vivante, maîtrise de dizaines de langues, rédaction, analyse, code, droit, médecine, cuisine, poésie. Mais les sections *motivation* et *expérience professionnelle* sont vides. Il n't a pas de parcours, pas de raisons personnelles d'être là.
-
-Et quelques particularités supplémentaires à bien noter pour la suite : il est distrait, il a une tendance marquée à vouloir faire plaisir coûte que coûte — parfois au détriment de l'exactitude — et il lui arrive d'inventer des choses. C'est ce qu'on appelle une {{def:mk:hallucination}} : une réponse construite avec confiance, mais déconnectée de la réalité. Parfois flagrant, parfois beaucoup moins détectable.
-
-Ce profil existe bel et bien. La bonne nouvelle : il est très gérable, si on sait comment l'aborder. C'est l'objet de ce guide.
 
 ---
 
